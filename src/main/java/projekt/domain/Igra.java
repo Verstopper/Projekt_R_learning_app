@@ -6,8 +6,8 @@ import javax.persistence.*;
 @Entity
 public class Igra {
     @Id
-    @Column(name = "id_igre", nullable = false, length = 10)
-    private String id;
+    @Column(name = "id_igre", nullable = false)
+    private Integer id;
 
     @Column(name = "naziv", nullable = false, length = 100)
     private String naziv;
@@ -16,15 +16,15 @@ public class Igra {
     private String opis;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_profesora", nullable = false)
-    private Profesor idProfesora;
+    @JoinColumn(name = "oib", nullable = false)
+    private Profesor oib;
 
-    public Profesor getIdProfesora() {
-        return idProfesora;
+    public Profesor getOib() {
+        return oib;
     }
 
-    public void setIdProfesora(Profesor idProfesora) {
-        this.idProfesora = idProfesora;
+    public void setOib(Profesor oib) {
+        this.oib = oib;
     }
 
     public String getOpis() {
@@ -43,11 +43,11 @@ public class Igra {
         this.naziv = naziv;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }

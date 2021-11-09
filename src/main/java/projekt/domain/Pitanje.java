@@ -9,14 +9,14 @@ import javax.persistence.Table;
 @Entity
 public class Pitanje {
     @Id
-    @Column(name = "id_pitanje", nullable = false, length = 10)
-    private String id;
+    @Column(name = "id_pitanje", nullable = false)
+    private Integer id;
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }

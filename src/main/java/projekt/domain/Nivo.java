@@ -6,17 +6,17 @@ import javax.persistence.*;
 @Entity
 public class Nivo {
     @Id
-    @Column(name = "id_nivo", nullable = false, length = 10)
-    private String id;
+    @Column(name = "id_nivo", nullable = false)
+    private Integer id;
 
     @Column(name = "naziv", nullable = false, length = 100)
     private String naziv;
 
-    @Column(name = "sljedeci_nivo", length = 10)
-    private String sljedeciNivo;
+    @Column(name = "sljedeci_nivo")
+    private Integer sljedeciNivo;
 
-    @Column(name = "prethodni_nivo", length = 10)
-    private String prethodniNivo;
+    @Column(name = "prethodni_nivo")
+    private Integer prethodniNivo;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_igre", nullable = false)
@@ -30,19 +30,19 @@ public class Nivo {
         this.idIgre = idIgre;
     }
 
-    public String getPrethodniNivo() {
+    public Integer getPrethodniNivo() {
         return prethodniNivo;
     }
 
-    public void setPrethodniNivo(String prethodniNivo) {
+    public void setPrethodniNivo(Integer prethodniNivo) {
         this.prethodniNivo = prethodniNivo;
     }
 
-    public String getSljedeciNivo() {
+    public Integer getSljedeciNivo() {
         return sljedeciNivo;
     }
 
-    public void setSljedeciNivo(String sljedeciNivo) {
+    public void setSljedeciNivo(Integer sljedeciNivo) {
         this.sljedeciNivo = sljedeciNivo;
     }
 
@@ -54,11 +54,11 @@ public class Nivo {
         this.naziv = naziv;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }

@@ -6,19 +6,17 @@ import javax.persistence.*;
 @Entity
 public class Odgovor {
     @Id
-    @Column(name = "id_odgovr", nullable = false, length = 10)
-    private String id;
+    @Column(name = "id_odgovr", nullable = false)
+    private Integer id;
 
-    @Lob
-    @Column(name = "\"točnost\"", nullable = false)
+    @Column(name = "\"točnost\"", nullable = false, length = 100)
     private String točnost;
 
-    @Lob
-    @Column(name = "text", nullable = false)
+    @Column(name = "text", nullable = false, length = 1000)
     private String text;
 
-    @Column(name = "vodi_na", nullable = false, length = 10)
-    private String vodiNa;
+    @Column(name = "vodi_na", nullable = false)
+    private Integer vodiNa;
 
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_pitanje", nullable = false)
@@ -32,11 +30,11 @@ public class Odgovor {
         this.idPitanje = idPitanje;
     }
 
-    public String getVodiNa() {
+    public Integer getVodiNa() {
         return vodiNa;
     }
 
-    public void setVodiNa(String vodiNa) {
+    public void setVodiNa(Integer vodiNa) {
         this.vodiNa = vodiNa;
     }
 
@@ -56,11 +54,11 @@ public class Odgovor {
         this.točnost = točnost;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }

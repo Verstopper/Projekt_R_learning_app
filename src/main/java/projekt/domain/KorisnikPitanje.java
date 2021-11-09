@@ -6,11 +6,11 @@ import javax.persistence.Entity;
 import javax.persistence.Table;
 import java.time.LocalDate;
 
-@Table(name = "vezakorisnikpitanje")
+@Table(name = "korisnik_pitanje")
 @Entity
-public class Vezakorisnikpitanje {
+public class KorisnikPitanje {
     @EmbeddedId
-    private VezakorisnikpitanjeId id;
+    private KorisnikPitanjeId id;
 
     @Column(name = "\"početak_pitanje\"", nullable = false)
     private LocalDate početakPitanje;
@@ -34,11 +34,11 @@ public class Vezakorisnikpitanje {
         this.početakPitanje = početakPitanje;
     }
 
-    public VezakorisnikpitanjeId getId() {
+    public KorisnikPitanjeId getId() {
         return id;
     }
 
-    public void setId(VezakorisnikpitanjeId id) {
+    public void setId(KorisnikPitanjeId id) {
         this.id = id;
     }
 }

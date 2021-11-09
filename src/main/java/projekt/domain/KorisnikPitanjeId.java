@@ -9,26 +9,26 @@ import java.io.Serializable;
 import java.util.Objects;
 
 @Embeddable
-public class VezakorisnikpitanjeId implements Serializable {
-    private static final long serialVersionUID = -3336914412795274563L;
-    @Column(name = "id_ucenik", nullable = false, length = 10)
-    private String idUcenik;
-    @Column(name = "id_pitanje", nullable = false, length = 10)
-    private String idPitanje;
+public class KorisnikPitanjeId implements Serializable {
+    private static final long serialVersionUID = 3157136244904885093L;
+    @Column(name = "id_ucenik", nullable = false)
+    private Integer idUcenik;
+    @Column(name = "id_pitanje", nullable = false)
+    private Integer idPitanje;
 
-    public String getIdPitanje() {
+    public Integer getIdPitanje() {
         return idPitanje;
     }
 
-    public void setIdPitanje(String idPitanje) {
+    public void setIdPitanje(Integer idPitanje) {
         this.idPitanje = idPitanje;
     }
 
-    public String getIdUcenik() {
+    public Integer getIdUcenik() {
         return idUcenik;
     }
 
-    public void setIdUcenik(String idUcenik) {
+    public void setIdUcenik(Integer idUcenik) {
         this.idUcenik = idUcenik;
     }
 
@@ -41,7 +41,7 @@ public class VezakorisnikpitanjeId implements Serializable {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
-        VezakorisnikpitanjeId entity = (VezakorisnikpitanjeId) o;
+        KorisnikPitanjeId entity = (KorisnikPitanjeId) o;
         return Objects.equals(this.idUcenik, entity.idUcenik) &&
                 Objects.equals(this.idPitanje, entity.idPitanje);
     }

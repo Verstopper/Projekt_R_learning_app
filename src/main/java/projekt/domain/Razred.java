@@ -9,8 +9,8 @@ import javax.persistence.Table;
 @Entity
 public class Razred {
     @Id
-    @Column(name = "id_razred", nullable = false, length = 10)
-    private String id;
+    @Column(name = "id_razred", nullable = false)
+    private Integer id;
 
     @Column(name = "naziv", nullable = false, length = 100)
     private String naziv;
@@ -34,11 +34,11 @@ public class Razred {
         this.naziv = naziv;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }

@@ -6,8 +6,8 @@ import javax.persistence.*;
 @Entity
 public class Ucenik {
     @Id
-    @Column(name = "id_ucenik", nullable = false, length = 10)
-    private String id;
+    @Column(name = "id_ucenik", nullable = false)
+    private Integer id;
 
     @Column(name = "korisnicko_ime", nullable = false, length = 100)
     private String korisnickoIme;
@@ -43,11 +43,11 @@ public class Ucenik {
         this.korisnickoIme = korisnickoIme;
     }
 
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 }
