@@ -1,9 +1,16 @@
 package projekt.domain;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Table(name = "odgovor")
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
 public class Odgovor {
     @Id
     @Column(name = "id_odgovr", nullable = false)
@@ -22,43 +29,4 @@ public class Odgovor {
     @JoinColumn(name = "id_pitanje", nullable = false)
     private Pitanje idPitanje;
 
-    public Pitanje getIdPitanje() {
-        return idPitanje;
-    }
-
-    public void setIdPitanje(Pitanje idPitanje) {
-        this.idPitanje = idPitanje;
-    }
-
-    public Integer getVodiNa() {
-        return vodiNa;
-    }
-
-    public void setVodiNa(Integer vodiNa) {
-        this.vodiNa = vodiNa;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getTočnost() {
-        return točnost;
-    }
-
-    public void setTočnost(String točnost) {
-        this.točnost = točnost;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

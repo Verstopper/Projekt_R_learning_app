@@ -1,9 +1,16 @@
 package projekt.domain;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Table(name = "ucenik")
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
 public class Ucenik {
     @Id
     @Column(name = "id_ucenik", nullable = false)
@@ -19,35 +26,4 @@ public class Ucenik {
     @JoinColumn(name = "id_razred", nullable = false)
     private Razred idRazred;
 
-    public Razred getIdRazred() {
-        return idRazred;
-    }
-
-    public void setIdRazred(Razred idRazred) {
-        this.idRazred = idRazred;
-    }
-
-    public String getPunoImeIPrezime() {
-        return punoImeIPrezime;
-    }
-
-    public void setPunoImeIPrezime(String punoImeIPrezime) {
-        this.punoImeIPrezime = punoImeIPrezime;
-    }
-
-    public String getKorisnickoIme() {
-        return korisnickoIme;
-    }
-
-    public void setKorisnickoIme(String korisnickoIme) {
-        this.korisnickoIme = korisnickoIme;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

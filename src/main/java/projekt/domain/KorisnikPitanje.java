@@ -1,5 +1,7 @@
 package projekt.domain;
 
+import lombok.*;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -8,6 +10,9 @@ import java.time.LocalDate;
 
 @Table(name = "korisnik_pitanje")
 @Entity
+@Data
+@Builder
+@NoArgsConstructor
 public class KorisnikPitanje {
     @EmbeddedId
     private KorisnikPitanjeId id;
@@ -18,27 +23,5 @@ public class KorisnikPitanje {
     @Column(name = "kraj_pitanja", nullable = false)
     private LocalDate krajPitanja;
 
-    public LocalDate getKrajPitanja() {
-        return krajPitanja;
-    }
 
-    public void setKrajPitanja(LocalDate krajPitanja) {
-        this.krajPitanja = krajPitanja;
-    }
-
-    public LocalDate getPočetakPitanje() {
-        return početakPitanje;
-    }
-
-    public void setPočetakPitanje(LocalDate početakPitanje) {
-        this.početakPitanje = početakPitanje;
-    }
-
-    public KorisnikPitanjeId getId() {
-        return id;
-    }
-
-    public void setId(KorisnikPitanjeId id) {
-        this.id = id;
-    }
 }
