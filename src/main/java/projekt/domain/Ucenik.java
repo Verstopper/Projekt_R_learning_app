@@ -1,16 +1,10 @@
 package projekt.domain;
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 
 @Table(name = "ucenik")
 @Entity
-@Data
-@Builder
-@NoArgsConstructor
+
 public class Ucenik {
     @Id
     @Column(name = "id_ucenik", nullable = false)
