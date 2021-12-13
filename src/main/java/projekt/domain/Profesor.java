@@ -11,9 +11,7 @@ import javax.persistence.Table;
 
 @Table(name = "profesor")
 @Entity
-@Data
-@Builder
-@NoArgsConstructor
+
 public class Profesor {
     @Id
     @Column(name = "oib", nullable = false, length = 10)

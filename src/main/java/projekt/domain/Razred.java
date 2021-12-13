@@ -11,9 +11,7 @@ import javax.persistence.Table;
 
 @Table(name = "razred")
 @Entity
-@Data
-@Builder
-@NoArgsConstructor
+
 public class Razred {
     @Id
     @Column(name = "id_razred", nullable = false)

@@ -8,9 +8,7 @@ import javax.persistence.*;
 
 @Table(name = "odgovor")
 @Entity
-@Data
-@Builder
-@NoArgsConstructor
+
 public class Odgovor {
     @Id
     @Column(name = "id_odgovr", nullable = false)
