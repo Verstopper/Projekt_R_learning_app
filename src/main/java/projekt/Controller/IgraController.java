@@ -4,11 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import projekt.domain.Igra;
-import projekt.domain.Profesor;
 import projekt.domain.Request;
 import projekt.service.IgraService;
-
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/igra")

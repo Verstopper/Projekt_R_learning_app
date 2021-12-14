@@ -5,12 +5,15 @@ public class Request {
     private String naziv;
     private String opis;
     private String oib;
+    private String text;
+    private String nivo;
 
-
-    public Request(String naziv, String opis, String oib) {
+    public Request(String naziv, String opis, String oib,String text,String nivo) {
         this.naziv = naziv;
         this.opis = opis;
         this.oib = oib;
+        this.text = text;
+        this.nivo = nivo;
     }
 
     public String getNaziv() {
@@ -35,5 +38,21 @@ public class Request {
 
     public void setOib(String oib) {
         this.oib = oib;
+    }
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
+
+    public String getNivo() {
+        return nivo;
+    }
+
+    public void setNivo(String nivo) {
+        this.nivo = nivo;
     }
 }
