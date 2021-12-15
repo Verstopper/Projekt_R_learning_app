@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import projekt.domain.Igra;
+
 import projekt.domain.Pitanje;
 import projekt.domain.Request;
-import projekt.service.IgraService;
+
 import projekt.service.PItanjeService;
 
 @RestController
@@ -23,10 +23,17 @@ public class PitanjeContoller {
 
 
     @PostMapping("/dodaj")
-    public Pitanje addGame(@RequestBody Request pitanje) throws Exception {
-        Assert.notNull(pitanje,"Objekt je prazan");
+    public Pitanje addQuestion(@RequestBody Request pitanje) throws Exception {
+
         return pItanjeService.addQuestion(pitanje);
     }
+
+    @PostMapping("/izbrisi")
+    public boolean deleteQuestion(@RequestBody Pitanje pitanje) throws Exception {
+
+        return pItanjeService.deleteQuestion(pitanje);
+    }
+
 
 
 }

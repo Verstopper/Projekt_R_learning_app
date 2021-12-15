@@ -1,6 +1,7 @@
 package projekt.domain;
 
 import javax.persistence.*;
+import java.util.Optional;
 
 @Entity
 @Table(name = "pitanje")
@@ -13,7 +14,7 @@ public class Pitanje {
     @Column(name = "naziv", nullable = false, length = 100)
     private String naziv;
 
-    @Column(name = "text", nullable = false, length = 1000)
+    @Column(name = "text", length = 1000)
     private String text;
 
     @ManyToOne(optional = false)

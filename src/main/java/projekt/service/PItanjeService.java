@@ -13,4 +13,6 @@ import projekt.repo.PitanjeRepository;
 public interface PItanjeService {
 
     public Pitanje addQuestion(Request pitanje) throws Exception;
+
+    boolean deleteQuestion(Pitanje pitanje) throws Exception;
 }
