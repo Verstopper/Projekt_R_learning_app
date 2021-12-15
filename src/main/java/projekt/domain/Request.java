@@ -16,6 +16,8 @@ public class Request {
         this.nivo = nivo;
     }
 
+
+
     public String getNaziv() {
         return naziv;
     }
