@@ -10,6 +10,10 @@ import java.time.LocalDate;
 
 @Table(name = "korisnik_pitanje")
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 
 public class KorisnikPitanje {
     @EmbeddedId

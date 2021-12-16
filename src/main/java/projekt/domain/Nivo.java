@@ -1,8 +1,17 @@
 package projekt.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "nivo")
 public class Nivo {
     @Id
@@ -22,44 +31,4 @@ public class Nivo {
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_igre", nullable = false)
     private Igra idIgre;
-
-    public Igra getIdIgre() {
-        return idIgre;
-    }
-
-    public void setIdIgre(Igra idIgre) {
-        this.idIgre = idIgre;
-    }
-
-    public Integer getPrethodniNivo() {
-        return prethodniNivo;
-    }
-
-    public void setPrethodniNivo(Integer prethodniNivo) {
-        this.prethodniNivo = prethodniNivo;
-    }
-
-    public Integer getSljedeciNivo() {
-        return sljedeciNivo;
-    }
-
-    public void setSljedeciNivo(Integer sljedeciNivo) {
-        this.sljedeciNivo = sljedeciNivo;
-    }
-
-    public String getNaziv() {
-        return naziv;
-    }
-
-    public void setNaziv(String naziv) {
-        this.naziv = naziv;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

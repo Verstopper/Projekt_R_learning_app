@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import projekt.domain.Profesor;
+import projekt.dto.LoginDto;
+import projekt.dto.RegistrationDto;
 import projekt.service.ProfesorService;
 
 @RestController
@@ -18,13 +20,13 @@ public class ProfesorController {
     private final ProfesorService profesorService;
 
     @PostMapping("/registracija")
-    public ResponseEntity<Profesor> register(@RequestBody Profesor profesor){
-        return new ResponseEntity<>(profesorService.register(profesor), HttpStatus.CREATED);
+    public ResponseEntity<Profesor> register(@RequestBody RegistrationDto registrationDto){
+        return new ResponseEntity<>(profesorService.register(registrationDto), HttpStatus.CREATED);
     }
 
     @PostMapping("/profesor/login")
-    public ResponseEntity<Profesor> login(@RequestBody String korisnickoIme, @RequestBody String lozinka){
-        return new ResponseEntity<>(profesorService.login(korisnickoIme, lozinka), HttpStatus.OK);
+    public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
+        return ResponseEntity.ok(profesorService.login(loginDto));
     }
 
 }

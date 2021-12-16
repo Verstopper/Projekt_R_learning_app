@@ -6,5 +6,6 @@ import projekt.domain.Ucenik;
 import java.util.Optional;
 
 public interface UcenikRepository extends JpaRepository<Ucenik, Integer> {
-    Optional<Ucenik> findByKorisnickoIme(String korisnickoIme);
+    Boolean existsByKorisnickoIme(String korisnickoIme);
+    Ucenik findByKorisnickoIme(String korisnickoIme);
 }

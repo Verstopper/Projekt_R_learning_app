@@ -15,7 +15,6 @@ public class UcenikServiceImpl implements UcenikService {
 
     @Override
     public Ucenik login(String korisnickoIme) {
-        return ucenikRepository.findByKorisnickoIme(korisnickoIme)
-                .orElseThrow(() -> new UsernameException("Uceniku jos nije dodjeljeno korisnicko ime."));
+        return null;
     }
 }
