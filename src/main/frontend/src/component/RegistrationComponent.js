@@ -78,9 +78,22 @@ class RegstrationComponent extends React.Component {
 
         return (
             <div className="navigation">
-                <a href="index.html">Početna</a>
-                <a href="ucenik.html">Učenik</a>
-                <a href="profesor.html">Profesor</a>
+
+                {
+                    !isUserLoggedIn &&
+                    <div><a href="/api/ZabavnoUcenje/login">Prijava ucenika</a></div>
+                }
+                {!isUserLoggedIn &&
+                <div>
+                    <a href="/api/ZabavnoUcenje/Ucenik/login" id="">Prijava profesora</a>
+                </div>
+                }
+                {isUserLoggedIn && <div>
+                    <p>{username}</p>
+                    <a href="/logout" id="">Odjava djelatnika</a>
+                </div>
+                }
+
             </div>
         );
     }

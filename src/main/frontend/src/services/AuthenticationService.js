@@ -34,7 +34,7 @@ class AuthenticationService {
     }
 
     loginAdmin(korisnicko_ime,lozinka) {
-        let url = "/api/ZabavnoUcenje/registracija";
+        let url = "/api/ZabavnoUcenje/login";
         return api.post(url, {korisnicko_ime: korisnicko_ime, lozinka: lozinka})
     }
 
