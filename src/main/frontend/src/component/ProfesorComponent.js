@@ -2,9 +2,12 @@ import React, {Component, useState} from "react";
 import Navigate from 'react-router-dom';
 import {validatePassword, validateUsername} from "./validateInfo";
 import UcenikComponent from "./UcenikComponent";
+import AuthenticationService from "../services/AuthenticationService";
+import InvalidComponent from "./InvalidComponent";
 
 
 class ProfesorComponent extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -26,12 +29,7 @@ class ProfesorComponent extends Component {
             let errPass = validatePassword(this.state.password)
 
             if (!errUser && !errPass) {
-                let responseUser = await AuthenticationService.checkUsernameInDBAdmin(this.state.username);
 
-                if (responseUser.data) {
-                    this.setState({
-                        existsInDB: true,
-                    })
                     let responsePass = await AuthenticationService.loginAdmin(this.state.username, this.state.password);
                     if (responsePass.status >= 400) {
                         this.setState(
@@ -51,15 +49,11 @@ class ProfesorComponent extends Component {
                             errors: 'Kriva lozinka'
                         })
                     }
-                } else {
-                    this.setState({
-                        errors: 'Admin ne postoji!',
-                    })
-                }
+
             } else {
                 this.setState(
                     {
-                        errors: errsUser,
+                        errors: errUser,
                     }
                 )
             }

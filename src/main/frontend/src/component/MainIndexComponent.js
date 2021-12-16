@@ -21,8 +21,7 @@ class MainIndexComponent extends Component {
                     <header>
                         <div className="navigation">
 
-                            {
-                                !isUserLoggedIn &&
+                            {!isUserLoggedIn &&
                                     <div><a href="/api/ZabavnoUcenje/login">Prijava ucenika</a></div>
                             }
                             {!isUserLoggedIn &&

@@ -80,7 +80,7 @@ class UcenikComponent extends Component {
         let renderValue;
         if(this.state.existsInDB && this.state.login){
             renderValue = <Navigate to={{
-                pathname:   `/igra.html/${this.state.username}`,
+                pathname:   `/api/ZabavnoUcenje/Ucenik/${this.state.username}`,
                 state: { username: this.state.username},
             }}
             /> ;
@@ -88,7 +88,19 @@ class UcenikComponent extends Component {
         }else{
             renderValue = (
                 <div className="wrapper fadeInDown">
-                    <div id="formContent">
+                    <section className="container container-px container-py">
+                        <form className="korisnik__odabir"  onSubmit={this.handleSubmit}>
+                            <div className="form-inputs">
+                                <label htmlFor="username">Username</label>
+                                <input type="text" id="username" name="username" placeholder="Username"
+                                       value={this.state.username} onChange={this.handleChange}/>
+                            </div>
+                            {this.state.errors && <p>{this.state.errors}</p>}
+
+                            <button className="form-input-btn" type="submit">Login</button>
+                        </form>
+                    </section>
+                    {/*<div id="formContent">
                         <!-- Tabs Titles -->
                         <h2 className="active"> Sign In </h2>
 
@@ -99,7 +111,7 @@ class UcenikComponent extends Component {
                                 <input formAction="igra.html" type="submit" className="fadeIn third" value="Prijavi se"></input>
                         </form>
 
-                    </div>
+                    </div>*/}
                 </div>
             )
         }

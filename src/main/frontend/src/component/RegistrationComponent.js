@@ -81,15 +81,15 @@ class RegstrationComponent extends React.Component {
 
                 {
                     !isUserLoggedIn &&
-                    <div><a href="/api/ZabavnoUcenje/login">Prijava ucenika</a></div>
+                    <div><a href="/login">Prijava ucenika</a></div>
                 }
                 {!isUserLoggedIn &&
                 <div>
-                    <a href="/api/ZabavnoUcenje/Ucenik/login" id="">Prijava profesora</a>
+                    <a href="/loginProf" id="">Prijava profesora</a>
                 </div>
                 }
                 {isUserLoggedIn && <div>
-                    <p>{username}</p>
+
                     <a href="/logout" id="">Odjava djelatnika</a>
                 </div>
                 }
