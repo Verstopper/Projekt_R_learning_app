@@ -1,14 +1,12 @@
-function validateInfo(username, password, password2){
+function validateInfo(username, password){
     let errors = {}
 
 
-    if(!password2){
-        errors.password2 ="Obavezno je ponovno upisati lozinku"
-    }else if(password !== password2){
-        errors.password2 = "Lozinke se ne podudaraju";
+    if(!password){
+        return "Obavezno je upisati lozinku!";
     }
 
-    return errors;
+
 }
 
 
@@ -28,16 +26,18 @@ function validatePassword(password){
     }
 }
 
-function validatePasswordMatch(password, password2){
 
-    if(!password2)
-        return "Obavezno je ponovno upisati lozinku"
-    else if(password !== password2)
-        return "Lozinke se ne podudaraju";
+function  validateOib(oib) {
+    if(!oib) {
+        return  "Obavezan OIB";
+    }
+    else if(oib.length != 11) {
+        return "OIB mora sadržavati 11 znamenki";
+    }
+
+
 }
-
-
-export default validateInfo
 export  {validateUsername}
-export {validatePasswordMatch}
 export {validatePassword}
+export  {validateOib}
+export {validateInfo}
