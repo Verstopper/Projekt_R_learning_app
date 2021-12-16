@@ -1,9 +1,18 @@
 package projekt.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 import java.util.Optional;
 
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "pitanje")
 public class Pitanje {
     @Id
@@ -20,36 +29,4 @@ public class Pitanje {
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_nivo", nullable = false)
     private Nivo idNivo;
-
-    public Nivo getIdNivo() {
-        return idNivo;
-    }
-
-    public void setIdNivo(Nivo idNivo) {
-        this.idNivo = idNivo;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getNaziv() {
-        return naziv;
-    }
-
-    public void setNaziv(String naziv) {
-        this.naziv = naziv;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

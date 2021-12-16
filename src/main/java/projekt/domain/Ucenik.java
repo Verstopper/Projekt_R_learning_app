@@ -1,10 +1,18 @@
 package projekt.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Table(name = "ucenik")
 @Entity
-
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Ucenik {
     @Id
     @Column(name = "id_ucenik", nullable = false)
@@ -19,5 +27,4 @@ public class Ucenik {
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_razred", nullable = false)
     private Razred idRazred;
-
 }

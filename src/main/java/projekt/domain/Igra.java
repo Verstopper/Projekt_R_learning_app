@@ -1,8 +1,17 @@
 package projekt.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.persistence.*;
 
 @Entity
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Table(name = "_igra")
 public class Igra {
     @Id
@@ -16,41 +25,7 @@ public class Igra {
     @Column(name = "opis", nullable = false, length = 1000)
     private String opis;
 
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "oib", nullable = true)
     private Profesor profesor;
-
-    public Profesor getOib() {
-        return profesor;
-    }
-
-    public void setOib(Profesor profesor) {
-
-        this.profesor = profesor;
-    }
-
-    public String getOpis() {
-        return opis;
-    }
-
-    public void setOpis(String opis) {
-        this.opis = opis;
-    }
-
-    public String getNaziv() {
-        return naziv;
-    }
-
-    public void setNaziv(String naziv) {
-        this.naziv = naziv;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 }

@@ -26,7 +26,7 @@ public class IgraServiceIMpl implements IgraService {
             Igra igra_nova = new Igra();
             igra_nova.setNaziv(igra.getNaziv());
             igra_nova.setOpis(igra.getOpis());
-            igra_nova.setOib(profRepo.findProfesorById(igra.getOib()));
+            igra_nova.setProfesor(profRepo.findProfesorById(igra.getOib()));
 
             igrarepo.save(igra_nova);
 
