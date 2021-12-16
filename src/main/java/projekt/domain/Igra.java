@@ -25,9 +25,7 @@ public class Igra {
     @Column(name = "opis", nullable = false, length = 1000)
     private String opis;
 
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "oib", nullable = true)
     private Profesor profesor;
-
 }

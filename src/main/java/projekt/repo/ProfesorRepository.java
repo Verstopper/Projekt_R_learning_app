@@ -11,4 +11,5 @@ public interface ProfesorRepository extends JpaRepository<Profesor, String> {
     boolean existsByKorisnickoIme(String korisnickoIme);
     boolean existsByEmail(String email);
     Optional<Profesor> findByKorisnickoImeAndLozinka(String korisnickoIme, String lozinka);
+    Profesor findByKorisnickoIme(String korisnickoIme);
 }
