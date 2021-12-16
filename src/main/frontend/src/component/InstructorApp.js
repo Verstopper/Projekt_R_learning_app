@@ -1,6 +1,15 @@
 import UcenikComponent from "./UcenikComponent";
 import ProfesorComponent from "./ProfesorComponent";
 import {Component} from "react";
+import MainIndexComponent from "./MainIndexComponent";
+import LogoutComponent from "./LogOut";
+import InvalidComponent from "./InvalidComponent";
+import RegistrationComponent from "./RegistrationComponent";
+import {Route, Router, Routes} from "react-router-dom";
+
+function NavComponent() {
+    return null;
+}
 
 class InstructorApp extends Component {
     render() {

@@ -1,15 +1,12 @@
 import React, {Component, useState} from 'react'
-import {validateUserName} from "./validateInfo";
-import LoginComponent from "./LogInComponent";
-import SignUpComponent from "./SignUpComponent";
-import LogInComponent from "./LogInComponent";
-import {BrowserRouter as Router, Link, Route, Routes} from "react-router-dom";
-import NavComponent from "./NavComponent";
-import MainIndexComponent from "./MainIndexComponent";
-import  { Navigate  } from 'react-router-dom'
-import AuthenticationService from "../sevices/AuthenticationService";
+
+
+//import  { Navigate  } from 'react-router-dom'
+import AuthenticationService from "../services/AuthenticationService";
 import InvalidComponent from "./InvalidComponent";
 import axios from 'axios';
+import {validateUsername} from "./validateInfo";
+import {Navigate} from "react-router-dom";
 
 
 class UcenikComponent extends Component {
@@ -38,7 +35,7 @@ class UcenikComponent extends Component {
         this.handleSubmit = async (event) => {
             // console.log("here")
             event.preventDefault();
-            let errs = validateUserName(this.state.username)
+            let errs = validateUsername(this.state.username)
             //console.log(errs);
             if(!errs){
                 // check if exists in DB

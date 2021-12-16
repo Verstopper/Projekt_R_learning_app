@@ -1,6 +1,6 @@
 import React, {Component, useState} from 'react'
 import {validatePassword, validatePasswordMatch} from "./validateInfo";
-import AuthenticationService from "../sevices/AuthenticationService";
+import AuthenticationService from "../services/AuthenticationService";
 import {Navigate} from "react-router-dom";
 import InvalidComponent from "./InvalidComponent";
 
@@ -100,4 +100,5 @@ class RegstrationComponent extends React.Component {
 
 }
 
-export default RegistrationComponent
+
+export default RegstrationComponent;
