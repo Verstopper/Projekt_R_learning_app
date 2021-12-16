@@ -1,6 +1,7 @@
 import React, {Component, useState} from "react";
 import Navigate from 'react-router-dom';
 import {validatePassword, validateUsername} from "./validateInfo";
+import UcenikComponent from "./UcenikComponent";
 
 
 class ProfesorComponent extends Component {
@@ -104,3 +105,5 @@ class ProfesorComponent extends Component {
     }
 
 }
+
+export default  ProfesorComponent
