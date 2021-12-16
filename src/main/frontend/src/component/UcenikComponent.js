@@ -9,9 +9,10 @@ import MainIndexComponent from "./MainIndexComponent";
 import  { Navigate  } from 'react-router-dom'
 import AuthenticationService from "../sevices/AuthenticationService";
 import InvalidComponent from "./InvalidComponent";
+import axios from 'axios';
 
 
-class UsernameComponent extends Component {
+class UcenikComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -43,24 +44,19 @@ class UsernameComponent extends Component {
                 // check if exists in DB
                 //if doesnt exist in DB => error
 
-                let response = await  AuthenticationService.checkUsernameInDB(this.state.username);
+                let response = await  AuthenticationService.loginUcenik(this.state.username);
                 //console.log(response.data);
 
                 //console.log("here")
 
-                if(response.data && response.data.lozinka){
+                if(response.data){
                     this.setState({
                         existsInDB: true,
                         login: true,
                     })
-                }else if(response.data && !response.data.lozinka){
-                    this.setState({
-                        existsInDB: true,
-                        login: false,
-                    })
                 }else{
                     this.setState({
-                        errors: 'Djelatnik ne postoji!',
+                        errors: 'Učenik ne postoji!',
                     })
                 }
             }else{
@@ -82,33 +78,28 @@ class UsernameComponent extends Component {
         }
         //replace username with id
         let renderValue;
-        if(this.state.existsInDB && !this.state.login){
-            renderValue =  <Navigate to={{
-                pathname:   `/prvaPrijava/${this.state.username}`,
-                state: { username: this.state.username},
-            }} /> ;
-        }else if(this.state.existsInDB && this.state.login){
+        if(this.state.existsInDB && this.state.login){
             renderValue = <Navigate to={{
-                pathname:   `/prijava/${this.state.username}`,
+                pathname:   `/igra.html/${this.state.username}`,
                 state: { username: this.state.username},
             }}
             /> ;
 
         }else{
             renderValue = (
-                <div className="">
-                    <section className="container container-px container-py">
-                        <form className="korisnik__odabir"  onSubmit={this.handleSubmit}>
-                            <div className="form-inputs">
-                                <label htmlFor="username">Username</label>
-                                <input type="text" id="username" name="username" placeholder="Username"
-                                       value={this.state.username} onChange={this.handleChange}/>
-                            </div>
-                            {this.state.errors && <p>{this.state.errors}</p>}
+                <div className="wrapper fadeInDown">
+                    <div id="formContent">
+                        <!-- Tabs Titles -->
+                        <h2 className="active"> Sign In </h2>
 
-                            <button className="form-input-btn" type="submit">Login</button>
+
+                        <!-- Login Form -->
+                        <form>
+                            <input type="text" id="login" className="fadeIn first" name="userName" placeholder="login"></input>
+                                <input formAction="igra.html" type="submit" className="fadeIn third" value="Prijavi se"></input>
                         </form>
-                    </section>
+
+                    </div>
                 </div>
             )
         }
@@ -117,4 +108,4 @@ class UsernameComponent extends Component {
 
 }
 
-export default  UserNameComponent
+export default  UcenikComponent
