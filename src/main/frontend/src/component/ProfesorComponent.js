@@ -35,7 +35,7 @@ class ProfesorComponent extends Component {
                     if (responsePass.status >= 400) {
                         this.setState(
                             {
-                                errors: 'Login failed.',
+                                errors: 'Neuspješna prijava.',
                             }
                         )
                     }
@@ -47,7 +47,7 @@ class ProfesorComponent extends Component {
                     } else {
 
                         this.setState({
-                            errors: 'Password wrong!'
+                            errors: 'Kriva lozinka'
                         })
                     }
                 } else {
@@ -69,7 +69,7 @@ class ProfesorComponent extends Component {
     render(){
         const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
         if(isUserLoggedIn){
-            let message = <p> Already logged in. Go to main page <a href='/'>here.</a></p>;
+            let message = <p> Već ste prijavljeni. Vratite se na početnu stranicu <a href='/'>ovdje.</a></p>;
             return <InvalidComponent message={message} />
         }
         //replace username with id
