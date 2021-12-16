@@ -10,7 +10,9 @@ public class RegistrationDtoToProfesorConverter implements Converter<Registratio
     @Override
     public Profesor convert(RegistrationDto source) {
         return Profesor.builder()
+                .id(source.getId())
                 .imeIPrezime(source.getImeIPrezime())
+                .korisnickoIme(source.getKorisnickoIme())
                 .email(source.getEmail())
                 .lozinka(source.getLozinka())
                 .build();

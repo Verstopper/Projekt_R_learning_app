@@ -1,4 +1,4 @@
-package projekt.controller;
+package projekt.Controller;
 
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

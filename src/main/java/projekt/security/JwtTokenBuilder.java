@@ -62,8 +62,8 @@ public class JwtTokenBuilder {
         return korisnickoIme.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
-
-    public synchronized void setSecret() {
-        secret = "J_=2.e#rW*jt\\FR.J9-@,6Y9*)`C#cdc";
+    @Value("${jwt.secret}")
+    public synchronized void setSecret(String secretSet) {
+        secret = secretSet;
     }
 }

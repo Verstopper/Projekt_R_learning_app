@@ -29,7 +29,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         String korisnickoIme = null;
         String jwtToken = null;
 
-        if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
+        /*if (requestTokenHeader != null && requestTokenHeader.startsWith("Bearer ")) {
             jwtToken = requestTokenHeader.substring(7);
             try {
                 korisnickoIme = JwtTokenBuilder.getUsernameFromToken(jwtToken);
@@ -38,7 +38,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
         } else {
             log.warn("JWT Token does not begin with Bearer String");
-        }
+        }*/
 
         if (korisnickoIme != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(korisnickoIme);

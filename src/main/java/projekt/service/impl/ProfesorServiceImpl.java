@@ -16,6 +16,7 @@ import projekt.exceptions.InvalidLoginException;
 import projekt.exceptions.UsernameException;
 import projekt.repo.ProfesorRepository;
 import projekt.security.JwtTokenBuilder;
+import projekt.security.JwtUserDetailsService;
 import projekt.service.ProfesorService;
 
 @Service
@@ -25,6 +26,7 @@ public class ProfesorServiceImpl implements ProfesorService {
     private final AuthenticationManager authenticationManager;
     private final ProfesorRepository profesorRepository;
     private final ConversionService conversionService;
+    private final JwtUserDetailsService jwtUserDetailsService;
 
     @Override
     public Profesor register(RegistrationDto registrationDto) {
@@ -42,13 +44,15 @@ public class ProfesorServiceImpl implements ProfesorService {
     @Override
     public String login(LoginDto loginDto) {
         try{
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginDto.getUsername(), loginDto.getPassword()));
-        }catch (AuthenticationException e){
+            jwtUserDetailsService.loadUserByUsername(loginDto.getUsername());
+        }catch (Exception e){
             throw new BadCredentialsException("Wrong username or password", e);
         }
 
         Profesor profesor = profesorRepository.findByKorisnickoIme(loginDto.getUsername());
 
-        return JwtTokenBuilder.generateToken(conversionService.convert(profesor, Korisnik.class));
+        Korisnik korisnik = conversionService.convert(profesor, Korisnik.class);
+
+        return JwtTokenBuilder.generateToken(korisnik);
     }
 }
