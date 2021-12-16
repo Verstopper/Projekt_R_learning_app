@@ -12,7 +12,9 @@ import java.time.LocalDate;
 @Entity
 @Data
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
+
 public class KorisnikPitanje {
     @EmbeddedId
     private KorisnikPitanjeId id;

@@ -1,26 +1,26 @@
 package projekt.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
-@Table(name = "odgovor")
 @Entity
 @Data
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
+@Table(name = "odgovor")
 public class Odgovor {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_odgovr", nullable = false)
     private Integer id;
 
     @Column(name = "\"točnost\"", nullable = false, length = 100)
     private String točnost;
-
-    @Column(name = "text", nullable = false, length = 1000)
-    private String text;
 
     @Column(name = "vodi_na", nullable = false)
     private Integer vodiNa;
@@ -29,4 +29,6 @@ public class Odgovor {
     @JoinColumn(name = "id_pitanje", nullable = false)
     private Pitanje idPitanje;
 
+    @Column(name = "text")
+    private String text;
 }

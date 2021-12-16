@@ -1,5 +1,6 @@
 package projekt.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -13,6 +14,7 @@ import javax.persistence.Table;
 @Entity
 @Data
 @Builder
+@AllArgsConstructor
 @NoArgsConstructor
 public class Razred {
     @Id
@@ -24,5 +26,4 @@ public class Razred {
 
     @Column(name = "generacija", nullable = false, length = 100)
     private String generacija;
-
 }
