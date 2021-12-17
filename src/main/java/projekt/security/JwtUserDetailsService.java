@@ -14,6 +14,7 @@ import projekt.domain.Uloga;
 import projekt.repo.ProfesorRepository;
 import projekt.repo.UcenikRepository;
 
+import java.util.ArrayList;
 import java.util.Collections;
 
 @Service
@@ -44,7 +45,6 @@ public class JwtUserDetailsService implements UserDetailsService {
                     .build();
         }
 
-        return new User(korisnik.getKorisnickoIme(), korisnik.getLozinka(),
-                Collections.singletonList(new SimpleGrantedAuthority(korisnik.getUloga().name())));
+        return new User(korisnik.getKorisnickoIme(), korisnik.getLozinka(), new ArrayList<>());
     }
 }

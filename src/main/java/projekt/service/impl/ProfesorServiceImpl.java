@@ -6,9 +6,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import projekt.domain.Korisnik;
 import projekt.domain.Profesor;
+import projekt.dto.AuthenticationResponseDto;
 import projekt.dto.LoginDto;
 import projekt.dto.RegistrationDto;
 import projekt.exceptions.EmailException;
@@ -42,17 +44,14 @@ public class ProfesorServiceImpl implements ProfesorService {
     }
 
     @Override
-    public String login(LoginDto loginDto) {
+    public AuthenticationResponseDto login(LoginDto loginDto){
         try{
             jwtUserDetailsService.loadUserByUsername(loginDto.getUsername());
         }catch (Exception e){
             throw new BadCredentialsException("Wrong username or password", e);
         }
 
-        Profesor profesor = profesorRepository.findByKorisnickoIme(loginDto.getUsername());
-
-        Korisnik korisnik = conversionService.convert(profesor, Korisnik.class);
-
-        return JwtTokenBuilder.generateToken(korisnik);
+        UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(loginDto.getUsername());
+        return new AuthenticationResponseDto(JwtTokenBuilder.generateToken(userDetails));
     }
 }
