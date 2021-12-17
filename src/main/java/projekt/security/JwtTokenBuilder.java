@@ -37,20 +37,14 @@ public class JwtTokenBuilder {
     }
 
     private static boolean isTokenExpired(String token) {
-        final Date expiration = getExpirationDateFromToken(token);
-        return expiration.before(new Date());
+        return getExpirationDateFromToken(token).before(new Date());
     }
 
-    public static String generateToken(Korisnik korisnik) {
+    public static String generateToken(UserDetails userDetails) {
         Map<String, Object> claims = new HashMap<>();
-        Uloga uloga = korisnik.getUloga();
-
-        claims.put("korisnickoIme", korisnik.getKorisnickoIme());
-        claims.put("uloga", uloga);
-
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(korisnik.getKorisnickoIme())
+                .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 24L * 60 * 60 * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret)
@@ -58,8 +52,8 @@ public class JwtTokenBuilder {
     }
 
     public static boolean validateToken(String token, UserDetails userDetails) {
-        final String korisnickoIme = getUsernameFromToken(token);
-        return korisnickoIme.equals(userDetails.getUsername()) && !isTokenExpired(token);
+        final String username = getUsernameFromToken(token);
+        return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
     }
 
     @Value("${jwt.secret}")
