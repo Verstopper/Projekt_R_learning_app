@@ -105,7 +105,7 @@ class UcenikComponent extends Component {
                         <!-- Login Form -->
                         <form>
                             <input type="text" id="login" className="fadeIn first" name="userName" placeholder="login"></input>
-                                <input formAction="igra.html" type="submit" className="fadeIn third" value="Prijavi se"></input>
+                                <input formAction="/login" type="submit" className="fadeIn third" value="Prijavi se"></input>
                         </form>
 
                     </div>*/}
