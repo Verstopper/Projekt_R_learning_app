@@ -11,4 +11,5 @@ public interface GameRepository extends JpaRepository<Game, Integer> {
 
     boolean existsByName(String name);
     Optional<Game> findByName(String name);
+    Game getById(Integer id);
 }

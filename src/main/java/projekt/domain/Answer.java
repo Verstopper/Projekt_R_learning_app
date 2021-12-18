@@ -19,10 +19,10 @@ public class Answer {
     @Column(name = "id_odgovr", nullable = false)
     private Integer id;
 
-    @Column(name = "\"točnost\"", nullable = false, length = 100)
+    @Column(name = "točnost", nullable = false, length = 100)
     private String correctness;
 
-    @Column(name = "vodi_na", nullable = false)
+    @Column(name = "vodi_na")
     private Integer leadsTo;
 
     @ManyToOne(optional = false)

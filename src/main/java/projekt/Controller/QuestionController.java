@@ -30,6 +30,12 @@ public class QuestionController {
         return ResponseEntity.ok(questionService.deleteQuestion(question));
     }
 
+    @PostMapping("/getNewQuestion")
+    public ResponseEntity<Question> getNextQuestion(@RequestBody @NonNull Question question) throws Exception {
+            return ResponseEntity.ok(questionService.getNextQuestion(question));
+        }
+
+
 
 
 }

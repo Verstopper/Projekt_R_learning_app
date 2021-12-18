@@ -28,7 +28,9 @@ public class QuestionServiceImpl implements QuestionService {
             throw new Exception("Postoji već identično pitanje");
         }
 
-        return questionRepository.save(question);
+        questionRepository.save(question);
+
+        return question;
     }
 
     @Override
@@ -37,6 +39,11 @@ public class QuestionServiceImpl implements QuestionService {
 
         questionRepository.delete(question);
         return true;
+    }
+
+    @Override
+    public Question getNextQuestion(Question question) {
+        return null;
     }
 }
 

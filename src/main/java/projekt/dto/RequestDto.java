@@ -11,4 +11,7 @@ public class RequestDto {
     private String oib;
     private String text;
     private String level;
+    private Integer question;
+    private String correctness;
+    private Integer game;
 }

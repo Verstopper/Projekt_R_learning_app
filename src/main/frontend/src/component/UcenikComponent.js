@@ -6,7 +6,6 @@ import AuthenticationService from "../services/AuthenticationService";
 import InvalidComponent from "./InvalidComponent";
 import axios from 'axios';
 import {validateUsername} from "./validateInfo";
-import {Navigate} from "react-router-dom";
 
 
 class UcenikComponent extends Component {
