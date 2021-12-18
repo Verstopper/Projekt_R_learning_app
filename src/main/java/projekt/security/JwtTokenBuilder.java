@@ -5,8 +5,6 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
-import projekt.domain.Korisnik;
-import projekt.domain.Uloga;
 
 import java.util.Date;
 import java.util.HashMap;

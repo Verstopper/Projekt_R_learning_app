@@ -21,7 +21,7 @@ class InstructorApp extends Component {
                     <Route path="/" element={<NavComponent /> }/>
                     <Route path="/api/ZabavnoUcenje/Ucenik/login" element={<Wrapper component={UcenikComponent} animate={true} /> }/>
                     <Route  path="/api/ZabavnoUcenje/registracija"   element={<RegistrationComponent />} />
-                    <Route  path="/api/ZabavnoUcenje/profesor/login"   element={<ProfesorComponent message={message}/>} />
+                    <Route  path="/api/ZabavnoUcenje/professor/login"   element={<ProfesorComponent message={message}/>} />
                     <Route  path="/prvaPrijava"   element={<InvalidComponent message={message}/>} />
                     <Route  path="/logout"   element={<LogoutComponent />} />
                 </Routes>

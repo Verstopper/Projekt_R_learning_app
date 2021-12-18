@@ -1,50 +1,47 @@
 package projekt.security;
 
 import lombok.AllArgsConstructor;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-import projekt.domain.Korisnik;
-import projekt.domain.Profesor;
-import projekt.domain.Ucenik;
-import projekt.domain.Uloga;
-import projekt.repo.ProfesorRepository;
-import projekt.repo.UcenikRepository;
+import projekt.dto.UserDto;
+import projekt.domain.Professor;
+import projekt.domain.Student;
+import projekt.domain.Role;
+import projekt.repo.ProfessorRepository;
+import projekt.repo.StudentRepository;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 @Service
 @AllArgsConstructor
 public class JwtUserDetailsService implements UserDetailsService {
 
-    private final ProfesorRepository profesorRepository;
-    private final UcenikRepository ucenikRepository;
+    private final ProfessorRepository professorRepository;
+    private final StudentRepository studentRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String korisnickoIme) throws UsernameNotFoundException {
-        Korisnik korisnik = new Korisnik();
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        UserDto userDto = new UserDto();
 
-        if (profesorRepository.existsByKorisnickoIme(korisnickoIme)) {
-            Profesor profesor = profesorRepository.findByKorisnickoIme(korisnickoIme);
-            korisnik = Korisnik.builder()
-                    .korisnickoIme(profesor.getKorisnickoIme())
-                    .lozinka(profesor.getLozinka())
-                    .uloga(Uloga.PROFESOR)
+        if (professorRepository.existsByUsername(username)) {
+            Professor professor = professorRepository.findByUsername(username);
+            userDto = UserDto.builder()
+                    .username(professor.getUsername())
+                    .password(professor.getPassword())
+                    .role(Role.PROFESSOR)
                     .build();
         }
 
-        if (ucenikRepository.existsByKorisnickoIme(korisnickoIme)) {
-            Ucenik ucenik = ucenikRepository.findByKorisnickoIme(korisnickoIme);
-            korisnik = Korisnik.builder()
-                    .korisnickoIme(ucenik.getKorisnickoIme())
-                    .uloga(Uloga.UCENIK)
+        if (studentRepository.existsByUsername(username)) {
+            Student student = studentRepository.findByUsername(username);
+            userDto = UserDto.builder()
+                    .username(student.getUsername())
+                    .role(Role.STUDENT)
                     .build();
         }
 
-        return new User(korisnik.getKorisnickoIme(), korisnik.getLozinka(), new ArrayList<>());
+        return new org.springframework.security.core.userdetails.User(userDto.getUsername(), userDto.getPassword(), new ArrayList<>());
     }
 }

@@ -8,7 +8,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
-import projekt.service.UcenikService;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -29,6 +28,12 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 
         String username = null;
         String jwtToken = null;
+
+        if(requestTokenHeader != null){
+            jwtToken = requestTokenHeader;
+            username = JwtTokenBuilder.getUsernameFromToken(jwtToken);
+        }
+
 
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
