@@ -1,7 +1,7 @@
 import React, {Component, useState} from "react";
 import { Navigate } from 'react-router-dom';
 import {validatePassword, validateUsername} from "./validateInfo";
-//import StudentComponent from "./StudentComponent";
+import StudentComponent from "./StudentComponent";
 import AuthenticationService from "../services/AuthenticationService";
 import InvalidComponent from "./InvalidComponent";
 

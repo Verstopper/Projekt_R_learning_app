@@ -1,5 +1,5 @@
 import React, {Component, useState} from 'react'
-import  { Navigate  } from 'react-router-dom'
+import  { Navigate } from 'react-router-dom'
 import AuthenticationService from "../services/AuthenticationService";
 import InvalidComponent from "./InvalidComponent";
 //import axios from 'axios';
@@ -28,7 +28,7 @@ class StudentComponent extends Component {
                         : event.target.value
                 }
             )
-            // console.log("---" + this.state);
+             //console.log("---" + this.state);
         }
         this.handleSubmit = async (event) => {
             // console.log("here")
@@ -66,6 +66,7 @@ class StudentComponent extends Component {
     }
 
     render() {
+        console.log("pozdrav iz StudentComponent, vec ulogiran")
         const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
         if(isUserLoggedIn){
             let message = <p> Already logged in. Go to main page <a href='/'>here.</a></p>;
@@ -81,6 +82,7 @@ class StudentComponent extends Component {
             /> ;
 
         }else{
+            console.log("StudentComponent dobar")
             renderValue = (
                 <div className="wrapper fadeInDown">
                     <section className="container container-px container-py">
@@ -111,6 +113,7 @@ class StudentComponent extends Component {
             )
         }
         return renderValue;
+        console.log("bok od StudentComponent");
     }
 
 }

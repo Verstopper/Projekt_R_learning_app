@@ -1,13 +1,14 @@
-import logo from './logo.svg';
-import './App.css';
+import Style from './static/style.css'
 import RouterComponent from "./component/RouterComponent";
+import React, {useState, useEffect} from "react";
+import './App.css';
 
-function App() {
+/*function App() {
   return (
     <div className="App">
 
       <RouterComponent />
-      {/*<header className="App-header">
+      {/!*<header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>
           Edit <code>src/App.js</code> and save to reload.
@@ -20,9 +21,30 @@ function App() {
         >
           Learn React
         </a>
-      </header>*/}
+      </header>*!/}
     </div>
   );
+}*/
+function App(){
+    console.log("pozdrav iz app.js")
+    return (
+        <>
+            <div className= "App">
+                <RouterComponent />
+            </div>
+        </>
+    )
 }
+
+/*class App extends React.Component {
+    render() {
+        return (
+            <div className="App">
+                <RouterComponent />
+
+            </div>
+        );
+    }
+}*/
 
 export default App;

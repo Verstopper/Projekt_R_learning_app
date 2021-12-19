@@ -5,7 +5,7 @@ import MainIndexComponent from "./MainIndexComponent";
 import LogoutComponent from "./LogOutComponent";
 import InvalidComponent from "./InvalidComponent";
 //import RegistrationComponent from "./RegistrationComponent";
-import {BrowserRouter as Route, Router, Routes} from "react-router-dom";
+import {BrowserRouter as Router, Route, Routes} from "react-router-dom";
 import StudentComponent from "./StudentComponent";
 import RegistrationComponent from "./RegistrationComponent";
 import ProfessorComponent from "./ProfessorComponent";
@@ -17,11 +17,12 @@ function NavComponent() {
 
 class RouterComponent extends Component {
     render() {
+        console.log("pozdrav iz routerComponent")
         let message = <p>Enter your username <a href='/login'>here.</a></p>;
         return (
             <Router>
                 <Routes>
-                    <Route path="/" element={<NavComponent /> }/>
+                    <Route path="/" element={<MainIndexComponent /> }/>
                     <Route path="/api/ZabavnoUcenje/Ucenik/login" element={<StudentComponent /> }/>
                     <Route  path="/api/ZabavnoUcenje/registracija"   element={<RegistrationComponent />} />
                     <Route  path="/api/ZabavnoUcenje/professor/login"   element={<ProfessorComponent message={message}/>} />
