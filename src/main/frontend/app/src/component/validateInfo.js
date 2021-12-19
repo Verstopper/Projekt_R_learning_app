@@ -31,7 +31,7 @@ function  validateOib(oib) {
     if(!oib) {
         return  "Obavezan OIB";
     }
-    else if(oib.length != 11) {
+    else if(oib.length !== 11) {
         return "OIB mora sadržavati 11 znamenki";
     }
 

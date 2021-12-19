@@ -1,14 +1,13 @@
 import React, {Component, useState} from 'react'
-
-
-//import  { Navigate  } from 'react-router-dom'
+import  { Navigate  } from 'react-router-dom'
 import AuthenticationService from "../services/AuthenticationService";
 import InvalidComponent from "./InvalidComponent";
-import axios from 'axios';
+//import axios from 'axios';
 import {validateUsername} from "./validateInfo";
 
 
-class UcenikComponent extends Component {
+
+class StudentComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -116,4 +115,4 @@ class UcenikComponent extends Component {
 
 }
 
-export default  UcenikComponent
+export default  StudentComponent

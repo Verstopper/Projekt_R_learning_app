@@ -1,13 +1,12 @@
 import React, {Component, useState} from "react";
-//import Navigate from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 import {validatePassword, validateUsername} from "./validateInfo";
-import UcenikComponent from "./UcenikComponent";
+//import StudentComponent from "./StudentComponent";
 import AuthenticationService from "../services/AuthenticationService";
 import InvalidComponent from "./InvalidComponent";
-import {Navigate} from "react-router-dom";
 
 
-class ProfesorComponent extends Component {
+class ProfessorComponent extends Component {
 
     constructor(props) {
         super(props);
@@ -31,25 +30,25 @@ class ProfesorComponent extends Component {
 
             if (!errUser && !errPass) {
 
-                    let responsePass = await AuthenticationService.loginAdmin(this.state.username, this.state.password);
-                    if (responsePass.status >= 400) {
-                        this.setState(
-                            {
-                                errors: 'Neuspješna prijava.',
-                            }
-                        )
-                    }
-                    if (responsePass.data) {
-                        AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
-                        this.setState({
-                            existsInDb: true,
-                        })
-                    } else {
+                let responsePass = await AuthenticationService.loginAdmin(this.state.username, this.state.password);
+                if (responsePass.status >= 400) {
+                    this.setState(
+                        {
+                            errors: 'Neuspješna prijava.',
+                        }
+                    )
+                }
+                if (responsePass.data) {
+                    AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
+                    this.setState({
+                        existsInDb: true,
+                    })
+                } else {
 
-                        this.setState({
-                            errors: 'Kriva lozinka'
-                        })
-                    }
+                    this.setState({
+                        errors: 'Kriva lozinka'
+                    })
+                }
 
             } else {
                 this.setState(
@@ -101,4 +100,4 @@ class ProfesorComponent extends Component {
 
 }
 
-export default  ProfesorComponent
+export default ProfessorComponent
