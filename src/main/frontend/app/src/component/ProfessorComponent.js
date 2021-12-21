@@ -24,6 +24,7 @@ class ProfessorComponent extends Component {
             )
         }
         this.handleSubmit = async (event) => {
+            console.log("hej hej")
             event.preventDefault();
             let errUser = validateUsername(this.state.username)
             let errPass = validatePassword(this.state.password)
@@ -78,7 +79,7 @@ class ProfessorComponent extends Component {
             renderValue = (
                 <div className="">
                     <section className="container container-px container-py">
-                        <form className="korisnik__odabir"  onSubmit={this.handleSubmit}>
+                        <form  onSubmit={this.handleSubmit}>
                             <div className="form-inputs">
                                 <label htmlFor="username">Username</label>
                                 <input type="text" id="username" name="username" placeholder="Username"

@@ -35,7 +35,10 @@ class AuthenticationService {
 
     loginAdmin(korisnicko_ime,lozinka) {
         let url = "/api/ZabavnoUcenje/profesor/login";
-        return api.post(url, {korisnicko_ime: korisnicko_ime, lozinka: lozinka})
+        let mess = api.post(url, {username: korisnicko_ime, password: lozinka})
+        console.log(mess)
+        return mess
+        //return api.post(url, {username: korisnicko_ime, password: lozinka})
     }
 
     loginUcenik(korisnicko_ime) {

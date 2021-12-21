@@ -10,6 +10,7 @@ import projekt.dto.LoginDto;
 import projekt.dto.RegistrationDto;
 import projekt.service.ProfessorService;
 
+@CrossOrigin(origins={ "http://localhost:3000", "http://localhost:4200" })
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/ZabavnoUcenje")
