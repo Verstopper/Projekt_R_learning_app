@@ -11,7 +11,12 @@ class MainIndexComponent extends Component {
         return (
             <main>
                 <section>
-                    <a href="/api/ZabavnoUcenje/professor/login">HEJ SVIJET</a>
+                    <a href="/api/ZabavnoUcenje/profesor/login">Prijava profesora</a>
+                    <br/>
+                    <a href= "/api/ZabavnoUcenje/ucenik/prijava"> Prijava ucenika</a>
+                    <br/>
+                    <a href= "/api/ZabavnoUcenje/profesor/registracija">Registracija profesora</a>
+                    <br/>
                 </section>
 
             </main>

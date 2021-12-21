@@ -71,7 +71,7 @@ class ProfessorComponent extends Component {
         let renderValue;
         if(this.state.existsInDB && !this.state.success){
             renderValue =  <Navigate to={{
-                pathname: '/loginAdmin',
+                pathname: '/loginProf',
                 state: { username: this.state.username},
             }} /> ;
         }else{

@@ -16,7 +16,7 @@ public class StudentController {
 
     private final StudentService studentService;
 
-    @PostMapping("/Ucenik/login")
+    @PostMapping("/ucenik/login")
     private ResponseEntity<Student> login(@RequestBody String username){
         return ResponseEntity.ok(studentService.login(username));
     }

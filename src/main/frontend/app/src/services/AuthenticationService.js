@@ -34,12 +34,12 @@ class AuthenticationService {
     }
 
     loginAdmin(korisnicko_ime,lozinka) {
-        let url = "/api/ZabavnoUcenje/login";
+        let url = "/api/ZabavnoUcenje/profesor/login";
         return api.post(url, {korisnicko_ime: korisnicko_ime, lozinka: lozinka})
     }
 
     loginUcenik(korisnicko_ime) {
-        let url = "/api/ZabavnoUcenje/Ucenik/login";
+        let url = "/api/ZabavnoUcenje/ucenik/login";
         return api.post(url,{korisnicko_ime:korisnicko_ime})
     }
 

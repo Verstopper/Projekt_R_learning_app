@@ -76,7 +76,7 @@ class StudentComponent extends Component {
         let renderValue;
         if(this.state.existsInDB && this.state.login){
             renderValue = <Navigate to={{
-                pathname:   `/api/ZabavnoUcenje/Ucenik/${this.state.username}`,
+                pathname:   `/api/ZabavnoUcenje/ucenik/${this.state.username}`,
                 state: { username: this.state.username},
             }}
             /> ;

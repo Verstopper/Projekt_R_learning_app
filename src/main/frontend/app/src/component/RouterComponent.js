@@ -10,6 +10,7 @@ import StudentComponent from "./StudentComponent";
 import RegistrationComponent from "./RegistrationComponent";
 import ProfessorComponent from "./ProfessorComponent";
 //import Wrapper from "./Wrapper";
+import Navbar from '../component/Navbar'
 
 function NavComponent() {
     return null;
@@ -21,11 +22,12 @@ class RouterComponent extends Component {
         let message = <p>Enter your username <a href='/login'>here.</a></p>;
         return (
             <Router>
+                <Navbar/>
                 <Routes>
-                    <Route path="/" element={<MainIndexComponent /> }/>
-                    <Route path="/api/ZabavnoUcenje/Ucenik/login" element={<StudentComponent /> }/>
-                    <Route  path="/api/ZabavnoUcenje/registracija"   element={<RegistrationComponent />} />
-                    <Route  path="/api/ZabavnoUcenje/professor/login"   element={<ProfessorComponent message={message}/>} />
+                    {/*<Route path="/" element={<MainIndexComponent /> }/>*/}
+                    <Route path="/api/ZabavnoUcenje/ucenik/prijava" element={<StudentComponent /> }/>
+                    <Route  path="/api/ZabavnoUcenje/profesor/registracija"   element={<RegistrationComponent />} />
+                    <Route  path="/api/ZabavnoUcenje/profesor/login"   element={<ProfessorComponent message={message}/>} />
                     <Route  path="/prvaPrijava"   element={<InvalidComponent message={message}/>} />
                     <Route  path="/logout"   element={<LogoutComponent />} />
                 </Routes>
