@@ -13,7 +13,7 @@ class MainIndexComponent extends Component {
                 <section>
                     <a href="/api/ZabavnoUcenje/profesor/login">Prijava profesora</a>
                     <br/>
-                    <a href= "/api/ZabavnoUcenje/ucenik/prijava"> Prijava ucenika</a>
+                    <a href= "/api/ZabavnoUcenje/ucenik/login"> Prijava ucenika</a>
                     <br/>
                     <a href= "/api/ZabavnoUcenje/profesor/registracija">Registracija profesora</a>
                     <br/>

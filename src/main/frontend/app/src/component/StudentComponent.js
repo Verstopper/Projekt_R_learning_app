@@ -9,6 +9,8 @@ import {validateUsername} from "./validateInfo";
 
 class StudentComponent extends Component {
 
+
+
     constructor(props) {
         super(props);
         this.state = {
@@ -66,7 +68,6 @@ class StudentComponent extends Component {
     }
 
     render() {
-        console.log("pozdrav iz StudentComponent, vec ulogiran")
         const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
         if(isUserLoggedIn){
             let message = <p> Already logged in. Go to main page <a href='/'>here.</a></p>;
@@ -88,13 +89,13 @@ class StudentComponent extends Component {
                     <section className="container container-px container-py">
                         <form className="korisnik__odabir"  onSubmit={this.handleSubmit}>
                             <div className="form-inputs">
-                                <label htmlFor="username">Username</label>
-                                <input type="text" id="username" name="username" placeholder="Username"
+                                {/*<label htmlFor="username">Username</label>*/}
+                                <input type="text" id="username" name="username" placeholder="Korisničko ime"
                                        value={this.state.username} onChange={this.handleChange}/>
                             </div>
                             {this.state.errors && <p>{this.state.errors}</p>}
 
-                            <button className="form-input-btn" type="submit">Login</button>
+                            <button className="form-input-btn" type="submit">Prijava</button>
                         </form>
                     </section>
                     {/*<div id="formContent">

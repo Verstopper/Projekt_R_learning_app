@@ -31,7 +31,7 @@ class ProfessorComponent extends Component {
 
             if (!errUser && !errPass) {
 
-                let responsePass = await AuthenticationService.loginAdmin(this.state.username, this.state.password);
+                let responsePass = await AuthenticationService.loginProfessor(this.state.username, this.state.password);
                 if (responsePass.status >= 400) {
                     this.setState(
                         {
@@ -72,7 +72,7 @@ class ProfessorComponent extends Component {
         let renderValue;
         if(this.state.existsInDB && !this.state.success){
             renderValue =  <Navigate to={{
-                pathname: '/loginProf',
+                pathname: '/api/ZabavnoUcenje/profesor/login',
                 state: { username: this.state.username},
             }} /> ;
         }else{

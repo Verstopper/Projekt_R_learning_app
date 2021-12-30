@@ -33,7 +33,7 @@ class AuthenticationService {
         })
     }
 
-    loginAdmin(korisnicko_ime,lozinka) {
+    loginProfessor(korisnicko_ime, lozinka) {
         let url = "/api/ZabavnoUcenje/profesor/login";
         let mess = api.post(url, {username: korisnicko_ime, password: lozinka})
         console.log(mess)

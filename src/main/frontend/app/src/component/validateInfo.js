@@ -22,7 +22,7 @@ function validatePassword(password){
     if(!password){
         return "Lozinka obavezna"
     }else if(password.length <= 5){
-        return "Lozinka prekratka. Lozinka mora imati najmanje 7 znakova.";
+        return "Lozinka prekratka. Lozinka mora imati najmanje 6 znakova.";
     }
 }
 

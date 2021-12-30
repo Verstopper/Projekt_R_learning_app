@@ -25,15 +25,15 @@ class RouterComponent extends Component {
                 <Navbar/>
                 <Routes>
                     {/*<Route path="/" element={<MainIndexComponent /> }/>*/}
-                    <Route path="/api/ZabavnoUcenje/ucenik/prijava" element={<StudentComponent /> }/>
+                    <Route path="/api/ZabavnoUcenje/ucenik/login" element={<StudentComponent /> }/>
                     <Route  path="/api/ZabavnoUcenje/profesor/registracija"   element={<RegistrationComponent />} />
                     <Route  path="/api/ZabavnoUcenje/profesor/login"   element={<ProfessorComponent message={message}/>} />
                     <Route  path="/prvaPrijava"   element={<InvalidComponent message={message}/>} />
                     <Route  path="/logout"   element={<LogoutComponent />} />
                 </Routes>
-                <Routes>
-                    <Route path="/" element={<MainIndexComponent /> }/>
-                </Routes>
+                {/*<Routes>*/}
+                {/*    <Route path="/" element={<MainIndexComponent /> }/>*/}
+                {/*</Routes>*/}
 
             </Router>
 
