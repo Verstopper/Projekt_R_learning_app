@@ -1,7 +1,7 @@
 import React, {Component, useState} from 'react'
 import { validatePassword } from "./validateInfo";
 import AuthenticationService from "../services/AuthenticationService";
-import { Navigate } from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import InvalidComponent from "./InvalidComponent";
 
 class RegstrationComponent extends React.Component {
@@ -11,8 +11,10 @@ class RegstrationComponent extends React.Component {
         // console.log("     +++++       ")
         // console.log(this.props.id)
         this.state = {
-            username: this.props.id,
-            password: '',
+            imeIPrezime: '',
+            korisnickoIme: '',
+            email: '',
+            lozinka: '',
             errors: {},
             hasLoginFailed: true,
             showSuccessMessage: false
@@ -77,18 +79,32 @@ class RegstrationComponent extends React.Component {
 
 
         return (
-            <div className="navigation">
-
-                {
-                    !isUserLoggedIn &&
-                    <div><a href="/login">Prijava ucenika</a></div>
-                }
-                {!isUserLoggedIn &&
-                <div>
-                    <a href="/api/ZabavnoUcenje/" id="">Prijava profesora</a>
-                </div>
-                }
-
+            <div className="">
+                <section className="container container-px container-py">
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="form-inputs">
+                            <label htmlFor="imeIPrezime"></label>
+                            <input type="text" id="ime_i_prezime" name="imeIPrezime" placeholder="Ime i prezime"
+                                   value={this.state.imeIPrezime} onChange={this.handleChange}/>
+                        </div>
+                        <div className="form-inputs">
+                            <label htmlFor="korisnickoIme"></label>
+                            <input type="text" id="korisnickoIme" name="korisnickoIme" placeholder="korisničko ime"
+                                   value={this.state.korisnickoIme} onChange={this.handleChange}/>
+                        </div>
+                        <div className="form-inputs">
+                            <label htmlFor="email"></label>
+                            <input type="text" id="email" name="email" placeholder="email"
+                                   value={this.state.email} onChange={this.handleChange}/>
+                        </div>
+                        <div className="form-inputs">
+                            <label htmlFor="lozinka"></label>
+                            <input type="text" id="lozinka" name="lozinka" placeholder="lozinka"
+                                   value={this.state.lozinka} onChange={this.handleChange}/>
+                        </div>
+                        <button className="form-input-btn" type="submit">Login</button>
+                    </form>
+                </section>
             </div>
         );
     }
