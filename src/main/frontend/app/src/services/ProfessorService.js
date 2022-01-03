@@ -10,7 +10,17 @@ class ProfessorService{
         let games;
         let success = false;
         try{
-            games = await api.get("")
+            games = await api.get("igra/getAll");
+            games = games.data;
+            success = true;
+        }catch (err) {
+            games = "Error!"
+        }
+        return{
+            games : games,
+            success : success,
         }
     }
 }
+
+export default new ProfessorService()

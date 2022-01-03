@@ -4,7 +4,8 @@ import {validatePassword, validateUsername} from "./validateInfo";
 import StudentComponent from "./StudentComponent";
 import AuthenticationService from "../services/AuthenticationService";
 import InvalidComponent from "./InvalidComponent";
-import GameComponent from './GameComponent'
+import GameComponent from "./GameComponent";
+
 
 
 class ProfessorComponent extends Component {
