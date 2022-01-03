@@ -24,7 +24,7 @@ public class ProfessorController {
     }
 
     @PostMapping("/registracija")
-    public ResponseEntity<Professor> register(@RequestBody RegistrationDto registrationDto){
+    public ResponseEntity<AuthenticationResponseDto> register(@RequestBody RegistrationDto registrationDto){
         return new ResponseEntity<>(professorService.register(registrationDto), HttpStatus.CREATED);
     }
 

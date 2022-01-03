@@ -26,7 +26,7 @@ public class ProfessorServiceImpl implements ProfessorService {
     private final JwtUserDetailsService jwtUserDetailsService;
 
     @Override
-    public Professor register(RegistrationDto registrationDto) {
+    public AuthenticationResponseDto register(RegistrationDto registrationDto) {
         if(professorRepository.existsByUsername(registrationDto.getKorisnickoIme()))
             throw new UsernameException("Korisnicko ime se već koristi.");
 
@@ -35,7 +35,13 @@ public class ProfessorServiceImpl implements ProfessorService {
 
         Professor professor = conversionService.convert(registrationDto, Professor.class);
 
-        return professorRepository.save(professor);
+        professorRepository.save(professor);
+
+        LoginDto loginDto = LoginDto.builder()
+                .username(registrationDto.getKorisnickoIme())
+                .password(registrationDto.getLozinka())
+                .build();
+        return login(loginDto);
     }
 
     @Override
@@ -45,6 +51,9 @@ public class ProfessorServiceImpl implements ProfessorService {
         }catch (Exception e){
             throw new BadCredentialsException("Wrong username or password", e);
         }
+
+        if(!professorRepository.findByUsername(loginDto.getUsername()).getPassword().equals(loginDto.getPassword()))
+            throw new BadCredentialsException("Invalid password");
 
         UserDetails userDetails = jwtUserDetailsService.loadUserByUsername(loginDto.getUsername());
         return new AuthenticationResponseDto(JwtTokenBuilder.generateToken(userDetails));

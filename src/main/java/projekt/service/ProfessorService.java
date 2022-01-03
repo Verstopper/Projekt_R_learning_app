@@ -6,6 +6,6 @@ import projekt.dto.LoginDto;
 import projekt.dto.RegistrationDto;
 
 public interface ProfessorService {
-    Professor register(RegistrationDto registrationDto);
+    AuthenticationResponseDto register(RegistrationDto registrationDto);
     AuthenticationResponseDto login(LoginDto loginDto);
 }
