@@ -11,6 +11,8 @@ import projekt.repo.AnswerRepository;
 import projekt.repo.QuestionRepository;
 import projekt.service.AnswerService;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class AnswerServiceImpl implements AnswerService {
@@ -40,5 +42,11 @@ public class AnswerServiceImpl implements AnswerService {
 
         answerRepository.delete(answer);
         return true;
+    }
+
+    @Override
+    public List<Answer> getAll(Integer idpitanja) {
+        Question q = questionRepository.getById(idpitanja);
+        return answerRepository.findAllByQuestion(q);
     }
 }

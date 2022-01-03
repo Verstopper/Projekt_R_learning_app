@@ -10,6 +10,7 @@ import projekt.domain.Game;
 import projekt.domain.Request;
 import projekt.dto.RequestDto;
 import projekt.service.GameService;
+import projekt.service.LevelService;
 
 import java.util.List;
 
@@ -20,9 +21,10 @@ public class GameController {
 
     private GameService gameService;
 
+
     @PostMapping("/dodaj")
     public ResponseEntity<Game> addGame(@RequestBody @NonNull RequestDto requestDto) throws Exception {
-       return ResponseEntity.ok(gameService.addGame(requestDto));
+        return ResponseEntity.ok(gameService.addGame(requestDto));
     }
 
     @PostMapping("/brisi")

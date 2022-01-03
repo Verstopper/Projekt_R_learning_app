@@ -7,7 +7,7 @@ import projekt.dto.RequestDto;
 
 public interface LevelService {
 
-    Level addLevel(RequestDto grade);
+    Level addLevel(Integer level1);
 
-    boolean deleteLevel(Level level) throws Exception;
+    boolean deleteLevel(Integer level) throws Exception;
 }

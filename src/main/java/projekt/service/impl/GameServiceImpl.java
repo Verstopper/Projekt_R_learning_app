@@ -9,6 +9,7 @@ import projekt.dto.RequestDto;
 import projekt.repo.GameRepository;
 import projekt.repo.ProfessorRepository;
 import projekt.service.GameService;
+import projekt.service.LevelService;
 
 import java.util.List;
 
@@ -16,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class GameServiceImpl implements GameService {
 
+     LevelService levelService;
     GameRepository gameRepository;
     ProfessorRepository professorRepository;
 
@@ -28,8 +30,9 @@ public class GameServiceImpl implements GameService {
         game.setName(requestDto.getName());
         game.setDescription(requestDto.getDescription());
         game.setProfessor(professorRepository.findProfessorById(requestDto.getOib()));
-
-        return gameRepository.save(game);
+        gameRepository.save(game);
+        levelService.addLevel(game.getId());
+        return game;
     }
 
 
@@ -42,10 +45,11 @@ public class GameServiceImpl implements GameService {
         return games;
     }
 
-    public boolean deleteGame(Game game) {
+    public boolean deleteGame(Game game) throws Exception {
         if(!gameRepository.existsById((game.getId()))) return false;
-
+        levelService.deleteLevel(game.getId());
         gameRepository.delete(game);
+
         return true;
     }
 

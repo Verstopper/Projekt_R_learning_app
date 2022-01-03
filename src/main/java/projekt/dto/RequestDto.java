@@ -10,7 +10,7 @@ public class RequestDto {
     private String description;
     private String oib;
     private String text;
-    private String level;
+    private Integer level;
     private Integer question;
     private String correctness;
     private Integer game;

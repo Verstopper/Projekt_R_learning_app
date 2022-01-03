@@ -21,11 +21,11 @@ public class LevelServiceImpl implements LevelService {
     GameRepository gameRepository;
 
     @Override
-    public Level addLevel(RequestDto requestDto) {
+    public Level addLevel(Integer level1) {
         //naziv,id igre
         Level level = new Level();
-        level.setName(requestDto.getName());
-        Game game = gameRepository.getById(requestDto.getGame());
+        level.setName(level1); // treba promjenit
+        Game game = gameRepository.getById(level1);
         Assert.notNull(game,"NE postoji igra");
         level.setGame(game);
         if(!levelRepository.existsByNameAndGame(level.getName(),level.getGame())) {
@@ -37,15 +37,16 @@ public class LevelServiceImpl implements LevelService {
     }
 
     @Override
-    public boolean deleteLevel(Level level) throws Exception {
-        if(!levelRepository.existsByNameAndGame(level.getName(),level.getGame())) {
-            return false;
-        } else {
-            levelRepository.delete(level);
-            return true;
-        }
+    public boolean deleteLevel(Integer level) throws Exception {
+        Level l1 = levelRepository.findByName(level);
 
+        levelRepository.delete(l1);
+        return true;
     }
+
+
+
+
 
 
 

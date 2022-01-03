@@ -20,7 +20,7 @@ public class Level {
     private Integer id;
 
     @Column(name = "naziv", nullable = false, length = 100)
-    private String name;
+    private Integer name;
 
     @Column(name = "sljedeci_nivo")
     private Integer nextLevel;

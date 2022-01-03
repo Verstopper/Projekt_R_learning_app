@@ -10,6 +10,8 @@ import projekt.repo.LevelRepository;
 import projekt.repo.QuestionRepository;
 import projekt.service.QuestionService;
 
+import java.util.List;
+
 @Service
 @AllArgsConstructor
 public class QuestionServiceImpl implements QuestionService {
@@ -44,6 +46,13 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question getNextQuestion(Question question) {
         return null;
+    }
+
+
+    @Override
+    public List<Question> getAll(Integer id) {
+        Level level = levelRepository.findByName(id);
+        return questionRepository.findAllByLevel(level);
     }
 }
 

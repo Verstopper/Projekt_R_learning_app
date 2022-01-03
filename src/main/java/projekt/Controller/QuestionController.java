@@ -6,9 +6,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import projekt.domain.Question;
+import projekt.domain.Request;
 import projekt.dto.RequestDto;
 
 import projekt.service.QuestionService;
+
+import java.util.List;
+
 @CrossOrigin(origins={ "http://localhost:3000", "http://localhost:4200" })
 @RestController
 @AllArgsConstructor
@@ -32,7 +36,10 @@ public class QuestionController {
             return ResponseEntity.ok(questionService.getNextQuestion(question));
         }
 
-
+        @PostMapping("getAll")
+    public ResponseEntity<List<Question>> getAll(@RequestBody @NonNull Request idigre) throws Exception {
+                return ResponseEntity.ok(questionService.getAll(idigre.getIdigre()));
+        }
 
 
 }
