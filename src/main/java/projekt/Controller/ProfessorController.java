@@ -5,10 +5,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import projekt.domain.Professor;
+import projekt.domain.Student;
 import projekt.dto.AuthenticationResponseDto;
 import projekt.dto.LoginDto;
 import projekt.dto.RegistrationDto;
+import projekt.dto.StudentAddDto;
 import projekt.service.ProfessorService;
+
+import java.io.InvalidObjectException;
 
 @CrossOrigin(origins={ "http://localhost:3000", "http://localhost:4200" })
 @RestController

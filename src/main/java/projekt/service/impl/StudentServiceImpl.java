@@ -1,9 +1,11 @@
 package projekt.service.impl;
 
 import lombok.AllArgsConstructor;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.stereotype.Service;
-import projekt.domain.Student;
+import projekt.dto.AuthenticationResponseDto;
 import projekt.repo.StudentRepository;
+import projekt.security.JwtTokenBuilder;
 import projekt.service.StudentService;
 
 @Service
@@ -13,7 +15,10 @@ public class StudentServiceImpl implements StudentService {
     private final StudentRepository studentRepository;
 
     @Override
-    public Student login(String korisnickoIme) {
-        return null;
+    public AuthenticationResponseDto login(String username) {
+        if(!studentRepository.existsByUsername(username))
+            throw new BadCredentialsException("Upisano je pogrešno korisničko ime.");
+
+        return new AuthenticationResponseDto(JwtTokenBuilder.generateToken(username));
     }
 }

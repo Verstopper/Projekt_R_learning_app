@@ -1,7 +1,7 @@
 package projekt.service;
 
-import projekt.domain.Student;
+import projekt.dto.AuthenticationResponseDto;
 
 public interface StudentService {
-    Student login(String korisnickoIme);
+    AuthenticationResponseDto login(String korisnickoIme);
 }

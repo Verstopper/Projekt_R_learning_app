@@ -12,6 +12,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import org.springframework.beans.factory.annotation.Value;
+import projekt.domain.Student;
 
 @Component
 public class JwtTokenBuilder {
@@ -43,6 +44,15 @@ public class JwtTokenBuilder {
         return Jwts.builder()
                 .setClaims(claims)
                 .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 24L * 60 * 60 * 1000))
+                .signWith(SignatureAlgorithm.HS512, secret)
+                .compact();
+    }
+
+    public static String generateToken(String username){
+        return Jwts.builder()
+                .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + 24L * 60 * 60 * 1000))
                 .signWith(SignatureAlgorithm.HS512, secret)

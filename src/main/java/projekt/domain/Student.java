@@ -15,6 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 public class Student {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_ucenik", nullable = false)
     private Integer id;
 
