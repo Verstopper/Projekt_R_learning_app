@@ -4,6 +4,7 @@ import {validatePassword, validateUsername} from "./validateInfo";
 import StudentComponent from "./StudentComponent";
 import AuthenticationService from "../services/AuthenticationService";
 import InvalidComponent from "./InvalidComponent";
+import GameComponent from './GameComponent'
 
 
 class ProfessorComponent extends Component {
@@ -65,8 +66,9 @@ class ProfessorComponent extends Component {
     render(){
         const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
         if(isUserLoggedIn){
-            let message = <p> Već ste prijavljeni. Vratite se na početnu stranicu <a href='/'>ovdje.</a></p>;
-            return <InvalidComponent message={message} />
+            return <GameComponent />
+            /*let message = <p> Već ste prijavljeni. Vratite se na početnu stranicu <a href='/'>ovdje.</a></p>;
+            return <InvalidComponent message={message} />*/
         }
         //replace username with id
         let renderValue;

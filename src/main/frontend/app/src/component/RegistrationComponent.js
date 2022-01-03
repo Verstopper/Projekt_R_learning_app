@@ -84,7 +84,7 @@ class RegstrationComponent extends React.Component {
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-inputs">
                             <label htmlFor="imeIPrezime"></label>
-                            <input type="text" id="ime_i_prezime" name="imeIPrezime" placeholder="Ime i prezime"
+                            <input type="text" id="imeIPrezime" name="imeIPrezime" placeholder="Ime i prezime"
                                    value={this.state.imeIPrezime} onChange={this.handleChange}/>
                         </div>
                         <div className="form-inputs">
