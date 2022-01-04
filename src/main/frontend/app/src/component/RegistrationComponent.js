@@ -3,6 +3,7 @@ import { validatePassword } from "./validateInfo";
 import AuthenticationService from "../services/AuthenticationService";
 import {Navigate} from "react-router-dom";
 import InvalidComponent from "./InvalidComponent";
+import ProfessorService from "../services/ProfessorService";
 
 class RegstrationComponent extends React.Component {
 
@@ -11,6 +12,7 @@ class RegstrationComponent extends React.Component {
         // console.log("     +++++       ")
         // console.log(this.props.id)
         this.state = {
+            oib: '',
             imeIPrezime: '',
             korisnickoIme: '',
             email: '',
@@ -33,12 +35,12 @@ class RegstrationComponent extends React.Component {
             // console.log("here")
             event.preventDefault();
             let err = {}
-            err.password = validatePassword(this.state.password)
+            //err.password = validatePassword(this.state.password)
             //console.log(err)
-            // console.log("i am here");
-            // console.log(this.state.username + " " +  this.state.password)
+            console.log("i am here");
+            console.log(this.state.korisnickoIme + " " +  this.state.lozinka)
             if(!err.password){
-                let response = await AuthenticationService.registerProfesor(this.state.username, this.state.password);
+                let response = await ProfessorService.professorSignUp(this.state.oib, this.state.korisnickoIme, this.state.lozinka, this.state.imeIPrezime, this.state.email);
                 if(response.status >= 400){
                     this.setState(
                         {
@@ -102,7 +104,7 @@ class RegstrationComponent extends React.Component {
                             <input type="text" id="lozinka" name="lozinka" placeholder="lozinka"
                                    value={this.state.lozinka} onChange={this.handleChange}/>
                         </div>
-                        <button className="form-input-btn" type="submit">Login</button>
+                        <button type="submit">Registracija</button>
                     </form>
                 </section>
             </div>

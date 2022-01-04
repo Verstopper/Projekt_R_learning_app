@@ -14,6 +14,7 @@ import projekt.service.LevelService;
 
 import java.util.List;
 
+@CrossOrigin(origins={ "http://localhost:3000", "http://localhost:4200" })
 @RestController
 @AllArgsConstructor
 @RequestMapping("/igra")

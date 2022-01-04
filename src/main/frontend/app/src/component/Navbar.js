@@ -46,6 +46,7 @@ class NavBar extends Component {
                         }
                         {isUserLoggedIn &&
                         <div>
+                            <a href="/api/ZabavnoUcenje/profesor/pregledIgara">Pregled igara</a>
                             <a href="/logout">Odjava</a>
                         </div>
                         }

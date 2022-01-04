@@ -26,12 +26,12 @@ class AuthenticationService {
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username)
     }
 
-    registerProfesor(oib, korisnicko_ime, lozinka, ime_i_prezime, email) {
+    /*registerProfesor(oib, korisnicko_ime, lozinka, ime_i_prezime, email) {
         let url = "/api/ZabavnoUcenje/registracija";
         return api.post(url,{
             oib: oib, korisnicko_ime : korisnicko_ime,lozinka:lozinka,ime_i_prezime:ime_i_prezime,email:email
         })
-    }
+    }*/
 
     loginProfessor(korisnicko_ime, lozinka) {
         let url = "/api/ZabavnoUcenje/profesor/login";
