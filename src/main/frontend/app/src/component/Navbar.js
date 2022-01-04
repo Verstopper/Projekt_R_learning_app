@@ -24,24 +24,24 @@ class NavBar extends Component {
         return (
             <header>
                 <nav>
-                    <a href= "/">Početna stranica</a>
+                    <a className={"btn btn-primary"} href= "/">Početna stranica</a>
                 </nav>
 
                 <div>
                     <div id="hidden">
                         {!isUserLoggedIn &&
                             <div>
-                                <a href="/api/ZabavnoUcenje/profesor/login">Prijava profesora</a>
+                                <a className={"btn btn-primary"} href="/api/ZabavnoUcenje/profesor/login">Prijava profesora</a>
                             </div>
                         }
                         {!isUserLoggedIn &&
                         <div>
-                            <a href="/api/ZabavnoUcenje/ucenik/login">Prijava ucenika</a>
+                            <a className={"btn btn-primary"} href="/api/ZabavnoUcenje/ucenik/login">Prijava ucenika</a>
                         </div>
                         }
                         {!isUserLoggedIn &&
                         <div>
-                            <a href="/api/ZabavnoUcenje/profesor/registracija">Registracija profesora</a>
+                            <a className={"btn btn-primary"} href="/api/ZabavnoUcenje/profesor/registracija">Registracija profesora</a>
                         </div>
                         }
                         {isUserLoggedIn &&
