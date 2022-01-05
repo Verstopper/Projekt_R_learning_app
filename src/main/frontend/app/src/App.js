@@ -2,6 +2,7 @@ import Style from './static/style.css'
 import RouterComponent from "./component/RouterComponent";
 import React, {useState, useEffect} from "react";
 import './App.css';
+import './static/style.css'
 
 /*function App() {
   return (

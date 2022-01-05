@@ -28,7 +28,7 @@ class ProfessorService{
         let response = {success: false,}
         try{
             let varijabla = await api.post("/api/ZabavnoUcenje/registracija",
-            {oib: oib, korisnicko_ime : korisnicko_ime,lozinka:lozinka,ime_i_prezime:ime_i_prezime,email:email});
+            {oib: oib, korisnickoIme : korisnicko_ime,lozinka:lozinka,imeIPrezime:ime_i_prezime,email:email});
             response.data = "Registracija uspješna :)"
             response.success = true;
         }catch (e) {
