@@ -35,7 +35,7 @@ public class ProfessorServiceImpl implements ProfessorService {
 
     @Override
     public AuthenticationResponseDto register(RegistrationDto registrationDto) {
-        if(professorRepository.existsByUsername(registrationDto.getKorisnickoIme()))
+        if(professorRepository.existsByUsername(registrationDto.getUsername()))
             throw new UsernameException("Korisnicko ime se već koristi.");
 
         if(professorRepository.existsByEmail(registrationDto.getEmail()))
@@ -46,8 +46,8 @@ public class ProfessorServiceImpl implements ProfessorService {
         professorRepository.save(professor);
 
         LoginDto loginDto = LoginDto.builder()
-                .username(registrationDto.getKorisnickoIme())
-                .password(registrationDto.getLozinka())
+                .username(registrationDto.getUsername())
+                .password(registrationDto.getPassword())
                 .build();
 
         return login(loginDto);

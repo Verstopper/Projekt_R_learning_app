@@ -11,10 +11,10 @@ public class RegistrationDtoToProfessorConverter implements Converter<Registrati
     public Professor convert(RegistrationDto source) {
         return Professor.builder()
                 .id(source.getOib())
-                .fullName(source.getImeIPrezime())
-                .username(source.getKorisnickoIme())
+                .fullName(source.getFullName())
+                .username(source.getUsername())
                 .email(source.getEmail())
-                .password(source.getLozinka())
+                .password(source.getPassword())
                 .build();
     }
 }

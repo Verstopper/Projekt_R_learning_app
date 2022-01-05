@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 public class RegistrationDto {
     private String oib;
-    private String imeIPrezime;
-    private String korisnickoIme;
+    private String fullName;
+    private String username;
     private String email;
-    private String lozinka;
+    private String password;
 }

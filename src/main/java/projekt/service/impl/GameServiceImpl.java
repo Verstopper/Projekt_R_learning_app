@@ -17,7 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 public class GameServiceImpl implements GameService {
 
-     LevelService levelService;
+    LevelService levelService;
     GameRepository gameRepository;
     ProfessorRepository professorRepository;
 
@@ -36,17 +36,17 @@ public class GameServiceImpl implements GameService {
     }
 
 
-    public List<Game> getAllGamesForProfessor(String oib) throws Exception{
+    public List<Game> getAllGamesForProfessor(String oib) throws Exception {
         Professor professor = professorRepository.findProfessorById(oib);
         List<Game> games = gameRepository.findAllByProfessor(professor);
-        if(games.size() == 0) {
+        if (games.size() == 0) {
             throw new Exception("Ne posotje igre za ovo");
         }
         return games;
     }
 
     public boolean deleteGame(Game game) throws Exception {
-        if(!gameRepository.existsById((game.getId()))) return false;
+        if (!gameRepository.existsById((game.getId()))) return false;
         levelService.deleteLevel(game.getId());
         gameRepository.delete(game);
 
