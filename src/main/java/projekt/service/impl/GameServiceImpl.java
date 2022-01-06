@@ -36,8 +36,8 @@ public class GameServiceImpl implements GameService {
     }
 
 
-    public List<Game> getAllGamesForProfessor(String oib) throws Exception {
-        Professor professor = professorRepository.findProfessorById(oib);
+    public List<Game> getAllGamesForProfessor(String username) throws Exception {
+        Professor professor = professorRepository.findByUsername(username);
         List<Game> games = gameRepository.findAllByProfessor(professor);
         if (games.size() == 0) {
             throw new Exception("Ne posotje igre za ovo");

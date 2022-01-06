@@ -13,10 +13,10 @@ class RegstrationComponent extends React.Component {
         // console.log(this.props.id)
         this.state = {
             oib: '',
-            imeIPrezime: '',
-            korisnickoIme: '',
+            fullName: '',
+            username: '',
             email: '',
-            lozinka: '',
+            password: '',
             errors: {},
             hasLoginFailed: true,
             showSuccessMessage: false
@@ -35,12 +35,14 @@ class RegstrationComponent extends React.Component {
             // console.log("here")
             event.preventDefault();
             let err = {}
+            //err = validatePassword(this.state.password);
             //err.password = validatePassword(this.state.password)
             //console.log(err)
+            console.log(err.password);
             console.log("i am here");
-            console.log(this.state.korisnickoIme + " " +  this.state.lozinka)
+            console.log(this.state.username + " " +  this.state.password)
             if(!err.password){
-                let response = await ProfessorService.professorSignUp(this.state.oib, this.state.korisnickoIme, this.state.lozinka, this.state.imeIPrezime, this.state.email);
+                let response = await ProfessorService.professorSignUp(this.state.oib, this.state.username, this.state.password, this.state.fullName, this.state.email);
                 if(response.status >= 400){
                     this.setState(
                         {
@@ -86,28 +88,28 @@ class RegstrationComponent extends React.Component {
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-inputs">
                             <label htmlFor="imeIPrezime"></label>
-                            <input type="text" id="imeIPrezime" name="imeIPrezime" placeholder="Ime i prezime"
-                                   value={this.state.imeIPrezime} onChange={this.handleChange}/>
+                            <input type="text" id="fullName" name="fullName" placeholder="Ime i prezime"
+                                   value={this.state.fullName} onChange={this.handleChange} required/>
                         </div>
                         <div className="form-inputs">
                             <label htmlFor="oib"></label>
                             <input type="text" id="oib" name="oib" placeholder="OIB"
-                                   value={this.state.oib} onChange={this.handleChange}/>
+                                   value={this.state.oib} onChange={this.handleChange} required/>
                         </div>
                         <div className="form-inputs">
                             <label htmlFor="korisnickoIme"></label>
-                            <input type="text" id="korisnickoIme" name="korisnickoIme" placeholder="korisničko ime"
-                                   value={this.state.korisnickoIme} onChange={this.handleChange}/>
+                            <input type="text" id="username" name="username" placeholder="korisničko ime"
+                                   value={this.state.username} onChange={this.handleChange} required/>
                         </div>
                         <div className="form-inputs">
                             <label htmlFor="email"></label>
                             <input type="text" id="email" name="email" placeholder="email"
-                                   value={this.state.email} onChange={this.handleChange}/>
+                                   value={this.state.email} onChange={this.handleChange} required/>
                         </div>
                         <div className="form-inputs">
                             <label htmlFor="lozinka"></label>
-                            <input type="text" id="lozinka" name="lozinka" placeholder="lozinka"
-                                   value={this.state.lozinka} onChange={this.handleChange}/>
+                            <input type="text" id="password" name="password" placeholder="lozinka"
+                                   value={this.state.password} onChange={this.handleChange} required/>
                         </div>
                         <button type="submit">Registracija</button>
                     </form>

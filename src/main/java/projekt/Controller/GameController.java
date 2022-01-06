@@ -34,7 +34,7 @@ public class GameController {
     }
 
     @PostMapping("/getAll")
-    public ResponseEntity<List<Game>> showGame(@RequestBody Request oibProf) throws Exception {
-            return ResponseEntity.ok(gameService.getAllGamesForProfessor(oibProf.getOib()));
+    public ResponseEntity<List<Game>> showGame(@RequestBody Request username) throws Exception {
+            return ResponseEntity.ok(gameService.getAllGamesForProfessor(username.getUsername()));
     }
 }

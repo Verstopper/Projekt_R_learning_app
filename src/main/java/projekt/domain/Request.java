@@ -13,7 +13,7 @@ import javax.persistence.criteria.CriteriaBuilder;
 @NoArgsConstructor
 public class Request {
 
-    String oib;
+    String username;
     Integer idigre;
     Integer idpitanje;
 

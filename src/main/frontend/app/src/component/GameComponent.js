@@ -1,8 +1,8 @@
-import {Component, useState} from "react";
 import ProfessorService from "../services/ProfessorService";
 import AuthenticationService from "../services/AuthenticationService";
 import NavBar from "./Navbar";
 import {Fragment} from "react";
+import React, {Component, useState} from 'react';
 
 class GameRow extends Component{
     constructor(props) {
@@ -37,14 +37,16 @@ class GameComponent extends Component{
 
         this.handleSubmit = async (event) => {
             event.preventDefault();
-            let games = await ProfessorService.getAllGames();
-            if(games.success){
+            let username = AuthenticationService.getLoggedInUserName();
+
+            let gamess = await ProfessorService.getAllGames(username);
+            if(gamess.success){
                 let value = [];
-                for (let game in games.games){
+                for (let game in gamess.games){
                     let obj = {
-                        id: games.games[game].id,
-                        naziv: games.games[game].naziv,
-                        opis: games.games[game].opis
+                        id: gamess.games[game].id_igre,
+                        naziv: gamess.games[game].naziv,
+                        opis: gamess.games[game].opis
                     }
                     value.push(obj)
                 }
@@ -53,7 +55,7 @@ class GameComponent extends Component{
                     success: true,
                 })
             }else{
-                let value = games.games
+                let value = gamess.games
                 this.setState({
                     games: value,
                     success: false,
@@ -63,14 +65,13 @@ class GameComponent extends Component{
     }
 
     render() {
-        let username = AuthenticationService.getLoggedInUserName();
         let rows;
         if(this.state.games && this.state.success){
             rows = []
             for(let game in this.state.games){
-                rows.push(<GameRow key={this.state.games[game].username}
-                                    id={this.state.games[game]}
-                                    username={this.state.games[game].username}/>)
+                rows.push(<GameRow key={this.state.games[game].id}
+                                    opis={this.state.games[game].opis}
+                                    />)
             }
         }
         if(this.state.games && !this.state.success){
