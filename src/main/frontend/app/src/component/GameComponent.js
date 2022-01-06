@@ -3,6 +3,7 @@ import AuthenticationService from "../services/AuthenticationService";
 import NavBar from "./Navbar";
 import {Fragment} from "react";
 import React, {Component, useState} from 'react';
+import { v4 as uuid_v4 } from "uuid";
 
 class GameRow extends Component{
     constructor(props) {
@@ -69,7 +70,7 @@ class GameComponent extends Component{
         if(this.state.games && this.state.success){
             rows = []
             for(let game in this.state.games){
-                rows.push(<GameRow key={this.state.games[game].id}
+                rows.push(<GameRow key={uuid_v4()}
                                     opis={this.state.games[game].opis}
                                     />)
             }
