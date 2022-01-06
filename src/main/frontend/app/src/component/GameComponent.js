@@ -71,7 +71,8 @@ class GameComponent extends Component{
             rows = []
             for(let game in this.state.games){
                 rows.push(<GameRow key={uuid_v4()}
-                                    opis={this.state.games[game].opis}
+                                   naslov={this.state.games[game].naziv}
+                                   opis={this.state.games[game].opis}
                                     />)
             }
         }
