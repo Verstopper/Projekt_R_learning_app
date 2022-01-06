@@ -10,7 +10,7 @@ class LogoutComponent extends Component {
 
         if(isUserLoggedIn){
             AuthenticationService.logout();
-            return <RouterComponent/>
+            return <Navigate to={"/"}/>
         }
 
         //let message = <p> Not logged in. Log in <a href='/login'>here.</a></p>;

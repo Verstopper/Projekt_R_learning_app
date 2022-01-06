@@ -85,10 +85,10 @@ class ProfessorComponent extends Component {
                         <form  onSubmit={this.handleSubmit}>
                             <div className="form-inputs">
                                 <label htmlFor="username">Username</label>
-                                <input type="text" id="username" name="username" placeholder="Username"
+                                <input required type="text" id="username" name="username" placeholder="Username"
                                        value={this.state.username} onChange={this.handleChange}/>
                                 <label htmlFor="password">Password</label>
-                                <input type="text" id="password" name="password" placeholder="Password"
+                                <input required type="text" id="password" name="password" placeholder="Password"
                                        value={this.state.password} onChange={this.handleChange}/>
                             </div>
                             {this.state.errors && <p>{this.state.errors}</p>}
