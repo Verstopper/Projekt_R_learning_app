@@ -13,7 +13,8 @@ class GameRow extends Component{
     render() {
         return(
             <div>
-                <label>{this.props.username}</label>
+                <label>{this.props.description}</label>
+                <label>{this.props.name}</label>
             </div>
         )
     }
@@ -47,8 +48,9 @@ class GameComponent extends Component{
                 for (let game in games.games){
 
                     let obj = {
+                        id: games.games[game].id,
                         name: games.games[game].name,
-                        description: games.games[game].opis
+                        description: games.games[game].description
                     }
                     value.push(obj)
                 }
@@ -72,10 +74,11 @@ class GameComponent extends Component{
             rows = []
             for(let game in this.state.games){
                 rows.push(<GameRow key={uuid_v4()}
-                                   naslov={this.state.games[game].name}
-                                   opis={this.state.games[game].description}
+                                   id = {this.state.games[game].id}
+                                   name={this.state.games[game].name}
+                                   description={this.state.games[game].description}
                                     />)
-                console.log(game)
+                console.log(rows)
             }
         }
         if(this.state.games && !this.state.success){
