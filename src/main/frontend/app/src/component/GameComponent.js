@@ -40,14 +40,15 @@ class GameComponent extends Component{
             event.preventDefault();
             let username = AuthenticationService.getLoggedInUserName();
 
-            let gamess = await ProfessorService.getAllGames(username);
-            if(gamess.success){
+            let games = await ProfessorService.getAllGames(username);
+            if(games.success){
                 let value = [];
-                for (let game in gamess.games){
+
+                for (let game in games.games){
+
                     let obj = {
-                        id: gamess.games[game].id_igre,
-                        naziv: gamess.games[game].naziv,
-                        opis: gamess.games[game].opis
+                        name: games.games[game].name,
+                        description: games.games[game].opis
                     }
                     value.push(obj)
                 }
@@ -56,7 +57,7 @@ class GameComponent extends Component{
                     success: true,
                 })
             }else{
-                let value = gamess.games
+                let value = games.games
                 this.setState({
                     games: value,
                     success: false,
@@ -71,13 +72,15 @@ class GameComponent extends Component{
             rows = []
             for(let game in this.state.games){
                 rows.push(<GameRow key={uuid_v4()}
-                                   naslov={this.state.games[game].naziv}
-                                   opis={this.state.games[game].opis}
+                                   naslov={this.state.games[game].name}
+                                   opis={this.state.games[game].description}
                                     />)
+                console.log(game)
             }
         }
         if(this.state.games && !this.state.success){
             rows = this.state.games;
+
         }
         return(
             <div>

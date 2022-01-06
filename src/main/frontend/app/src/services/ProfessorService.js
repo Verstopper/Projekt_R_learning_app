@@ -14,7 +14,6 @@ class ProfessorService{
             console.log("ovo mora proc")
             games = await api.post("/igra/getAll",{username});
             console.log(games.data);
-            games.data = "Dobila sam sve igre";
             console.log("probavam dohvatit igre...");
             success = true;
         }catch (err) {
