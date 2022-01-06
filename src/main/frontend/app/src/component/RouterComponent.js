@@ -20,7 +20,7 @@ function NavComponent() {
 class RouterComponent extends Component {
     render() {
         console.log("pozdrav iz routerComponent")
-        let message = <p>Enter your username <a href='/login'>here.</a></p>;
+        //let message = <p>Enter your username <a href='/login'>here.</a></p>;
         return (
             <Router>
                 <Navbar/>
@@ -29,8 +29,8 @@ class RouterComponent extends Component {
                     <Route path="/api/ZabavnoUcenje/ucenik/login" element={<StudentComponent /> }/>
                     <Route path="/api/ZabavnoUcenje/profesor/pregledIgara" element={<GameComponent />} />
                     <Route  path="/api/ZabavnoUcenje/profesor/registracija"   element={<RegistrationComponent />} />
-                    <Route  path="/api/ZabavnoUcenje/profesor/login"   element={<ProfessorComponent message={message}/>} />
-                    <Route  path="/prvaPrijava"   element={<InvalidComponent message={message}/>} />
+                    <Route  path="/api/ZabavnoUcenje/profesor/login"   element={<ProfessorComponent />} />
+                    <Route  path="/prvaPrijava"   element={<InvalidComponent />} />
                     <Route  path="/logout"   element={<LogoutComponent />} />
                 </Routes>
                 {/*<Routes>*/}

@@ -23,26 +23,52 @@ class NavBar extends Component {
 
         return (
             <header>
-                <nav>
-                    <a className={"btn btn-primary"} href= "/">Početna stranica</a>
+                <nav className="navbar navbar-expand-lg navbar-light bg-light">
+                    <a className="navbar-brand" href="/">Početna stranica</a>
+                    <button className="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false"
+                            aria-label="Toggle navigation">
+                        <span className="navbar-toggler-icon"></span>
+                    </button>
+                    <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+                        <div className="navbar-nav">
+                            {!isUserLoggedIn &&
+                            <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/login">Prijava
+                                profesora</a>
+                            }
+                            {!isUserLoggedIn &&
+                            <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/ucenik/login">Prijava
+                                ucenika</a>
+                            }
+                            {!isUserLoggedIn &&
+                            <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/registracija">Registracija
+                                profesora</a>
+                            }
+                            {isUserLoggedIn &&
+                            <><a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/login">Prijava
+                                profesora</a>
+                                <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/ucenik/login">Prijava ucenika</a>
+                                <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/registracija">Registracija
+                                profesora</a>
+                                <a className={"nav-item nav-link pull-right"} href={"/logout"}>Odjava</a>
+                            </>
+                            }
+                        </div>
+                    </div>
                 </nav>
 
-                <div>
+                {/*<div>
+                    <a className={"btn btn-primary"} href="/">Početna stranica</a>
                     <div id="hidden">
                         {!isUserLoggedIn &&
-                            <div>
-                                <a className={"btn btn-primary"} href="/api/ZabavnoUcenje/profesor/login">Prijava profesora</a>
-                            </div>
+                        <a className={"btn btn-primary"} href="/api/ZabavnoUcenje/profesor/login">Prijava profesora</a>
                         }
                         {!isUserLoggedIn &&
-                        <div>
-                            <a className={"btn btn-primary"} href="/api/ZabavnoUcenje/ucenik/login">Prijava ucenika</a>
-                        </div>
+                        <a className={"btn btn-primary"} href="/api/ZabavnoUcenje/ucenik/login">Prijava ucenika</a>
                         }
                         {!isUserLoggedIn &&
-                        <div>
-                            <a className={"btn btn-primary"} href="/api/ZabavnoUcenje/profesor/registracija">Registracija profesora</a>
-                        </div>
+                        <a className={"btn btn-primary"} href="/api/ZabavnoUcenje/profesor/registracija">Registracija
+                            profesora</a>
                         }
                         {isUserLoggedIn &&
                         <div>
@@ -52,8 +78,7 @@ class NavBar extends Component {
                         }
 
                     </div>
-                </div>
-
+                </div>*/}
             </header>
         );
 

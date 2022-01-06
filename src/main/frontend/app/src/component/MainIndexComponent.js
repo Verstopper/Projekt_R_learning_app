@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import  {Link, withRouter } from 'react-router-dom';
+import {Link, Navigate, withRouter} from 'react-router-dom';
+import NavBar from "./Navbar";
 
 
 
@@ -10,7 +11,13 @@ class MainIndexComponent extends Component {
     }
     render() {
         return (
-            <main>
+            <>
+            <NavBar/>
+            <div>
+                HELLO POCETNA STRANICA
+            </div>
+            </>
+            /*<main>
                 <section>
                     <a href="/api/ZabavnoUcenje/profesor/login">Prijava profesora</a>
                     <br/>
@@ -20,7 +27,7 @@ class MainIndexComponent extends Component {
                     <br/>
                 </section>
 
-            </main>
+            </main>*/
         );
     }
 }

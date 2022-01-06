@@ -13,8 +13,8 @@ class GameRow extends Component{
     render() {
         return(
             <div>
-                <label>{this.props.description}</label>
                 <label>{this.props.name}</label>
+                <label>{this.props.description}</label>
             </div>
         )
     }
@@ -73,7 +73,7 @@ class GameComponent extends Component{
         if(this.state.games && this.state.success){
             rows = []
             for(let game in this.state.games){
-                rows.push(<GameRow key={uuid_v4()}
+                rows.push(<GameRow key={this.state.games[game].id}
                                    id = {this.state.games[game].id}
                                    name={this.state.games[game].name}
                                    description={this.state.games[game].description}

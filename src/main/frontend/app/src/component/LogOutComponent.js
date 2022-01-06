@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import AuthenticationService from "../services/AuthenticationService";
 import {Navigate} from "react-router-dom";
 import InvalidComponent from "./InvalidComponent";
+import RouterComponent from "./RouterComponent";
 
 class LogoutComponent extends Component {
     render() {
@@ -9,11 +10,11 @@ class LogoutComponent extends Component {
 
         if(isUserLoggedIn){
             AuthenticationService.logout();
-            return <Navigate to='/' />
+            return <RouterComponent/>
         }
 
-        let message = <p> Not logged in. Log in <a href='/login'>here.</a></p>;
-        return <InvalidComponent message={message} />
+        //let message = <p> Not logged in. Log in <a href='/login'>here.</a></p>;
+        //return <InvalidComponent message={message} />
     }
 }
 
