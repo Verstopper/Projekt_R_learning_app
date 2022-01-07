@@ -12,6 +12,7 @@ import ProfessorComponent from "./ProfessorComponent";
 //import Wrapper from "./Wrapper";
 import Navbar from '../component/Navbar'
 import GameComponent from "./GameComponent";
+import AddGameComponent from "./AddGameComponent";
 
 function NavComponent() {
     return null;
@@ -32,6 +33,7 @@ class RouterComponent extends Component {
                     <Route  path="/api/ZabavnoUcenje/profesor/login"   element={<ProfessorComponent />} />
                     <Route  path="/prvaPrijava"   element={<InvalidComponent />} />
                     <Route  path="/logout"   element={<LogoutComponent />} />
+                    <Route path="/igra/dodaj" element={<AddGameComponent/>} />
                 </Routes>
                 {/*<Routes>*/}
                 {/*    <Route path="/" element={<MainIndexComponent /> }/>*/}

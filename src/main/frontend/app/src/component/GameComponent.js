@@ -89,7 +89,7 @@ class GameComponent extends Component{
             <div>
                 <NavBar />
                 <section>
-                    <a>Dodaj igru</a>
+                    <a href={"/igra/dodaj"}>Dodaj igru</a>
                     <form onSubmit={this.handleSubmit}>
                         <button type="submit">Pregled igara</button>
                     </form>
