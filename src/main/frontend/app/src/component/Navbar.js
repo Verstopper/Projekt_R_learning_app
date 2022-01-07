@@ -59,8 +59,7 @@ class NavBar extends Component {
                             }
                             {isUserLoggedIn &&
                             <>
-                                {/*<a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/login">Prijava*/}
-                                {/*    profesora</a>*/}
+                                <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/login">Kontrolna ploča</a>
                                 {/*<a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/ucenik/login">Prijava*/}
                                 {/*    ucenika</a>*/}
                                 {/*<a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/registracija">Registracija*/}

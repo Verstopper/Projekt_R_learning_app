@@ -88,7 +88,7 @@ class ProfessorComponent extends Component {
                                 <input required type="text" id="username" name="username" placeholder="Korisničko ime"
                                        value={this.state.username} onChange={this.handleChange}/>
                                 {/*<label htmlFor="password">Password</label>*/}
-                                <input required type="text" id="password" name="password" placeholder="Lozinka"
+                                <input required autoComplete={"off"} type="text" id="password" name="password" placeholder="Lozinka"
                                        value={this.state.password} onChange={this.handleChange}/>
                             </div>
                             {this.state.errors && <p>{this.state.errors}</p>}

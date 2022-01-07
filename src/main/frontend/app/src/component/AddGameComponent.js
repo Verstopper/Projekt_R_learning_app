@@ -89,7 +89,8 @@ class AddGameComponent extends React.Component {
                             <input type="text" id="oib" name="oib" placeholder="OIB"
                                    value={this.state.oib} onChange={this.handleChange} required/>
                         </div>
-                        <button type="submit">Dodaj igru</button>
+                        <button className={"btn btn-primary"} type="submit">Dodaj igru</button>
+                        <a className={"btn btn-danger"} href="javascript:history.go(-1)">Odustani</a>
                     </form>
                 </section>
             </div>
