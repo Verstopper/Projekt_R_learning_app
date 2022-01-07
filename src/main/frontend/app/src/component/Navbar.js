@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Link} from "react-router-dom";
+import {Link, Navigate} from "react-router-dom";
 import AuthenticationService from "../services/AuthenticationService";
 import {render} from "@testing-library/react";
 
@@ -10,7 +10,17 @@ class NavBar extends Component {
         super(props);
         this.state = {
             hasLoginFailed: true,
+            logout: false
         }
+    }
+
+    handleClick = (event) => {
+        event.preventDefault()
+        AuthenticationService.logout()
+        this.setState({
+            logout: true
+        })
+
     }
 
     render() {
@@ -19,6 +29,9 @@ class NavBar extends Component {
         let username = undefined;
         if (isUserLoggedIn) {
             username = AuthenticationService.getLoggedInUserName();
+        }
+        if(this.state.logout) {
+            return <Navigate to={"/"}/>
         }
 
         return (
@@ -45,12 +58,14 @@ class NavBar extends Component {
                                 profesora</a>
                             }
                             {isUserLoggedIn &&
-                            <><a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/login">Prijava
-                                profesora</a>
-                                <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/ucenik/login">Prijava ucenika</a>
-                                <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/registracija">Registracija
-                                profesora</a>
-                                <a className={"nav-item nav-link pull-right"} href={"/logout"}>Odjava</a>
+                            <>
+                                {/*<a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/login">Prijava*/}
+                                {/*    profesora</a>*/}
+                                {/*<a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/ucenik/login">Prijava*/}
+                                {/*    ucenika</a>*/}
+                                {/*<a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/registracija">Registracija*/}
+                                {/*    profesora</a>*/}
+                                <a className={"nav-item nav-link pull-right"} href={"/logout"} onClick={this.handleClick}>Odjava</a>
                             </>
                             }
                         </div>

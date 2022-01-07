@@ -87,7 +87,7 @@ class GameComponent extends Component{
         }
         return(
             <div>
-                {/*<NavBar />*/}
+                <NavBar />
                 <section>
                     <a>Dodaj igru</a>
                     <form onSubmit={this.handleSubmit}>
