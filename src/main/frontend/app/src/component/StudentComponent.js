@@ -95,7 +95,8 @@ class StudentComponent extends Component {
                             </div>
                             {this.state.errors && <p>{this.state.errors}</p>}
 
-                            <button className="form-input-btn" type="submit">Prijava</button>
+                            <button className="btn btn-primary" type="submit">Prijava</button>
+                            <a className={"btn btn-danger"} href={"/"}>Odustani</a>
                         </form>
                     </section>
                     {/*<div id="formContent">

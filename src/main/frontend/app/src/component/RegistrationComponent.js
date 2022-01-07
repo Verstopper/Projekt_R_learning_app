@@ -111,7 +111,8 @@ class RegstrationComponent extends React.Component {
                             <input type="text" id="password" name="password" placeholder="lozinka"
                                    value={this.state.password} onChange={this.handleChange} required/>
                         </div>
-                        <button type="submit">Registracija</button>
+                        <button className={"btn btn-primary"} type="submit">Registracija</button>
+                        <a className={"btn btn-danger"} href={"/"}>Odustani</a>
                     </form>
                 </section>
             </div>

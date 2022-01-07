@@ -84,16 +84,17 @@ class ProfessorComponent extends Component {
                     <section className="container container-px container-py">
                         <form  onSubmit={this.handleSubmit}>
                             <div className="form-inputs">
-                                <label htmlFor="username">Username</label>
-                                <input required type="text" id="username" name="username" placeholder="Username"
+                                {/*<label htmlFor="username">Username</label>*/}
+                                <input required type="text" id="username" name="username" placeholder="Korisničko ime"
                                        value={this.state.username} onChange={this.handleChange}/>
-                                <label htmlFor="password">Password</label>
-                                <input required type="text" id="password" name="password" placeholder="Password"
+                                {/*<label htmlFor="password">Password</label>*/}
+                                <input required type="text" id="password" name="password" placeholder="Lozinka"
                                        value={this.state.password} onChange={this.handleChange}/>
                             </div>
                             {this.state.errors && <p>{this.state.errors}</p>}
 
-                            <button className="form-input-btn" type="submit">Login</button>
+                            <button className="btn btn-primary" type="submit">Login</button>
+                            <a className={"btn btn-danger"} href={"/"}>Odustani</a>
                         </form>
                     </section>
                 </div>
