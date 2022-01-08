@@ -19,7 +19,7 @@ public class Student {
     @Column(name = "id_ucenik", nullable = false)
     private Integer id;
 
-    @Column(name = "korisnicko_ime", nullable = false, length = 100)
+    @Column(name = "username", nullable = false, length = 100)
     private String username;
 
     @Column(name = "puno_ime_i_prezime", nullable = false, length = 100)

@@ -14,4 +14,5 @@ public class RequestDto {
     private Integer question;
     private String correctness;
     private Integer game;
+    private String username;
 }

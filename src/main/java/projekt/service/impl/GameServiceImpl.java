@@ -29,7 +29,7 @@ public class GameServiceImpl implements GameService {
         Game game = new Game();
         game.setName(requestDto.getName());
         game.setDescription(requestDto.getDescription());
-        game.setProfessor(professorRepository.findProfessorById(requestDto.getOib()));
+        game.setProfessor(professorRepository.findByUsername(requestDto.getUsername()));
         gameRepository.save(game);
         levelService.addLevel(game.getId());
         return game;

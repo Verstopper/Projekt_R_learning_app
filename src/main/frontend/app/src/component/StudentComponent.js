@@ -4,6 +4,7 @@ import AuthenticationService from "../services/AuthenticationService";
 import InvalidComponent from "./InvalidComponent";
 //import axios from 'axios';
 import {validateUsername} from "./validateInfo";
+import StudentGameComponent from "./StudentGameComponent";
 
 
 
@@ -40,7 +41,6 @@ class StudentComponent extends Component {
             if(!errs){
                 // check if exists in DB
                 //if doesnt exist in DB => error
-
                 let response = await  AuthenticationService.loginUcenik(this.state.username);
                 //console.log(response.data);
 
@@ -69,18 +69,20 @@ class StudentComponent extends Component {
 
     render() {
         const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
+        console.log("USER JE LOGINAN VALJDA  " + isUserLoggedIn)
         if(isUserLoggedIn){
             let message = <p> Already logged in. Go to main page <a href='/'>here.</a></p>;
-            return <InvalidComponent message={message} />
+            return <StudentGameComponent />
         }
         //replace username with id
         let renderValue;
         if(this.state.existsInDB && this.state.login){
-            renderValue = <Navigate to={{
-                pathname:   `/api/ZabavnoUcenje/ucenik/${this.state.username}`,
-                state: { username: this.state.username},
-            }}
-            /> ;
+            //renderValue = <Navigate to={{
+              //  pathname:   `/api/ZabavnoUcenje/ucenik/${this.state.username}`,
+                //state: { username: this.state.username},
+            //}}
+            ///> ;
+            return <StudentGameComponent />
 
         }else{
             console.log("StudentComponent dobar")
