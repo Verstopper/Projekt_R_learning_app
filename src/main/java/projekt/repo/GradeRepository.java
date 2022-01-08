@@ -5,5 +5,6 @@ import projekt.domain.Grade;
 
 public interface GradeRepository extends JpaRepository<Grade, Integer> {
     boolean existsByNameAndAndGeneration(String name, String generation);
+    Grade getGradeByName(String name);
 
 }

@@ -55,10 +55,11 @@ public class GradeServiceImpl implements GradeService {
     }
 
     @Override
-    public Student addStudent(Integer gradeId, StudentAddDto studentAddDto) throws InvalidObjectException {
-        Grade grade = gradeRepository.findById(gradeId)
-                .orElseThrow(() -> new InvalidObjectException("Ne postoji razred s id-jem: " + gradeId + "."));
-
+    public Student addStudent(StudentAddDto studentAddDto) throws Exception {
+        Grade grade = gradeRepository.getGradeByName(studentAddDto.getGrade());
+        if(grade == null) {
+            throw  new Exception("Ne postoji razred s tim imenom!");
+        }
         if(studentRepository.existsByUsername(studentAddDto.getUsername()))
             throw new UsernameException("Neki učenik već ima korisničko ime: " + studentAddDto.getUsername() + ".");
 

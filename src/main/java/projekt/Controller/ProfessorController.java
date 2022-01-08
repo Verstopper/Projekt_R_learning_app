@@ -3,9 +3,13 @@ package projekt.Controller;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import projekt.domain.Grade;
+import projekt.domain.Request;
 import projekt.dto.LoginDto;
 import projekt.dto.RegistrationDto;
 import projekt.service.ProfessorService;
+
+import java.util.List;
 
 
 @CrossOrigin(origins={ "http://localhost:3000", "http://localhost:4200" })
@@ -31,6 +35,11 @@ public class ProfessorController {
     public ResponseEntity<String> login(@RequestBody LoginDto loginDto){
         professorService.login(loginDto);
         return ResponseEntity.ok("Uspješan login.");
+    }
+
+    @PostMapping("/profesor/getAllGrades")
+    public ResponseEntity<List<Grade>> getAllGrades(@RequestBody Request request) {
+        return ResponseEntity.ok(professorService.getAllGrade(request));
     }
 
 }

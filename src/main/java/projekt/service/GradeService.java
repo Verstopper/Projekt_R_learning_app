@@ -8,5 +8,5 @@ import java.io.InvalidObjectException;
 
 public interface GradeService {
     boolean addGrade(GradeAddDto gradeAddDto) throws InvalidObjectException;
-    Student addStudent(Integer id, StudentAddDto studentAddDto) throws InvalidObjectException;
+    Student addStudent(StudentAddDto studentAddDto) throws InvalidObjectException, Exception;
 }

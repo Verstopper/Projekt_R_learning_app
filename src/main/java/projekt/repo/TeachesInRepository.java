@@ -12,4 +12,5 @@ import java.util.Set;
 public interface TeachesInRepository extends JpaRepository<Predajeu,String> {
 
     Set<Predajeu> getAllByGrade(Grade grade);
+    Set<Predajeu> getAllByProfessor(Professor professor);
 }
