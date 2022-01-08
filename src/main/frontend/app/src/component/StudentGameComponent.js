@@ -39,8 +39,8 @@ class StudentRow extends Component {
         }
         this.handleSubmit = async (event) => {
             event.preventDefault();
-           // let username = AuthenticationService.getLoggedInUserName();
-            let username = "mara";
+            let username = AuthenticationService.getLoggedInUserName();
+           // let username = "mara";
             console.log("STUDENT JE " + username)
             let games = await StudentService.getAllGames(username);
             if(games.success) {

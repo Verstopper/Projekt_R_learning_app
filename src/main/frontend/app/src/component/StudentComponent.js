@@ -82,6 +82,7 @@ class StudentComponent extends Component {
                 //state: { username: this.state.username},
             //}}
             ///> ;
+            AuthenticationService.registerSuccessfulLogin(this.state.username," ");
             return <StudentGameComponent />
 
         }else{

@@ -26,6 +26,8 @@ class AuthenticationService {
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username)
     }
 
+
+
     /*registerProfesor(oib, korisnicko_ime, lozinka, ime_i_prezime, email) {
         let url = "/api/ZabavnoUcenje/registracija";
         return api.post(url,{
