@@ -10,4 +10,5 @@ import lombok.Data;
 public class GradeAddDto {
     private String name;
     private String generation;
+    private String username;
 }
