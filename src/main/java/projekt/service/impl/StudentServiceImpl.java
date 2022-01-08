@@ -52,8 +52,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void addStudent(StudentAddDto studentAddDto) {
-        Grade grade = gradeRepository.findById(studentAddDto.getGradeId())
-                .orElseThrow(() -> new EntityNotFoundException("Ne postoji razred s id-em: " + studentAddDto.getGradeId() +"."));
+        Grade grade = gradeRepository.findByName(studentAddDto.getGradeName())
+                .orElseThrow(() -> new EntityNotFoundException("Ne postoji razred s imenom: " + studentAddDto.getGradeName() + "."));
 
         if(studentRepository.existsByUsername(studentAddDto.getUsername()))
             throw new UsernameException("Neki učenik već ima korisničko ime: " + studentAddDto.getUsername() + ".");
