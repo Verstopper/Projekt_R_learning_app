@@ -20,7 +20,7 @@ class GameRow extends Component{
     }
 }
 
-class GameComponent extends Component{
+class ProfessorDashboard extends Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -92,6 +92,8 @@ class GameComponent extends Component{
 
                     <form onSubmit={this.handleSubmit}>
                         <a className={"btn btn-primary"} href={"/igra/dodaj"}>Dodaj igru</a>
+                        <a className={"btn btn-primary"} href={""}>Dodaj razred</a>
+                        <a className={"btn btn-primary"} href={""}>Stvori ucenika</a>
                         <button className={"btn btn-secondary"} type="submit">Pregled igara</button>
                     </form>
                     <form>
@@ -103,4 +105,4 @@ class GameComponent extends Component{
     }
 }
 
-export default GameComponent
+export default ProfessorDashboard

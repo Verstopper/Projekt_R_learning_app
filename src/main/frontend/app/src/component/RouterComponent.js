@@ -11,7 +11,7 @@ import RegistrationComponent from "./RegistrationComponent";
 import ProfessorComponent from "./ProfessorComponent";
 //import Wrapper from "./Wrapper";
 import Navbar from '../component/Navbar'
-import GameComponent from "./GameComponent";
+import ProfessorDashboard from "./ProfessorDashboard";
 import AddGameComponent from "./AddGameComponent";
 
 function NavComponent() {
@@ -28,7 +28,7 @@ class RouterComponent extends Component {
                 <Routes>
                     {/*<Route path="/" element={<MainIndexComponent /> }/>*/}
                     <Route path="/api/ZabavnoUcenje/ucenik/login" element={<StudentComponent /> }/>
-                    <Route path="/api/ZabavnoUcenje/profesor/pregledIgara" element={<GameComponent />} />
+                    <Route path="/api/ZabavnoUcenje/profesor/pregledIgara" element={<ProfessorDashboard />} />
                     <Route  path="/api/ZabavnoUcenje/profesor/registracija"   element={<RegistrationComponent />} />
                     <Route  path="/api/ZabavnoUcenje/profesor/login"   element={<ProfessorComponent />} />
                     <Route  path="/prvaPrijava"   element={<InvalidComponent />} />
