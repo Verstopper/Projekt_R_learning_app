@@ -4,8 +4,8 @@ import AuthenticationService from "../services/AuthenticationService";
 import {Navigate} from "react-router-dom";
 import InvalidComponent from "./InvalidComponent";
 import ProfessorService from "../services/ProfessorService";
-import GameService from "../services/GameService";
 import ProfessorDashboard from "./ProfessorDashboard";
+import GradeService from "./GradeService";
 
 class AddGameComponent extends React.Component {
 
@@ -13,10 +13,12 @@ class AddGameComponent extends React.Component {
         super(props);
         // console.log("     +++++       ")
         // console.log(this.props.id)
+        let username = AuthenticationService.getLoggedInUserName();
         this.state = {
+            username: username,
             success: false,
             name: '',
-            description: '',
+            generation: '',
             oib: '',
             showSuccessMessage: false
         }
@@ -39,16 +41,16 @@ class AddGameComponent extends React.Component {
             //console.log(err)
             console.log(err.password);
             console.log("i am here");
-            console.log("ime igre:" + this.state.name + ", opis igre: " +  this.state.description)
+            console.log("ime igre:" + this.state.name + ", generacija: " +  this.state.generation)
             if(!err.password){
-                let username = AuthenticationService.getLoggedInUserName();
-                let response = await GameService.addGame(this.state.name, this.state.description, username);
+                //let username = AuthenticationService.getLoggedInUserName();
+                let response = await GradeService.addGrade(this.state.name, this.state.generation, this.state.username);
                 this.state.success = true;
                 if(response.status >= 400){
                     this.state.success = false;
                     this.setState(
                         {
-                            errors: 'Dodavanje igre neuspješno.',
+                            errors: 'Dodavanje razreda neuspješno.',
                         }
                     )
                 }
@@ -91,13 +93,13 @@ class AddGameComponent extends React.Component {
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-inputs">
                             <label htmlFor="name"></label>
-                            <input type="text" id="name" name="name" placeholder="Ime igre"
+                            <input type="text" id="name" name="name" placeholder="Ime razreda"
                                    value={this.state.name} onChange={this.handleChange} required/>
                         </div>
                         <div className="form-inputs">
                             <label htmlFor="description"></label>
-                            <input type="text" id="description" name="description" placeholder="Opis igre"
-                                   value={this.state.description} onChange={this.handleChange} required/>
+                            <input type="text" id="generation" name="generation" placeholder="Generacija"
+                                   value={this.state.generation} onChange={this.handleChange} required/>
                         </div>
 
                         {/*<div className="form-inputs">*/}
@@ -105,7 +107,7 @@ class AddGameComponent extends React.Component {
                         {/*    <input type="text" id="oib" name="oib" placeholder="OIB"*/}
                         {/*           value={this.state.oib} onChange={this.handleChange} required/>*/}
                         {/*</div>*/}
-                        <button className={"btn btn-primary"} type="submit">Dodaj igru</button>
+                        <button className={"btn btn-primary"} type="submit">Dodaj razred</button>
                         <a className={"btn btn-danger"} href="javascript:history.go(-1)">Odustani</a>
                     </form>
                 </section>

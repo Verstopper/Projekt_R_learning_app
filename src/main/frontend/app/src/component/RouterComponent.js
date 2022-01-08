@@ -13,6 +13,7 @@ import ProfessorComponent from "./ProfessorComponent";
 import Navbar from '../component/Navbar'
 import ProfessorDashboard from "./ProfessorDashboard";
 import AddGameComponent from "./AddGameComponent";
+import AddGradeComponent from "./AddGradeComponent";
 
 function NavComponent() {
     return null;
@@ -34,6 +35,7 @@ class RouterComponent extends Component {
                     <Route  path="/prvaPrijava"   element={<InvalidComponent />} />
                     <Route  path="/logout"   element={<LogoutComponent />} />
                     <Route path="/igra/dodaj" element={<AddGameComponent/>} />
+                    <Route path={"/api/ZabavnoUcenje/razred"} element={<AddGradeComponent/>}/>
                 </Routes>
                 {/*<Routes>*/}
                 {/*    <Route path="/" element={<MainIndexComponent /> }/>*/}

@@ -92,7 +92,7 @@ class ProfessorDashboard extends Component{
 
                     <form onSubmit={this.handleSubmit}>
                         <a className={"btn btn-primary"} href={"/igra/dodaj"}>Dodaj igru</a>
-                        <a className={"btn btn-primary"} href={""}>Dodaj razred</a>
+                        <a className={"btn btn-primary"} href={"/api/ZabavnoUcenje/razred"}>Dodaj razred</a>
                         <a className={"btn btn-primary"} href={""}>Stvori ucenika</a>
                         <button className={"btn btn-secondary"} type="submit">Pregled igara</button>
                     </form>
