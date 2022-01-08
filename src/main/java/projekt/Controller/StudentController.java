@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import projekt.domain.Game;
 import projekt.domain.Request;
+import projekt.dto.StudentAddDto;
 import projekt.service.StudentService;
 
 import java.util.List;
@@ -18,13 +19,19 @@ public class StudentController {
     private final StudentService studentService;
 
     @PostMapping("/ucenik/login")
-    private ResponseEntity<String> login(@RequestBody Request username){
+    public ResponseEntity<String> login(@RequestBody Request username){
         studentService.login(username.getUsername());
         return ResponseEntity.ok("Učenik se uspješno ulogirao.");
     }
 
     @PostMapping("/ucenik/allGame")
-    private ResponseEntity<List<Game>> getAllGames(@RequestBody Request username) {
+    public ResponseEntity<List<Game>> getAllGames(@RequestBody Request username) {
         return ResponseEntity.ok(studentService.getAllGames(username.getUsername()));
+    }
+
+    @PostMapping("/dodajUcenika")
+    public ResponseEntity addStudent(@RequestBody StudentAddDto studentAddDto) {
+        studentService.addStudent(studentAddDto);
+        return ResponseEntity.ok().build();
     }
 }

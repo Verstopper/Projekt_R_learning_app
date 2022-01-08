@@ -27,8 +27,4 @@ public class GradeController {
         }
     }
 
-    @PostMapping("/{id}/dodajUcenika")
-    public ResponseEntity<Student> addStudent(@RequestBody StudentAddDto studentAddDto, @PathVariable Integer id) throws Exception {
-        return ResponseEntity.ok(gradeService.addStudent(studentAddDto));
-    }
 }

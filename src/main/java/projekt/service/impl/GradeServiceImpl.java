@@ -34,17 +34,19 @@ public class GradeServiceImpl implements GradeService {
                     .generation(gradeAddDto.getGeneration())
                     .build();
 
-            Integer garde_id = gradeRepository.save(grade).getId();
-            Professor prof_id = professorRepository.findByUsername(gradeAddDto.getUsername());
+            grade = gradeRepository.save(grade);
+            Professor professor = professorRepository.findByUsername(gradeAddDto.getUsername());
 
-            Predajeu predajeu = new Predajeu();
-            PredajeuId predajeuId = new PredajeuId();
+            PredajeuId predajeuId = PredajeuId.builder()
+                    .idGrade(grade.getId())
+                    .oib(professor.getId())
+                    .build();
 
-            predajeuId.setIdGrade(garde_id);
-            predajeuId.setOib(prof_id.getId());
-            predajeu.setId(predajeuId);
-            predajeu.setGrade(grade);
-            predajeu.setProfessor(prof_id);
+            Predajeu predajeu = Predajeu.builder()
+                    .id(predajeuId)
+                    .grade(grade)
+                    .professor(professor)
+                    .build();
 
             teachesInRepository.save(predajeu);
         }catch (Exception e) {
@@ -52,22 +54,5 @@ public class GradeServiceImpl implements GradeService {
         }
 
         return true;
-    }
-
-    @Override
-    public Student addStudent(StudentAddDto studentAddDto) throws Exception {
-        Grade grade = gradeRepository.getGradeByName(studentAddDto.getGrade());
-        if(grade == null) {
-            throw  new Exception("Ne postoji razred s tim imenom!");
-        }
-        if(studentRepository.existsByUsername(studentAddDto.getUsername()))
-            throw new UsernameException("Neki učenik već ima korisničko ime: " + studentAddDto.getUsername() + ".");
-
-        Student student = Student.builder()
-                .username(studentAddDto.getUsername())
-                .fullName(studentAddDto.getFullName())
-                .grade(grade).build();
-
-        return studentRepository.save(student);
     }
 }
