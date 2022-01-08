@@ -4,8 +4,6 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import projekt.domain.*;
 import projekt.dto.GradeAddDto;
-import projekt.dto.StudentAddDto;
-import projekt.exceptions.UsernameException;
 import projekt.repo.GradeRepository;
 import projekt.repo.ProfessorRepository;
 import projekt.repo.StudentRepository;
@@ -13,7 +11,6 @@ import projekt.repo.TeachesInRepository;
 import projekt.service.GradeService;
 
 import java.io.InvalidObjectException;
-import java.util.Locale;
 
 @Service
 @AllArgsConstructor
@@ -24,8 +21,8 @@ public class GradeServiceImpl implements GradeService {
     private TeachesInRepository teachesInRepository;
 
     @Override
-    public boolean addGrade(GradeAddDto gradeAddDto) throws InvalidObjectException {
-        try {
+    public void addGrade(GradeAddDto gradeAddDto) throws InvalidObjectException {
+//        try {
             if (gradeRepository.existsByNameAndAndGeneration(gradeAddDto.getName().toLowerCase(), gradeAddDto.getGeneration()))
                 throw new InvalidObjectException("U generaciji: " + gradeAddDto.getGeneration() + " već postoji razred: " + gradeAddDto.getName() + ".");
 
@@ -49,10 +46,10 @@ public class GradeServiceImpl implements GradeService {
                     .build();
 
             teachesInRepository.save(predajeu);
-        }catch (Exception e) {
-            return false;
-        }
+//        }catch (Exception e) {
+//            return false;
+//        }
 
-        return true;
+//        return true;
     }
 }

@@ -8,6 +8,15 @@ import GameService from "../services/GameService";
 import ProfessorDashboard from "./ProfessorDashboard";
 import StudentService from "../services/StudentService";
 
+class GradeItem extends Component{
+    constructor(props) {
+        super(props);
+    }
+    render(){
+        return <option value={this.props.name}>{this.props.name}</option>
+    }
+}
+
 class AddStudentComponent extends React.Component {
 
     constructor(props) {
@@ -38,7 +47,7 @@ class AddStudentComponent extends React.Component {
             //console.log(err)
             console.log(err.password);
             console.log("i am here");
-            console.log("ime ucenika:" + this.state.full + ", username ucenika: " +  this.state.username)
+            //console.log("ime ucenika:" + this.state.name + ", username ucenika: " +  this.state.username)
             if(!err.password){
                 let response = await StudentService.addStudent(this.state.fullName, this.state.username, this.state.grade);
                 this.state.success = true;
@@ -67,21 +76,31 @@ class AddStudentComponent extends React.Component {
         }
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         let usernameOfProfessor = AuthenticationService.getLoggedInUserName();
-        ProfessorService.getAllGrades(usernameOfProfessor).then( res => {
-            console.log(res)
+        await ProfessorService.getAllGrades(usernameOfProfessor).then( res => {
+            console.log("res " + res)
             this.setState({
                 data : res.data,
             })
         });
         console.log("+++++++++++++++++")
         console.log(this.state.data)
+        console.log(typeof this.state.data)
         //console.log(this.state.data.map)
         console.log("+++++++++++++++++")
     }
 
     render() {
+        let rows;
+        if(this.state.data){
+            rows=[]
+            for(let grade in this.state.data){
+                rows.push(<GradeItem key={this.state.data[grade].id}
+                                     name={this.state.data[grade].name} />)
+            }
+        }
+        console.log(rows);
 
         if(this.state.success){
             return(
@@ -113,12 +132,10 @@ class AddStudentComponent extends React.Component {
                         </div>
                         <div className="form-group">
                             <label htmlFor="grade">Odabir razreda</label>
-                            <select className="dropdown" name="grade" id="" onChange={this.handleChange} required>
-                                <option>1.a</option>
-                                <option>blabla</option>
-                                {/*{this.state.data.map(grade => (*/}
-                                {/*    <option key={grade.id} value = {grade.id}>{grade.name}</option>*/}
-                                {/*))}*/}
+                            <select className="dropdown" name="grade" onChange={this.handleChange} required>
+                                {/*<option>1.a</option>*/}
+                                {/*<option>blabla</option>*/}
+                                {rows && rows}
                             </select>
                         </div>
                         <button className={"btn btn-primary"} type="submit">Dodaj učenika</button>

@@ -19,12 +19,16 @@ public class GradeController {
 
     @PostMapping
     public ResponseEntity<String> addGrade(@RequestBody GradeAddDto gradeAddDto) throws InvalidObjectException {
-        if(gradeService.addGrade(gradeAddDto) == true ) {
-            return ResponseEntity.ok("Razred uspješno dodan!");
-        }
-        else {
-            return ResponseEntity.ok("Razred nije uspjesno dodan");
-        }
+        gradeService.addGrade(gradeAddDto);
+        return ResponseEntity.ok("Razred uspješno dodan :)");
+//        if(gradeService.addGrade(gradeAddDto) == true ) {
+//            return ResponseEntity.ok("Razred uspješno dodan!");
+//        }
+
+//        else {
+//            return ResponseEntity.ok("Razred nije uspjesno dodan");
+//        }
+
     }
 
 }

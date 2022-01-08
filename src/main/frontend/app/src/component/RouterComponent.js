@@ -38,7 +38,7 @@ class RouterComponent extends Component {
                     <Route  path="/logout"   element={<LogoutComponent />} />
                     <Route path="/igra/dodaj" element={<AddGameComponent/>} />
                     <Route path={"/api/ZabavnoUcenje/razred"} element={<AddGradeComponent/>}/>
-                    <Route path={"/api/ZabavnoUcenje/razred/:id/dodajUcenika"} element={<Wrapper component={AddStudentComponent} animate={true} />}/>
+                    <Route path={"/api/ZabavnoUcenje/dodajUcenika"} element={<Wrapper component={AddStudentComponent} animate={true} />}/>
                 </Routes>
                 <Routes>
                     <Route path="/" element={<MainIndexComponent /> }/>

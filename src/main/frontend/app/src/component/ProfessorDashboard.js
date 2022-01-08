@@ -15,6 +15,7 @@ class GameRow extends Component{
             <div>
                 <label>{this.props.name}</label>
                 <label>{this.props.description}</label>
+
             </div>
         )
     }
@@ -93,7 +94,7 @@ class ProfessorDashboard extends Component{
                     <form onSubmit={this.handleSubmit}>
                         <a className={"btn btn-primary"} href={"/igra/dodaj"}>Dodaj igru</a>
                         <a className={"btn btn-primary"} href={"/api/ZabavnoUcenje/razred"}>Dodaj razred</a>
-                        <a className={"btn btn-primary"} href={"/api/ZabavnoUcenje/razred/{{id}}/dodajUcenika"}>Stvori ucenika</a>
+                        <a className={"btn btn-primary"} href={"/api/ZabavnoUcenje/dodajUcenika"}>Stvori ucenika</a>
                         <button className={"btn btn-secondary"} type="submit">Pregled igara</button>
                     </form>
                     <form>

@@ -23,16 +23,16 @@ class StudentService {
         }
     }
 
-    async addStudent(fullName, username, grade) {
+    async addStudent(fullName, username, gradeName) {
         let usernameLoggedIn = AuthenticationService.getLoggedInUserName();
-        let url = '/api/ZabavnoUcenje/razred/{id}/dodajUcenika'
+        let url = '/api/ZabavnoUcenje/dodajUcenika'
         console.log("USERNAME LOGGEDIN" + usernameLoggedIn)
         let response = {success: false,}
         // let student;
         let success = false;
         try {
             let student = await api.post(url,
-                {fullName: fullName, username: username, grade: grade});
+                {fullName: fullName, username: username, gradeName: gradeName});
             response.data= true;
         }catch (err){
             response.data = "Greška prilikom dodavanja studenta."
