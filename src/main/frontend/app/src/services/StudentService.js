@@ -7,19 +7,20 @@ const api = axios.create({
 })
 class StudentService {
     async getAllGames(username) {
+
+
         let games;
         let success = false;
-        try{
-            console.log("USERRNAME " + username )
-        games = await api.post("/api/ZabavnoUcenje/ucenik/allGame",{username:username});
-            console.log("SVE IGRE " + games.data)
-        success = true;
-        }catch (error) {
-            games = "Error"
+        try {
+            games = await api.post("/api/ZabavnoUcenje/ucenik/allGame",{username:username});
+            success = true;
+        }catch (err){
+           games = "Greška prilikom dodavanja igre."
         }
-        return{
-            games : games.data,
-            success : success,
+
+        return {
+            games:games.data,
+            success:success,
         }
     }
 

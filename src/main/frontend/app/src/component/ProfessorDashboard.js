@@ -15,8 +15,8 @@ class GameRow extends Component{
             <div>
                 <label>{this.props.name}</label>
                 <label>{this.props.description}</label>
-
             </div>
+
         )
     }
 }
@@ -43,6 +43,7 @@ class ProfessorDashboard extends Component{
             let username = AuthenticationService.getLoggedInUserName();
 
             let games = await ProfessorService.getAllGames(username);
+            console.log(games.success)
             if(games.success){
                 let value = [];
 
@@ -70,6 +71,9 @@ class ProfessorDashboard extends Component{
     }
 
     render() {
+
+
+
         let rows;
         if(this.state.games && this.state.success){
             rows = []

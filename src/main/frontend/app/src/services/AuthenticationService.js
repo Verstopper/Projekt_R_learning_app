@@ -1,6 +1,7 @@
 import axios from "axios";
 const API_URL = 'http://localhost:8080'
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
+export const NAME_SESSION_ATTRIBUTE_NAME = 'User'
 const api = axios.create({
     baseURL: API_URL
 })
@@ -23,8 +24,20 @@ class AuthenticationService {
         return user
     }
 
+    getRole() {
+        let user = sessionStorage.getItem(NAME_SESSION_ATTRIBUTE_NAME)
+        if(user == "student") {
+            return user
+        }
+    }
+
     registerSuccessfulLogin(username, password) {
         sessionStorage.setItem(USER_NAME_SESSION_ATTRIBUTE_NAME, username)
+
+    }
+
+    putStudentinSession() {
+        sessionStorage.setItem(NAME_SESSION_ATTRIBUTE_NAME,"student")
     }
 
 

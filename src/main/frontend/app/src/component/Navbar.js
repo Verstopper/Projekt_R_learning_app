@@ -26,6 +26,7 @@ class NavBar extends Component {
     render() {
 
         const isUserLoggedIn = AuthenticationService.isUserLoggedIn()
+        const role = AuthenticationService.getRole();
         let username = undefined;
         if (isUserLoggedIn) {
             username = AuthenticationService.getLoggedInUserName();
@@ -34,7 +35,8 @@ class NavBar extends Component {
             return <Navigate to={"/"}/>
         }
 
-        return (
+
+            return (
             <header>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <a className="navbar-brand" href="/">Početna stranica</a>
@@ -57,8 +59,9 @@ class NavBar extends Component {
                             }
                             {isUserLoggedIn &&
                             <>
+                                {!role &&
                                 <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/login">Kontrolna
-                                    ploča</a>
+                                    ploča</a>}
                                 {/*<a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/ucenik/login">Prijava*/}
                                 {/*    ucenika</a>*/}
                                 {/*<a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/registracija">Registracija*/}

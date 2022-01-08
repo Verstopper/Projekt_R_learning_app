@@ -83,6 +83,8 @@ class StudentComponent extends Component {
             //}}
             ///> ;
             AuthenticationService.registerSuccessfulLogin(this.state.username," ");
+            AuthenticationService.putStudentinSession();
+
             return <StudentGameComponent />
 
         }else{
