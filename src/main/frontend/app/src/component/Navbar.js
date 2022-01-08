@@ -14,14 +14,14 @@ class NavBar extends Component {
         }
     }
 
-    handleClick = (event) => {
-        event.preventDefault()
-        AuthenticationService.logout()
-        this.setState({
-            logout: true
-        })
-
-    }
+    // handleClick = (event) => {
+    //     event.preventDefault()
+    //     AuthenticationService.logout()
+    //     this.setState({
+    //         logout: true
+    //     })
+    //
+    // }
 
     render() {
 
@@ -30,7 +30,7 @@ class NavBar extends Component {
         if (isUserLoggedIn) {
             username = AuthenticationService.getLoggedInUserName();
         }
-        if(this.state.logout) {
+        if (this.state.logout) {
             return <Navigate to={"/"}/>
         }
 
@@ -46,25 +46,24 @@ class NavBar extends Component {
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav">
                             {!isUserLoggedIn &&
-                            <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/login">Prijava
-                                profesora</a>
-                            }
-                            {!isUserLoggedIn &&
-                            <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/ucenik/login">Prijava
-                                ucenika</a>
-                            }
-                            {!isUserLoggedIn &&
-                            <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/registracija">Registracija
-                                profesora</a>
+                            <>
+                                <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/login">Prijava
+                                    profesora</a>
+                                <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/ucenik/login">Prijava
+                                    ucenika</a>
+                                <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/registracija">Registracija
+                                    profesora</a>
+                            </>
                             }
                             {isUserLoggedIn &&
                             <>
-                                <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/login">Kontrolna ploča</a>
+                                <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/login">Kontrolna
+                                    ploča</a>
                                 {/*<a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/ucenik/login">Prijava*/}
                                 {/*    ucenika</a>*/}
                                 {/*<a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/registracija">Registracija*/}
                                 {/*    profesora</a>*/}
-                                <a className={"nav-item nav-link pull-right"} href={"/logout"} onClick={this.handleClick}>Odjava</a>
+                                <a className={"nav-item nav-link pull-right"} href={"/logout"}>Odjava</a>
                             </>
                             }
                         </div>

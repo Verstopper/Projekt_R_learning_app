@@ -14,6 +14,8 @@ import Navbar from '../component/Navbar'
 import ProfessorDashboard from "./ProfessorDashboard";
 import AddGameComponent from "./AddGameComponent";
 import AddGradeComponent from "./AddGradeComponent";
+import AddStudentComponent from "./AddStudentComponent";
+import Wrapper from "./Wrapper";
 
 function NavComponent() {
     return null;
@@ -25,7 +27,7 @@ class RouterComponent extends Component {
         //let message = <p>Enter your username <a href='/login'>here.</a></p>;
         return (
             <Router>
-                <Navbar/>
+                {/*<Navbar/>*/}
                 <Routes>
                     {/*<Route path="/" element={<MainIndexComponent /> }/>*/}
                     <Route path="/api/ZabavnoUcenje/ucenik/login" element={<StudentComponent /> }/>
@@ -36,10 +38,11 @@ class RouterComponent extends Component {
                     <Route  path="/logout"   element={<LogoutComponent />} />
                     <Route path="/igra/dodaj" element={<AddGameComponent/>} />
                     <Route path={"/api/ZabavnoUcenje/razred"} element={<AddGradeComponent/>}/>
+                    <Route path={"/api/ZabavnoUcenje/razred/:id/dodajUcenika"} element={<Wrapper component={AddStudentComponent} animate={true} />}/>
                 </Routes>
-                {/*<Routes>*/}
-                {/*    <Route path="/" element={<MainIndexComponent /> }/>*/}
-                {/*</Routes>*/}
+                <Routes>
+                    <Route path="/" element={<MainIndexComponent /> }/>
+                </Routes>
 
             </Router>
 

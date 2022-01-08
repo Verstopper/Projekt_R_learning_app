@@ -1,4 +1,5 @@
 import axios from "axios";
+import AuthenticationService from "./AuthenticationService";
 const API_URl = 'http://localhost:8080'
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
 const api = axios.create({
@@ -20,6 +21,23 @@ class StudentService {
             games : games.data,
             success : success,
         }
+    }
+
+    async addStudent(fullName, username, grade) {
+        let usernameLoggedIn = AuthenticationService.getLoggedInUserName();
+        let url = '/api/ZabavnoUcenje/razred/{id}/dodajUcenika'
+        console.log("USERNAME LOGGEDIN" + usernameLoggedIn)
+        let response = {success: false,}
+        // let student;
+        let success = false;
+        try {
+            let student = await api.post(url,
+                {fullName: fullName, username: username, grade: grade});
+            response.data= true;
+        }catch (err){
+            response.data = "Greška prilikom dodavanja studenta."
+        }
+        return response
     }
 }
 

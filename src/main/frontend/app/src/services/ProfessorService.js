@@ -37,6 +37,21 @@ class ProfessorService{
         }
         return response;
     }
+
+    async getAllGrades(username) {
+        let url = "/api/ZabavnoUcenje/profesor/getAllGrades";
+        let response = {success: false}
+        try {
+            let response2 = await api.post(url, {username: username});
+            console.log("response2: " + response2.data)
+            response.success = true
+            response.data = response2.data
+            console.log("response: " + response.data)
+        } catch (err) {
+            response.data = "Greška prilikom dohvata razreda."
+        }
+        return response
+    }
 }
 
 export default new ProfessorService()
