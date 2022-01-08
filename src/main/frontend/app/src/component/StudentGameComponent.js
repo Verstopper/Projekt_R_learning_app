@@ -2,6 +2,7 @@ import React,{ Component,useState} from "react";
 import StudentService from "../services/StudentService";
 import AuthenticationService from "../services/AuthenticationService";
 import StudentComponent from "./StudentComponent";
+import NavBar from "./Navbar";
 
 
 class StudentRow extends Component {
@@ -90,14 +91,14 @@ class StudentRow extends Component {
             rows = rows.state.games;
         return (
             <div>
-                {/*<NavBar />*/}
+                <NavBar />
                 <section>
                     <form onSubmit={this.handleSubmit}>
-                        <button type="submit">Pogledaj sve igre koje možes igrati</button>
+                        <button className={"btn btn-primary"} type="submit">Pogledaj sve igre koje možes igrati</button>
                     </form>
-                    {/*<form onSubmit={this.handleSubmit}>
+                    <form onSubmit={this.handleSubmit}>
                         <button type="submit">ODJAVA</button>
-                    </form>*/}
+                    </form>
                     <form>
                         {rows && rows}
                     </form>

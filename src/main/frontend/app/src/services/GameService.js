@@ -7,13 +7,13 @@ const api = axios.create({
 })
 
 class GameService {
-    async addGame(name, description, oib) {
+    async addGame(name, description, username) {
         let response = {success: false,}
         let game;
         let success = false;
         try {
             game = await api.post("/igra/dodaj",
-                {name: name, description: description, oib: oib});
+                {name: name, description: description, username:username});
             response.data= true;
         }catch (err){
             response.data = "Greška prilikom dodavanja igre."
