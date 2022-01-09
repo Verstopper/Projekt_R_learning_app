@@ -1,51 +1,35 @@
 import ProfessorService from "../services/ProfessorService";
 import AuthenticationService from "../services/AuthenticationService";
 import NavBar from "./Navbar";
-import {Fragment} from "react";
-import React, {Component, useState} from 'react';
-import { v4 as uuid_v4 } from "uuid";
-import {Button, Col, Container, Row} from "react-bootstrap";
-import {Navigate} from "react-router-dom";
-import EditGameComponent from "./EditGameComponent";
-import {render} from "@testing-library/react";
-import MainIndexComponent from "./MainIndexComponent";
 
-class GameRow extends Component{
+import React, {Component, useState} from 'react';
+
+import {Button, Col, Container, Row} from "react-bootstrap";
+
+class QuestionRow extends Component{
     constructor(props) {
         super(props);
     }
 
     render() {
-        function goToGame(id) {
-            console.log("USLI SMO U FUJU")
-            console.log("ID JE " + id)
-           // return <EditGameComponent id ={id}/>
-
-            return <Navigate to={{
-                pathname: `api/ZabavnoUcenje/igra/uredi`,
-                state: {id:id},
-            }}
-            />
-        }
-
         return(
-        <Container>
-            <Row>
-                <Col  md={4}>Naziv igre: {this.props.name}
-                <p> Opis igre: {this.props.description} </p> </Col>
-                <Col md={{ span: 4, offset: 4 }}><Button variant="danger">Izbriši</Button>
-                    <Button variant="warning"  onClick={() => goToGame(this.props.id)} >Uredi</Button></Col>
-            </Row>
+            <Container>
+                <Row>
+                    <Col  md={4}>Naziv igre: {this.props.name}
+                        <p> Opis igre: {this.props.description} </p> </Col>
+                    <Col md={{ span: 4, offset: 4 }}><Button variant="danger">Izbriši</Button>
+                        <Button variant="warning" href={"/"}>Uredi</Button></Col>
+                </Row>
 
 
-        </Container>
+            </Container>
         )
 
 
     }
 }
 
-class ProfessorDashboard extends Component{
+class EditGameComponent extends Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -54,7 +38,7 @@ class ProfessorDashboard extends Component{
             password: '',
             success: undefined,
             games: undefined,
-            id: ''
+            id : ''
         }
 
         this.handleChange = (event) =>{
@@ -103,11 +87,11 @@ class ProfessorDashboard extends Component{
         if(this.state.games && this.state.success){
             rows = []
             for(let game in this.state.games){
-                rows.push(<GameRow key={this.state.games[game].id}
+                rows.push(<QuestionRow key={this.state.games[game].id}
                                    id = {this.state.games[game].id}
                                    name={this.state.games[game].name}
                                    description={this.state.games[game].description}
-                                    />)
+                />)
                 console.log(rows)
             }
         }
@@ -119,13 +103,13 @@ class ProfessorDashboard extends Component{
             <div>
                 <NavBar />
                 <section>
+                    <label>UREDITE SVOJU IGRU!!</label>
+                     <form onSubmit={this.handleSubmit}>
 
-                    <form onSubmit={this.handleSubmit}>
-                        <a className={"btn btn-primary"} href={"/igra/dodaj"}>Dodaj igru</a>
-                        <a className={"btn btn-primary"} href={"/api/ZabavnoUcenje/razred"}>Dodaj razred</a>
-                        <a className={"btn btn-primary"} href={"/api/ZabavnoUcenje/dodajUcenika"}>Stvori ucenika</a>
-                        <button className={"btn btn-secondary"} type="submit">Pregled igara</button>
-                    </form>
+                        <button className={"btn btn-secondary"} type="submit">Pregled pitanja</button>
+                    </form>/
+
+
                     <form>
                         {rows && rows}
                     </form>
@@ -134,5 +118,4 @@ class ProfessorDashboard extends Component{
         )
     }
 }
-
-export default ProfessorDashboard
+export default EditGameComponent;

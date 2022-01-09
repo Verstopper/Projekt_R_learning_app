@@ -5,6 +5,8 @@ import StudentComponent from "./StudentComponent";
 import NavBar from "./Navbar";
 import ProfessorService from "../services/ProfessorService";
 import LogoutComponent from "./LogOutComponent";
+import {Button, Col, Container, Row} from "react-bootstrap";
+
 
 
 class StudentRow extends Component {
@@ -14,11 +16,16 @@ class StudentRow extends Component {
 
     render() {
 
-        return (<div>
-            <label>{this.props.name}</label>
-            <label>{this.props.description}</label>
-            <label>{this.props.oib}</label>
-        </div>)
+        return (<Container>
+            <Row>
+                <Col md={{ span: 2, offset: 5}}>Naziv igre: {this.props.name}
+                    <p> Opis igre: {this.props.description} </p> </Col>
+                <Button variant="warning"   >IGRAJ</Button>
+
+            </Row>
+
+
+        </Container>)
     }
 }
 
@@ -56,7 +63,7 @@ class StudentRow extends Component {
                         id: games.games[game].id,
                         name: games.games[game].name,
                         description: games.games[game].description,
-                        oib : games.games[game],
+
                     }
                     value.push(obj)
                 }
@@ -93,8 +100,8 @@ class StudentRow extends Component {
                     rows.push(<StudentRow key={this.state.games[game].id}
                                           name={this.state.games[game].name}
                                           description={this.state.games[game].description}
-                                          oib = {this.state.games[game].oib
-                                          }/>)
+                                         // oib = {this.state.games[game].oib
+                                          />)
                     // professor = {this.state.games[game]})
                 }
             }
