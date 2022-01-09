@@ -9,9 +9,9 @@ import java.util.List;
 
 public interface QuestionService {
 
-    public Question addQuestion(RequestDto requestDto) throws Exception;
+    Question addQuestion(RequestDto requestDto);
 
-    boolean deleteQuestion(Question request) throws Exception;
+    void deleteQuestion(Integer questionId);
 
     Question getNextQuestion(Question question);
 

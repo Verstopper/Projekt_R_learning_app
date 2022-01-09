@@ -15,7 +15,7 @@ public interface GameRepository extends JpaRepository<Game, Integer> {
 
     Optional<Game> findByName(String name);
 
-    Game getById(Integer id);
-
     List<Game> findAllByProfessor(Professor professor);
+
+    boolean existsByProfessor(Professor professor);
 }

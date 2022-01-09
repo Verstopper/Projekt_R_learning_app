@@ -10,5 +10,5 @@ import java.util.List;
 public interface ProfessorService {
     void register(RegistrationDto registrationDto);
     void login(LoginDto loginDto);
-    List<Grade> getAllGrade(Request request);
+    List<Grade> getAllGrades(Request request);
 }

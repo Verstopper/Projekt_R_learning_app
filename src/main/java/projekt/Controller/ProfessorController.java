@@ -39,7 +39,7 @@ public class ProfessorController {
 
     @PostMapping("/profesor/getAllGrades")
     public ResponseEntity<List<Grade>> getAllGrades(@RequestBody Request request) {
-        return ResponseEntity.ok(professorService.getAllGrade(request));
+        return ResponseEntity.ok(professorService.getAllGrades(request));
     }
 
 }

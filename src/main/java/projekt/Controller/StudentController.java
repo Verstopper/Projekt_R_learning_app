@@ -34,4 +34,10 @@ public class StudentController {
         studentService.addStudent(studentAddDto);
         return ResponseEntity.ok().build();
     }
+
+    @PostMapping("/obrisiUcenika")
+    public ResponseEntity<String> deleteStudent(@RequestBody int studentId){
+        studentService.deleteStudent(studentId);
+        return ResponseEntity.ok("Učenik uspješno izbrisan.");
+    }
 }

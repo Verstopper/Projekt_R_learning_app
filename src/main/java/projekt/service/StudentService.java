@@ -10,4 +10,5 @@ public interface StudentService {
     void login(String username);
     List<Game> getAllGames(String username);
     void addStudent(StudentAddDto studentAddDto);
+    void deleteStudent(int studentId);
 }

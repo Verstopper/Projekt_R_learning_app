@@ -20,17 +20,18 @@ public class AnswerController {
     private AnswerService answerService;
 
     @PostMapping("/dodaj")
-    public ResponseEntity<Answer> addQuestion(@RequestBody @NonNull RequestDto requestDto){
+    public ResponseEntity<Answer> addAnswer(@RequestBody @NonNull RequestDto requestDto){
         return ResponseEntity.ok(answerService.addAnswer(requestDto));
     }
 
     @PostMapping("/izbrisi")
-    public ResponseEntity<Boolean> deleteQuestion(@RequestBody @NonNull  Answer answer) throws Exception {
-        return ResponseEntity.ok(answerService.deleteAnswer(answer));
+    public ResponseEntity<String> deleteAnswer(@RequestBody @NonNull Integer answerId) {
+        answerService.deleteAnswer(answerId);
+        return ResponseEntity.ok("Uspješno obrisan odgovor.");
     }
 
     @PostMapping("/getAllAnswers")
-    public ResponseEntity<List<Answer>> getAllAnswers(@RequestBody @NonNull Request idpitanje) throws Exception {
-        return ResponseEntity.ok(answerService.getAll(idpitanje.getIdpitanje()));
+    public ResponseEntity<List<Answer>> getAllAnswers(@RequestBody @NonNull Integer questionId){
+        return ResponseEntity.ok(answerService.getAll(questionId));
     }
 }

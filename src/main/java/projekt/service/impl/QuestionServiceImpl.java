@@ -10,6 +10,8 @@ import projekt.repo.LevelRepository;
 import projekt.repo.QuestionRepository;
 import projekt.service.QuestionService;
 
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -19,28 +21,30 @@ public class QuestionServiceImpl implements QuestionService {
     private QuestionRepository questionRepository;
     private LevelRepository levelRepository;
 
-    public Question addQuestion(RequestDto requestDto) throws Exception {
-        Question question = new Question();
-        Level level = levelRepository.findByName(requestDto.getLevel());
-        question.setName(requestDto.getName());
-        question.setText(requestDto.getText());
-        question.setLevel(level);
+    @Override
+    public Question addQuestion(RequestDto requestDto){
+        Level level = levelRepository.getByName(requestDto.getLevel());
 
-        if (questionRepository.existsByNameAndAndText(question.getName(), question.getText())) {
-            throw new Exception("Postoji već identično pitanje");
-        }
+        Question question = Question.builder()
+                .name(requestDto.getName())
+                .text(requestDto.getText())
+                .level(level)
+                .build();
 
-        questionRepository.save(question);
 
-        return question;
+        if (questionRepository.existsByNameAndAndText(question.getName(), question.getText()))
+            throw new EntityExistsException("Postoji već identično pitanje");
+
+
+        return questionRepository.save(question);
     }
 
     @Override
-    public boolean deleteQuestion(Question question) throws Exception {
-        if (!questionRepository.existsById(question.getId())) return false;
+    public void deleteQuestion(Integer questionId) {
+        if (!questionRepository.existsById(questionId))
+            throw new EntityNotFoundException("Ne postoji pitanje s id-em: " + questionId + ".");
 
-        questionRepository.delete(question);
-        return true;
+        questionRepository.deleteById(questionId);
     }
 
     @Override
@@ -51,7 +55,7 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<Question> getAll(Integer id) {
-        Level level = levelRepository.findByName(id);
+        Level level = levelRepository.getByName(id);
         return questionRepository.findAllByLevel(level);
     }
 }

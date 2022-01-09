@@ -1,9 +1,7 @@
 package projekt.service.impl;
 
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import projekt.domain.Answer;
 import projekt.domain.Question;
 import projekt.dto.RequestDto;
@@ -11,6 +9,8 @@ import projekt.repo.AnswerRepository;
 import projekt.repo.QuestionRepository;
 import projekt.service.AnswerService;
 
+import javax.persistence.EntityExistsException;
+import javax.persistence.EntityNotFoundException;
 import java.util.List;
 
 @Service
@@ -22,31 +22,34 @@ public class AnswerServiceImpl implements AnswerService {
 
     @Override
     public Answer addAnswer(RequestDto requestDto) {
-        Assert.notNull(requestDto,"Ne posotji objekt");
-        Answer answer = new Answer();
-        answer.setText(requestDto.getText());
-        Question question = questionRepository.getById(requestDto.getQuestion());
-        answer.setQuestion(question);
-        answer.setCorrectness(requestDto.getCorrectness());
-        if(!answerRepository.existsByTextAndQuestionAndCorrectness(answer.getText(),answer.getQuestion(),answer.getCorrectness())) {
-            answerRepository.save(answer);
-            return answer;
-        }
-        return  null;
+        Question question = questionRepository.findById(requestDto.getQuestion())
+                .orElseThrow(() -> new EntityNotFoundException("Ne postoji pitanje s id-em: " + requestDto.getQuestion() + "."));
+
+        Answer answer = Answer.builder()
+                .text(requestDto.getText())
+                .question(question)
+                .correctness(requestDto.getCorrectness())
+                .build();
+
+        if(answerRepository.existsByTextAndQuestionAndCorrectness(answer.getText(),answer.getQuestion(),answer.getCorrectness()))
+            throw new EntityExistsException("Već postoji takav odgovor.");
+
+        return  answerRepository.save(answer);
     }
 
     @Override
-    public boolean deleteAnswer(Answer answer) {
-        if (!answerRepository.existsByTextAndQuestionAndCorrectness(answer.getText(), answer.getQuestion(), answer.getCorrectness()))
-            return false;
+    public void deleteAnswer(Integer answerId) {
+        if (!answerRepository.existsById(answerId))
+            throw new EntityNotFoundException("Ne postoji odgovor s id-em: " + answerId + ".");
 
-        answerRepository.delete(answer);
-        return true;
+        answerRepository.deleteById(answerId);
     }
 
     @Override
-    public List<Answer> getAll(Integer idpitanja) {
-        Question q = questionRepository.getById(idpitanja);
-        return answerRepository.findAllByQuestion(q);
+    public List<Answer> getAll(Integer questionId) {
+        Question question = questionRepository.findById(questionId)
+                .orElseThrow(() -> new EntityNotFoundException("Ne postoji pitanje s id-em: " + questionId + "."));
+
+        return answerRepository.findAllByQuestion(question);
     }
 }

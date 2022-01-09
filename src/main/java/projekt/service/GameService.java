@@ -10,7 +10,7 @@ public interface GameService {
 
     Game addGame(RequestDto igra) throws Exception;
 
-    boolean deleteGame(Game game) throws Exception;
+    void deleteGame(Integer game) throws Exception;
 
     List<Game> getAllGamesForProfessor(String oib) throws Exception;
 }

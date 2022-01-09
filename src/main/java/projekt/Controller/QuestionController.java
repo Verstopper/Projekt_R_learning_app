@@ -22,17 +22,18 @@ public class QuestionController {
     private QuestionService questionService;
 
     @PostMapping("/dodaj")
-    public ResponseEntity<Question> addQuestion(@RequestBody RequestDto requestDto) throws Exception {
+    public ResponseEntity<Question> addQuestion(@RequestBody RequestDto requestDto)  {
         return ResponseEntity.ok(questionService.addQuestion(requestDto));
     }
 
     @PostMapping("/izbrisi")
-    public ResponseEntity<Boolean> deleteQuestion(@RequestBody @NonNull Question question) throws Exception {
-        return ResponseEntity.ok(questionService.deleteQuestion(question));
+    public ResponseEntity<String> deleteQuestion(@RequestBody Integer questionId) {
+        questionService.deleteQuestion(questionId);
+        return ResponseEntity.ok("Pitanje uspješno izbrisano.");
     }
 
     @PostMapping("/getNewQuestion")
-    public ResponseEntity<Question> getNextQuestion(@RequestBody @NonNull Question question) throws Exception {
+    public ResponseEntity<Question> getNextQuestion(@RequestBody @NonNull Question question) {
             return ResponseEntity.ok(questionService.getNextQuestion(question));
         }
 

@@ -2,19 +2,17 @@ package projekt.service;
 
 import org.springframework.stereotype.Service;
 import projekt.domain.Answer;
-import projekt.domain.Question;
 import projekt.dto.RequestDto;
 
 import java.util.List;
 
 @Service
 public interface AnswerService {
-    public Answer addAnswer(RequestDto odgovor);
+    Answer addAnswer(RequestDto answer);
 
-    List<Answer> getAll(Integer idpitanja);
+    List<Answer> getAll(Integer questionId);
 
-    public boolean deleteAnswer(Answer answer);
-
+    void deleteAnswer(Integer answer);
 
 
 }

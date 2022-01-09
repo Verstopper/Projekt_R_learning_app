@@ -1,53 +1,45 @@
 package projekt.service.impl;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.util.Assert;
 import projekt.domain.Game;
-import projekt.domain.Grade;
 import projekt.domain.Level;
-import projekt.dto.RequestDto;
 import projekt.repo.GameRepository;
 import projekt.repo.LevelRepository;
 import projekt.service.LevelService;
 
+import javax.persistence.EntityNotFoundException;
+
 @Service
+@AllArgsConstructor
 public class LevelServiceImpl implements LevelService {
 
-
-    @Autowired
     LevelRepository levelRepository;
-    @Autowired
     GameRepository gameRepository;
 
     @Override
-    public Level addLevel(Integer level1) {
+    public void addLevel(Integer levelName) {
         //naziv,id igre
-        Level level = new Level();
-        level.setName(level1); // treba promjenit
-        Game game = gameRepository.getById(level1);
-        Assert.notNull(game,"NE postoji igra");
-        level.setGame(game);
-        if(!levelRepository.existsByNameAndGame(level.getName(),level.getGame())) {
-        levelRepository.save(level);
-        return level;}
-        return null;
+        Game game = gameRepository.findById(levelName)
+                .orElseThrow(() -> new EntityNotFoundException("Ne postoji igra s id-em: " + levelName + "."));
 
+        Level level = Level.builder()
+                .name(levelName) // treba promijeniti
+                .game(game)
+                .build();
+
+        if (!levelRepository.existsByNameAndGame(level.getName(), level.getGame()))
+            levelRepository.save(level);
 
     }
 
     @Override
-    public boolean deleteLevel(Integer level) throws Exception {
-        Level l1 = levelRepository.findByName(level);
+    public void deleteLevel(Integer levelName) throws Exception {
+        Level level = levelRepository.findByName(levelName)
+                .orElseThrow(() -> new EntityNotFoundException("Ne postoji level s imenom: " + levelName + "."));
 
-        levelRepository.delete(l1);
-        return true;
+        levelRepository.delete(level);
     }
-
-
-
-
-
 
 
 }

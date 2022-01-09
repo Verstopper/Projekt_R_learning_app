@@ -1,7 +1,6 @@
 package projekt.service.impl;
 
 import lombok.AllArgsConstructor;
-import net.bytebuddy.dynamic.scaffold.MethodGraph;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.stereotype.Service;
 import projekt.domain.Grade;
@@ -18,6 +17,7 @@ import projekt.repo.ProfessorRepository;
 import projekt.repo.TeachesInRepository;
 import projekt.service.ProfessorService;
 
+import javax.persistence.EntityNotFoundException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
@@ -55,12 +55,14 @@ public class ProfessorServiceImpl implements ProfessorService {
     public void login(LoginDto loginDto){
         if(!professorRepository.existsByUsernameAndPassword(loginDto.getUsername(), loginDto.getPassword()))
             throw new InvalidLoginException("Wrong login info");
-        ;
+
     }
 
     @Override
-    public List<Grade> getAllGrade(Request request) {
-        Professor professor = professorRepository.findByUsername(request.getUsername());
+    public List<Grade> getAllGrades(Request request) {
+        Professor professor = professorRepository.findByUsername(request.getUsername())
+                .orElseThrow(() -> new EntityNotFoundException("Ne postoji profesor s korisničkim imenom: " + request.getUsername() + "."));
+
         Set<Predajeu> listGrade = teachesInRepository.getAllByProfessor(professor);
         List<Grade> lista = new LinkedList<>();
         for(var predaje : listGrade) {

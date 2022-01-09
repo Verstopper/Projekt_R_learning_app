@@ -19,18 +19,14 @@ import java.util.Set;
 public class StudentServiceImpl implements StudentService {
 
     private final StudentRepository studentRepository;
-
     private final GradeRepository gradeRepository;
-
     private final TeachesInRepository teachesInRepository;
-
     private final ProfessorRepository professorRepository;
-
     private final GameRepository gameRepository;
 
     @Override
     public void login(String username) {
-        if(!studentRepository.existsByUsername(username))
+        if (!studentRepository.existsByUsername(username))
             throw new InvalidLoginException("Upisano je pogrešno korisničko ime.");
     }
 
@@ -43,11 +39,9 @@ public class StudentServiceImpl implements StudentService {
         for (var predjeu : professorSet) {
             Professor professor = professorRepository.findProfessorById(predjeu.getProfessor().getId());
             List<Game> games = gameRepository.findAllByProfessor(professor);
-            for(var game : games) {
-                allGames.add(game);
-            }
+            allGames.addAll(games);
         }
-    return allGames;
+        return allGames;
     }
 
     @Override
@@ -55,7 +49,7 @@ public class StudentServiceImpl implements StudentService {
         Grade grade = gradeRepository.findByName(studentAddDto.getGradeName())
                 .orElseThrow(() -> new EntityNotFoundException("Ne postoji razred s imenom: " + studentAddDto.getGradeName() + "."));
 
-        if(studentRepository.existsByUsername(studentAddDto.getUsername()))
+        if (studentRepository.existsByUsername(studentAddDto.getUsername()))
             throw new UsernameException("Neki učenik već ima korisničko ime: " + studentAddDto.getUsername() + ".");
 
         Student student = Student.builder()
@@ -63,6 +57,14 @@ public class StudentServiceImpl implements StudentService {
                 .fullName(studentAddDto.getFullName())
                 .grade(grade).build();
 
-         studentRepository.save(student);
+        studentRepository.save(student);
+    }
+
+    @Override
+    public void deleteStudent(int studentId) {
+        if(!studentRepository.existsById(studentId))
+            throw new EntityNotFoundException("Ne postoji učenik s id-em: " + studentId +".");
+
+        studentRepository.deleteById(studentId);
     }
 }
