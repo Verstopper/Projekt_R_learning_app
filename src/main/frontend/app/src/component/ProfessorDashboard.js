@@ -1,14 +1,8 @@
 import ProfessorService from "../services/ProfessorService";
 import AuthenticationService from "../services/AuthenticationService";
 import NavBar from "./Navbar";
-import {Fragment} from "react";
 import React, {Component, useState} from 'react';
-import { v4 as uuid_v4 } from "uuid";
 import {Button, Col, Container, Row} from "react-bootstrap";
-import {Navigate} from "react-router-dom";
-import EditGameComponent from "./EditGameComponent";
-import {render} from "@testing-library/react";
-import MainIndexComponent from "./MainIndexComponent";
 
 class GameRow extends Component{
     constructor(props) {
@@ -19,13 +13,8 @@ class GameRow extends Component{
         function goToGame(id) {
             console.log("USLI SMO U FUJU")
             console.log("ID JE " + id)
-           // return <EditGameComponent id ={id}/>
-
-            return <Navigate to={{
-                pathname: `api/ZabavnoUcenje/igra/uredi`,
-                state: {id:id},
-            }}
-            />
+           AuthenticationService.getGameIntoStorage(id);
+           return
         }
 
         return(
@@ -34,7 +23,7 @@ class GameRow extends Component{
                 <Col  md={4}>Naziv igre: {this.props.name}
                 <p> Opis igre: {this.props.description} </p> </Col>
                 <Col md={{ span: 4, offset: 4 }}><Button variant="danger">Izbriši</Button>
-                    <Button variant="warning"  onClick={() => goToGame(this.props.id)} >Uredi</Button></Col>
+                    <Button variant="warning" href = "/api/ZabavnoUcenje/igrauredi" onClick={() => goToGame(this.props.id)} >Uredi</Button></Col>
             </Row>
 
 
@@ -54,7 +43,7 @@ class ProfessorDashboard extends Component{
             password: '',
             success: undefined,
             games: undefined,
-            id: ''
+
         }
 
         this.handleChange = (event) =>{

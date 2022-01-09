@@ -2,6 +2,8 @@ import axios from "axios";
 const API_URL = 'http://localhost:8080'
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
 export const NAME_SESSION_ATTRIBUTE_NAME = 'User'
+export const GAME_SESSION_ATTRIBUTE_NAME = 'gameid'
+export const QUESTION_SESSION_ATTRIBUTE_NAME = 'questionid'
 const api = axios.create({
     baseURL: API_URL
 })
@@ -22,6 +24,25 @@ class AuthenticationService {
         console.log("Userrrrrrrrrr"  + user)
         if (user === null) return ''
         return user
+    }
+
+    getQuestionIntoStorage(id) {
+        sessionStorage.setItem(QUESTION_SESSION_ATTRIBUTE_NAME,id);
+    }
+
+    getQuestionFromStorage() {
+        let id_question = sessionStorage.getItem(QUESTION_SESSION_ATTRIBUTE_NAME)
+        return id_question
+    }
+
+
+    getGameIntoStorage(id) {
+        sessionStorage.setItem(GAME_SESSION_ATTRIBUTE_NAME,id);
+    }
+
+    getGameFromStorage() {
+        let id_game = sessionStorage.getItem(GAME_SESSION_ATTRIBUTE_NAME)
+        return id_game
     }
 
     getRole() {
@@ -61,6 +82,7 @@ class AuthenticationService {
         let url = "/api/ZabavnoUcenje/ucenik/login";
         return api.post(url,{username:username})
     }
+
 
 }
 export default new

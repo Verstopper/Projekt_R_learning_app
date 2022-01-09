@@ -31,7 +31,7 @@ public class AnswerController {
     }
 
     @PostMapping("/getAllAnswers")
-    public ResponseEntity<List<Answer>> getAllAnswers(@RequestBody @NonNull Integer questionId){
-        return ResponseEntity.ok(answerService.getAll(questionId));
+    public ResponseEntity<List<Answer>> getAllAnswers(@RequestBody @NonNull Request questionId){
+        return ResponseEntity.ok(answerService.getAll(questionId.getIdigre()));
     }
 }

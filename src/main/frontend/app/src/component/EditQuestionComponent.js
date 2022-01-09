@@ -6,8 +6,9 @@ import React, {Component, useState} from 'react';
 
 import {Button, Col, Container, Row} from "react-bootstrap";
 import QuestionService from "../services/QuestionService";
+import AnswerService from "../services/AnswerService";
 
-class QuestionRow extends Component{
+class AnswerRow extends Component{
     constructor(props) {
         super(props);
     }
@@ -21,10 +22,10 @@ class QuestionRow extends Component{
         return(
             <Container>
                 <Row>
-                    <Col  md={4}>Odgovor: {this.props.name}
-                        <p> Točnost: {this.props.text} </p> </Col>
+                    <Col  md={4}>Naziv pitanje: {this.props.text}
+                        <p> Opis pitanja: {this.props.correctness} </p> </Col>
                     <Col md={{ span: 4, offset: 4 }}><Button variant="danger">Izbriši</Button>
-                        <Button variant="warning" href={"/api/ZabavnoUcenje/pitanjeuredi"}>Uredi</Button></Col>
+                        <Button variant="warning" href={"/"}>Uredi</Button></Col>
                 </Row>
 
 
@@ -35,7 +36,7 @@ class QuestionRow extends Component{
     }
 }
 
-class EditGameComponent extends Component{
+class EditQuestionComponent extends Component{
     constructor(props) {
         super(props);
         this.state = {
@@ -43,7 +44,7 @@ class EditGameComponent extends Component{
             errors: '',
             password: '',
             success: undefined,
-            questions: undefined
+            answers: undefined
         }
 
         this.handleChange = (event) =>{
@@ -54,31 +55,31 @@ class EditGameComponent extends Component{
 
         this.handleSubmit = async (event) => {
             event.preventDefault();
-            let id_game = AuthenticationService.getGameFromStorage();
-            console.log(id_game)
-            let questions = await QuestionService.getAllQuestions(id_game);
-            console.log(questions.questions)
-            console.log(questions.data)
-            if(questions.success){
+            let id_question = AuthenticationService.getQuestionFromStorage();
+
+            let answers = await AnswerService.getAllAnswers(id_question)
+            console.log(answers.questions)
+            console.log(answers.data)
+            if(answers.success){
                 let value = [];
-                console.log("UNDEFINED" + questions.questions)
-                for (let question in questions.data){
-                    console.log("QUESTION " + question)
+                console.log("UNDEFINED" + answers.answers)
+                for (let answer in answers.data){
+
                     let obj = {
-                        id: questions.data[question].id,
-                        name: questions.data[question].name,
-                        text: questions.data[question].text
+                        id: answers.data[answer].id,
+                        correctness: answers.data[answer].correctness,
+                        text: answers.data[answer].text
                     }
                     value.push(obj)
                 }
                 this.setState({
-                    questions: value,
+                    answers: value,
                     success: true,
                 })
             }else{
-                let value = questions.questions
+                let value = answers.answers
                 this.setState({
-                    questions: value,
+                    answers: value,
                     success: false,
                 })
             }
@@ -90,29 +91,29 @@ class EditGameComponent extends Component{
 
 
         let rows;
-        if(this.state.questions && this.state.success){
+        if(this.state.answers && this.state.success){
             rows = []
-            for(let question in this.state.questions){
-                rows.push(<QuestionRow key={this.state.questions[question].id}
-                                   id = {this.state.questions[question].id}
-                                   name={this.state.questions[question].name}
-                                   text={this.state.questions[question].text}
+            for(let answer in this.state.answers){
+                rows.push(<AnswerRow key={this.state.answers[answer].id}
+                                       id = {this.state.answers[answer].id}
+                                       correctness={this.state.answers[answer].correctness}
+                                       text={this.state.answers[answer].text}
                 />)
                 console.log(rows)
             }
         }
-        if(this.state.questions && !this.state.success){
-            rows = this.state.questions;
+        if(this.state.answers && !this.state.success){
+            rows = this.state.answers;
 
         }
         return(
             <div>
                 <NavBar />
                 <section>
-                    <label>UREDITE SVOJU IGRU!!</label>
-                     <form onSubmit={this.handleSubmit}>
+                    <label>UREDITE SVOJE PITANJE</label>
+                    <form onSubmit={this.handleSubmit}>
 
-                        <button className={"btn btn-secondary"} type="submit">Pregled pitanja</button>
+                        <button className={"btn btn-secondary"} type="submit">Pregled odgovora</button>
                     </form>/
 
 
@@ -124,4 +125,4 @@ class EditGameComponent extends Component{
         )
     }
 }
-export default EditGameComponent;
+export default EditQuestionComponent;

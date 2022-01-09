@@ -50,6 +50,11 @@ public class AnswerServiceImpl implements AnswerService {
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new EntityNotFoundException("Ne postoji pitanje s id-em: " + questionId + "."));
 
-        return answerRepository.findAllByQuestion(question);
+        List<Answer> list = answerRepository.findAllByQuestion(question);
+        if(list.isEmpty()) {
+            return null;
+
+        }
+        return list;
     }
 }
