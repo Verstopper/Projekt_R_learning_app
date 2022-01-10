@@ -15,8 +15,9 @@ class AnswerRow extends Component{
 
     render() {
 
-        function goToQuestion(id) {
-            AuthenticationService.getQuestionIntoStorage(id);
+        function deleteAnswer(id) {
+            AnswerService.deleteAnswers(id);
+            window.location.reload(false);
             return
         }
         return(
@@ -24,7 +25,7 @@ class AnswerRow extends Component{
                 <Row>
                     <Col  md={4}>Naziv: {this.props.text}
                         <p> Točnost: {this.props.correctness} </p> </Col>
-                    <Col md={{ span: 4, offset: 4 }}><Button variant="danger">Izbriši</Button>
+                    <Col md={{ span: 4, offset: 4 }}><Button variant="danger" onClick={() => deleteAnswer(this.props.id)}>Izbriši</Button>
                         <Button variant="warning" href={"/"}>Uredi</Button></Col>
                 </Row>
 
@@ -113,7 +114,7 @@ class EditQuestionComponent extends Component{
                     <label>UREDITE SVOJE PITANJE</label>
                     <form onSubmit={this.handleSubmit}>
                         <button className={"btn btn-secondary"} type="submit">Pregled odgovora</button>
-                        <button className={"btn btn-secondary"} type="submit">Dodaj odgovor</button>
+                        <button className={"btn btn-secondary"} >Dodaj odgovor</button>
                     </form>/
 
 

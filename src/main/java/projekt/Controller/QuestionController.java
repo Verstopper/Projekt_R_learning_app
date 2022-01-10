@@ -27,8 +27,8 @@ public class QuestionController {
     }
 
     @PostMapping("/izbrisi")
-    public ResponseEntity<String> deleteQuestion(@RequestBody Integer questionId) {
-        questionService.deleteAllAnswersForQuestion(questionId);
+    public ResponseEntity<String> deleteQuestion(@RequestBody Request questionId) {
+        questionService.deleteAllAnswersForQuestion(questionId.getIdpitanje());
         return ResponseEntity.ok("Pitanje uspješno izbrisano.");
     }
 

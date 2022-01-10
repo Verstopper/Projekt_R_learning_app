@@ -6,6 +6,7 @@ import React, {Component, useState} from 'react';
 
 import {Button, Col, Container, Row} from "react-bootstrap";
 import QuestionService from "../services/QuestionService";
+import GameService from "../services/GameService";
 
 class QuestionRow extends Component{
     constructor(props) {
@@ -15,16 +16,23 @@ class QuestionRow extends Component{
     render() {
 
         function goToQuestion(id) {
+            console.log("ID QUESTION " + id)
             AuthenticationService.getQuestionIntoStorage(id);
             return
         }
+
+        function deleteQuestion(id) {
+            let response = QuestionService.deleteAllQuestions(id);
+            window.location.reload(false);
+        }
+
         return(
             <Container>
                 <Row>
                     <Col  md={4}>Naziv: {this.props.name}
                         <p> Text: {this.props.text} </p> </Col>
-                    <Col md={{ span: 4, offset: 4 }}><Button variant="danger">Izbriši</Button>
-                        <Button variant="warning" onClick={() => goToQuestion(this.state.id)} href={"/api/ZabavnoUcenje/pitanjeuredi"}>Uredi</Button></Col>
+                    <Col md={{ span: 4, offset: 4 }}><Button variant="danger" onClick={() => deleteQuestion(this.props.id) }>Izbriši</Button>
+                        <Button variant="warning" onClick={() => goToQuestion(this.props.id)} href={"/api/ZabavnoUcenje/pitanjeuredi"} >Uredi</Button></Col>
                 </Row>
 
 
@@ -113,7 +121,7 @@ class EditGameComponent extends Component{
 
                         <button className={"btn btn-secondary"} type="submit">Pregled pitanja</button>
                      </form>/
-                         <button variant = "warning" href={"/api/ZabavnoUcenje/addQuestion"}>Dodaj pitanje</button>
+                         <Button variant = "warning" href={"/api/ZabavnoUcenje/addQuestion"}>Dodaj pitanje</Button>
                     <form>
                         {rows && rows}
                     </form>

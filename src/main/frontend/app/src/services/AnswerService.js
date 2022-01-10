@@ -20,6 +20,21 @@ class AnswerService {
         }
         return response
     }
+
+    async deleteAnswers(id_answer) {
+        let response = {success: false,}
+        let answers;
+        try {
+            answers = await api.post("/odgovor/izbrisi",
+                {id_question:id_answer});
+            response.data= answers.data;
+            response.success = true;
+        }catch (err){
+            response.success = false;
+            response.data = "Greška prilikom pregleda pitanja."
+        }
+        return response
+    }
 }
 
 export default new AnswerService()

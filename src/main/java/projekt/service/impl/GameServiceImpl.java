@@ -41,10 +41,9 @@ public class GameServiceImpl implements GameService {
                 .description(requestDto.getDescription())
                 .professor(professor).build();
         game = gameRepository.save(game);
-        System.out.println(game.getId());
-        Level level = new Level();
-        level.setId(game.getId());
-        level.setGame(game);
+        Level level = Level.builder()
+                .id(game.getId()).game(game).build();
+
         level = levelRepository.save(level);
 
         return game;

@@ -21,6 +21,22 @@ class QuestionService {
         }
         return response
     }
+
+    async deleteAllQuestions(id_question) {
+        let response = {success: false,}
+        let questions;
+        console.log("UDE U FUNKCIJU I PITANJE " + id_question)
+        try {
+            questions = await api.post("/request/izbrisi",
+                {idpitanje:id_question});
+            response.data= questions.data;
+            response.success = true;
+        }catch (err){
+            response.success = false;
+            response.data = "Greška prilikom pregleda igara."
+        }
+        return response
+    }
 }
 
 export  default new QuestionService()

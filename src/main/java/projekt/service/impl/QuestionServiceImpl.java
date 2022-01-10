@@ -64,7 +64,6 @@ public class QuestionServiceImpl implements QuestionService {
     public void deleteAllAnswersForQuestion(Integer idquestion) {
         Question question = questionRepository.getById(idquestion);
         answerService.deleteAllAnswers(idquestion);
-
         questionRepository.delete(question);
     }
 

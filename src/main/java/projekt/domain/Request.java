@@ -17,6 +17,7 @@ public class Request {
     Integer idigre;
     Integer idpitanje;
     String korisnicko_ime;
+    Integer id_question;
 
 
 

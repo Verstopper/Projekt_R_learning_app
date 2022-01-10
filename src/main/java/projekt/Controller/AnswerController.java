@@ -25,8 +25,8 @@ public class AnswerController {
     }
 
     @PostMapping("/izbrisi")
-    public ResponseEntity<String> deleteAnswer(@RequestBody @NonNull Integer answerId) {
-        answerService.deleteAnswer(answerId);
+    public ResponseEntity<String> deleteAnswer(@RequestBody @NonNull Request answerId) {
+        answerService.deleteAnswer(answerId.getId_question());
         return ResponseEntity.ok("Uspješno obrisan odgovor.");
     }
 
