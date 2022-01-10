@@ -3,6 +3,8 @@ import AuthenticationService from "../services/AuthenticationService";
 import NavBar from "./Navbar";
 import React, {Component, useState} from 'react';
 import {Button, Col, Container, Row} from "react-bootstrap";
+import GameService from "../services/GameService";
+import Popup from './Popup';
 
 class GameRow extends Component{
     constructor(props) {
@@ -17,12 +19,19 @@ class GameRow extends Component{
            return
         }
 
+        function deleteGame(id) {
+            console.log("ID IGRE JE " + id);
+            let response = GameService.deleteGame(id);
+            window.location.reload(false);
+            console.log("RESPONCE NAKON BRISANJA" + response)
+        }
+
         return(
         <Container>
             <Row>
                 <Col  md={4}>Naziv igre: {this.props.name}
                 <p> Opis igre: {this.props.description} </p> </Col>
-                <Col md={{ span: 4, offset: 4 }}><Button variant="danger">Izbriši</Button>
+                <Col md={{ span: 4, offset: 4 }}><Button variant="danger" onClick={() => deleteGame(this.props.id)}>Izbriši</Button>
                     <Button variant="warning" href = "/api/ZabavnoUcenje/igrauredi" onClick={() => goToGame(this.props.id)} >Uredi</Button></Col>
             </Row>
 
@@ -34,7 +43,10 @@ class GameRow extends Component{
     }
 }
 
+
+
 class ProfessorDashboard extends Component{
+
     constructor(props) {
         super(props);
         this.state = {
@@ -43,8 +55,11 @@ class ProfessorDashboard extends Component{
             password: '',
             success: undefined,
             games: undefined,
+            isOpen: false,
+            setIsOpen: false
 
         }
+
 
         this.handleChange = (event) =>{
             this.setState({
@@ -104,6 +119,10 @@ class ProfessorDashboard extends Component{
             rows = this.state.games;
 
         }
+
+
+
+
         return(
             <div>
                 <NavBar />
@@ -114,6 +133,7 @@ class ProfessorDashboard extends Component{
                         <a className={"btn btn-primary"} href={"/api/ZabavnoUcenje/razred"}>Dodaj razred</a>
                         <a className={"btn btn-primary"} href={"/api/ZabavnoUcenje/dodajUcenika"}>Stvori ucenika</a>
                         <button className={"btn btn-secondary"} type="submit">Pregled igara</button>
+
                     </form>
                     <form>
                         {rows && rows}

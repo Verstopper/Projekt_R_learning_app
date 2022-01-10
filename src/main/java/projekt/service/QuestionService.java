@@ -16,4 +16,8 @@ public interface QuestionService {
     Question getNextQuestion(Question question);
 
     List<Question> getAll(Integer id);
+
+    void deleteAllAnswersForQuestion(Integer idquestion);
+
+    void  deleteAllQuestion(Integer leveId);
 }

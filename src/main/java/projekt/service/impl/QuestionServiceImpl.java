@@ -8,11 +8,13 @@ import projekt.domain.Question;
 import projekt.dto.RequestDto;
 import projekt.repo.LevelRepository;
 import projekt.repo.QuestionRepository;
+import projekt.service.AnswerService;
 import projekt.service.QuestionService;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -20,10 +22,11 @@ public class QuestionServiceImpl implements QuestionService {
 
     private QuestionRepository questionRepository;
     private LevelRepository levelRepository;
+    private AnswerService answerService;
 
     @Override
     public Question addQuestion(RequestDto requestDto){
-        Level level = levelRepository.getByName(requestDto.getLevel());
+        Level level = levelRepository.getById(requestDto.getLevel());
 
         Question question = Question.builder()
                 .name(requestDto.getName())
@@ -48,6 +51,24 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
+    public  void  deleteAllQuestion(Integer leveId) {
+        Level level = levelRepository.getById(leveId);
+        List<Question> lista = questionRepository.getAllByLevel(level);
+        for(var q :lista) {
+            answerService.deleteAllAnswers(q.getId());
+            questionRepository.delete(q);
+        }
+    }
+
+    @Override
+    public void deleteAllAnswersForQuestion(Integer idquestion) {
+        Question question = questionRepository.getById(idquestion);
+        answerService.deleteAllAnswers(idquestion);
+
+        questionRepository.delete(question);
+    }
+
+    @Override
     public Question getNextQuestion(Question question) {
         return null;
     }
@@ -55,8 +76,9 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<Question> getAll(Integer id) {
-        Level level = levelRepository.getByName(id);
-        return questionRepository.findAllByLevel(level);
+        Level level = levelRepository.getById(id);
+
+        return questionRepository.getAllByLevel(level);
     }
 }
 

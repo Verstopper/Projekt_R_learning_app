@@ -19,15 +19,6 @@ public class Level {
     @Column(name = "id_nivo", nullable = false)
     private Integer id;
 
-    @Column(name = "naziv", nullable = false, length = 100)
-    private Integer name;
-
-    @Column(name = "sljedeci_nivo")
-    private Integer nextLevel;
-
-    @Column(name = "prethodni_nivo")
-    private Integer previousLevel;
-
     @ManyToOne(optional = false)
     @JoinColumn(name = "id_igre", nullable = false)
     private Game game;

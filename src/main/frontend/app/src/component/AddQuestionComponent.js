@@ -4,21 +4,18 @@ import AuthenticationService from "../services/AuthenticationService";
 import {Navigate} from "react-router-dom";
 import InvalidComponent from "./InvalidComponent";
 import ProfessorService from "../services/ProfessorService";
-import GameService from "../services/GameService";
-import ProfessorDashboard from "./ProfessorDashboard";
 
-class AddGameComponent extends React.Component {
-
+class AddQuestionComponent extends React.Component {
 
     constructor(props) {
         super(props);
         // console.log("     +++++       ")
         // console.log(this.props.id)
         this.state = {
-            success: false,
             name: '',
             description: '',
-            oib: '',
+            errors: {},
+            hasLoginFailed: true,
             showSuccessMessage: false
         }
         this.handleChange = (event) =>{
@@ -40,19 +37,22 @@ class AddGameComponent extends React.Component {
             //console.log(err)
             console.log(err.password);
             console.log("i am here");
-            console.log("ime igre:" + this.state.name + ", opis igre: " +  this.state.description)
+            console.log(this.state.username + " " +  this.state.password)
             if(!err.password){
-                let username = AuthenticationService.getLoggedInUserName();
-                let response = await GameService.addGame(this.state.name, this.state.description, username);
-                this.state.success = true;
+                let response = await ProfessorService.professorSignUp(this.state.oib, this.state.username, this.state.password, this.state.fullName, this.state.email);
                 if(response.status >= 400){
-                    this.state.success = false;
                     this.setState(
                         {
-                            errors: 'Dodavanje igre neuspješno.',
+                            errors: 'Registracija neuspjela',
                         }
                     )
                 }
+
+                //console.log(response);
+                AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
+                this.setState({
+                    hasLoginFailed: false,
+                })
             }
             else{
                 this.setState(
@@ -62,27 +62,20 @@ class AddGameComponent extends React.Component {
                 )
             }
             // console.log(errs)
-            if(this.state.success){
-                return(
-                    <ProfessorDashboard/>
-                )
-            }
+
         }
     }
 
     render() {
 
-        if(this.state.success){
-            return(
-                <ProfessorDashboard/>
-            )
-        }
+        if(!this.state.hasLoginFailed)
+            return <Navigate to='/'/>
 
-        /*const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
+        const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
         if(isUserLoggedIn){
             let message = <p> Already logged in. Go to main page <a href='/'>here.</a></p>;
             return <InvalidComponent message={message} />
-        }*/
+        }
 
 
 
@@ -92,22 +85,16 @@ class AddGameComponent extends React.Component {
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-inputs">
                             <label htmlFor="name"></label>
-                            <input type="text" id="name" name="name" placeholder="Ime igre"
+                            <input type="text" id="name" name="name" placeholder="Naziv pitanja"
                                    value={this.state.name} onChange={this.handleChange} required/>
                         </div>
                         <div className="form-inputs">
                             <label htmlFor="description"></label>
-                            <input type="text" id="description" name="description" placeholder="Opis igre"
+                            <input type="text" id="description" name="description" placeholder="description"
                                    value={this.state.description} onChange={this.handleChange} required/>
                         </div>
-
-                        {/*<div className="form-inputs">*/}
-                        {/*    <label htmlFor="oib"></label>*/}
-                        {/*    <input type="text" id="oib" name="oib" placeholder="OIB"*/}
-                        {/*           value={this.state.oib} onChange={this.handleChange} required/>*/}
-                        {/*</div>*/}
-                        <button className={"btn btn-primary"} type="submit"  >Dodaj igru</button>
-                        <a className={"btn btn-danger"} href="javascript:history.go(-1)">Odustani</a>
+                        <button className={"btn btn-primary"} type="submit">Registracija</button>
+                        <a className={"btn btn-danger"} href="javascript:history.go(-1)" >Odustani</a>
                     </form>
                 </section>
             </div>
@@ -117,4 +104,4 @@ class AddGameComponent extends React.Component {
 }
 
 
-export default AddGameComponent;
+export default AddQuestionComponent;

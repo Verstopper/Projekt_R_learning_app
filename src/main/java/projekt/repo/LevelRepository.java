@@ -10,9 +10,9 @@ import java.util.Optional;
 @Repository
 public interface LevelRepository extends JpaRepository<Level, Integer> {
     boolean existsById(Integer id);
-    Level getByName(Integer name);
 
-    Optional<Level> findByName(Integer name);
 
-    boolean existsByNameAndGame(Integer name, Game game);
+    Level getById(Integer id);
+
+
 }

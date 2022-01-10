@@ -28,7 +28,7 @@ public class QuestionController {
 
     @PostMapping("/izbrisi")
     public ResponseEntity<String> deleteQuestion(@RequestBody Integer questionId) {
-        questionService.deleteQuestion(questionId);
+        questionService.deleteAllAnswersForQuestion(questionId);
         return ResponseEntity.ok("Pitanje uspješno izbrisano.");
     }
 
@@ -39,7 +39,11 @@ public class QuestionController {
 
         @PostMapping("getAll")
     public ResponseEntity<List<Question>> getAll(@RequestBody @NonNull Request idigre) throws Exception {
-                return ResponseEntity.ok(questionService.getAll(idigre.getIdigre()));
+                List<Question> questions = questionService.getAll(idigre.getIdigre());
+                if(questions.isEmpty()) {
+                    return  null;
+                }
+        return ResponseEntity.ok(questions);
         }
 
 

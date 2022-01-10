@@ -46,6 +46,15 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
+    public  void deleteAllAnswers(Integer questionid) {
+        Question question = questionRepository.getById(questionid);
+        List<Answer> lista = answerRepository.findAllByQuestion(question);
+        for(var a : lista) {
+            answerRepository.delete(a);
+        }
+    }
+
+    @Override
     public List<Answer> getAll(Integer questionId) {
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new EntityNotFoundException("Ne postoji pitanje s id-em: " + questionId + "."));

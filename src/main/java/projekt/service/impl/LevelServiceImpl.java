@@ -2,7 +2,7 @@ package projekt.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import projekt.domain.Game;
+
 import projekt.domain.Level;
 import projekt.repo.GameRepository;
 import projekt.repo.LevelRepository;
@@ -19,23 +19,12 @@ public class LevelServiceImpl implements LevelService {
 
     @Override
     public void addLevel(Integer levelName) {
-        //naziv,id igre
-        Game game = gameRepository.findById(levelName)
-                .orElseThrow(() -> new EntityNotFoundException("Ne postoji igra s id-em: " + levelName + "."));
-
-        Level level = Level.builder()
-                .name(levelName) // treba promijeniti
-                .game(game)
-                .build();
-
-        if (!levelRepository.existsByNameAndGame(level.getName(), level.getGame()))
-            levelRepository.save(level);
 
     }
 
     @Override
     public void deleteLevel(Integer levelName) throws Exception {
-        Level level = levelRepository.findByName(levelName)
+        Level level = levelRepository.findById(levelName)
                 .orElseThrow(() -> new EntityNotFoundException("Ne postoji level s imenom: " + levelName + "."));
 
         levelRepository.delete(level);

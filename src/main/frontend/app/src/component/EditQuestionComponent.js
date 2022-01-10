@@ -22,8 +22,8 @@ class AnswerRow extends Component{
         return(
             <Container>
                 <Row>
-                    <Col  md={4}>Naziv pitanje: {this.props.text}
-                        <p> Opis pitanja: {this.props.correctness} </p> </Col>
+                    <Col  md={4}>Naziv: {this.props.text}
+                        <p> Točnost: {this.props.correctness} </p> </Col>
                     <Col md={{ span: 4, offset: 4 }}><Button variant="danger">Izbriši</Button>
                         <Button variant="warning" href={"/"}>Uredi</Button></Col>
                 </Row>
@@ -56,7 +56,7 @@ class EditQuestionComponent extends Component{
         this.handleSubmit = async (event) => {
             event.preventDefault();
             let id_question = AuthenticationService.getQuestionFromStorage();
-
+            console.log("SVI ODGOVROI OD PITANJA SA ID " + id_question)
             let answers = await AnswerService.getAllAnswers(id_question)
             console.log(answers.questions)
             console.log(answers.data)
@@ -112,8 +112,8 @@ class EditQuestionComponent extends Component{
                 <section>
                     <label>UREDITE SVOJE PITANJE</label>
                     <form onSubmit={this.handleSubmit}>
-
                         <button className={"btn btn-secondary"} type="submit">Pregled odgovora</button>
+                        <button className={"btn btn-secondary"} type="submit">Dodaj odgovor</button>
                     </form>/
 
 

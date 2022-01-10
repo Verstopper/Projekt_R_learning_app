@@ -14,5 +14,7 @@ public interface AnswerService {
 
     void deleteAnswer(Integer answer);
 
+    void deleteAllAnswers(Integer idQuestion);
+
 
 }

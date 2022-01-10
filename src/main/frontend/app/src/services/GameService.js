@@ -20,6 +20,22 @@ class GameService {
         }
         return response
     }
+
+    async deleteGame(game_id) {
+        let response = {success: false,}
+        let game;
+        try {
+            game = await api.post("/igra/brisi",
+                {idigre: game_id});
+            response.data= game.data;
+            response.success = true;
+        }catch (err){
+            response.data = "Greška prilikom dodavanja igre."
+        }
+        return response
+    }
+
+
 }
 
 export default new GameService()

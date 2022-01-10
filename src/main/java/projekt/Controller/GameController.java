@@ -29,8 +29,8 @@ public class GameController {
     }
 
     @PostMapping("/brisi")
-    public ResponseEntity<String> deleteGame(@RequestBody @NonNull Integer gameId) throws Exception {
-        gameService.deleteGame(gameId);
+    public ResponseEntity<String> deleteGame(@RequestBody @NonNull Request gameId) throws Exception {
+        gameService.deleteGame(gameId.getIdigre());
         return ResponseEntity.ok("Igra uspješno izbrisana.");
     }
 

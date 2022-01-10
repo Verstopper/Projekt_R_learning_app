@@ -21,10 +21,10 @@ class QuestionRow extends Component{
         return(
             <Container>
                 <Row>
-                    <Col  md={4}>Odgovor: {this.props.name}
-                        <p> Točnost: {this.props.text} </p> </Col>
+                    <Col  md={4}>Nazic: {this.props.name}
+                        <p> Text: {this.props.text} </p> </Col>
                     <Col md={{ span: 4, offset: 4 }}><Button variant="danger">Izbriši</Button>
-                        <Button variant="warning" href={"/api/ZabavnoUcenje/pitanjeuredi"}>Uredi</Button></Col>
+                        <Button variant="warning" onClick={() => goToQuestion(this.state.id)} href={"/api/ZabavnoUcenje/pitanjeuredi"}>Uredi</Button></Col>
                 </Row>
 
 
@@ -55,7 +55,7 @@ class EditGameComponent extends Component{
         this.handleSubmit = async (event) => {
             event.preventDefault();
             let id_game = AuthenticationService.getGameFromStorage();
-            console.log(id_game)
+            console.log("ID igre + " +id_game)
             let questions = await QuestionService.getAllQuestions(id_game);
             console.log(questions.questions)
             console.log(questions.data)
@@ -86,9 +86,6 @@ class EditGameComponent extends Component{
     }
 
     render() {
-
-
-
         let rows;
         if(this.state.questions && this.state.success){
             rows = []
@@ -105,6 +102,8 @@ class EditGameComponent extends Component{
             rows = this.state.questions;
 
         }
+
+
         return(
             <div>
                 <NavBar />
@@ -113,9 +112,8 @@ class EditGameComponent extends Component{
                      <form onSubmit={this.handleSubmit}>
 
                         <button className={"btn btn-secondary"} type="submit">Pregled pitanja</button>
-                    </form>/
-
-
+                     </form>/
+                         <button variant = "warning" href={"/api/ZabavnoUcenje/addQuestion"}>Dodaj pitanje</button>
                     <form>
                         {rows && rows}
                     </form>

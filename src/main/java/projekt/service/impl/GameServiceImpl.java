@@ -3,12 +3,16 @@ package projekt.service.impl;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import projekt.domain.Game;
+import projekt.domain.Level;
 import projekt.domain.Professor;
 import projekt.dto.RequestDto;
 import projekt.repo.GameRepository;
+import projekt.repo.LevelRepository;
 import projekt.repo.ProfessorRepository;
+import projekt.service.AnswerService;
 import projekt.service.GameService;
 import projekt.service.LevelService;
+import projekt.service.QuestionService;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
@@ -21,6 +25,9 @@ public class GameServiceImpl implements GameService {
     LevelService levelService;
     GameRepository gameRepository;
     ProfessorRepository professorRepository;
+    QuestionService questionService;
+    AnswerService answerService;
+    LevelRepository levelRepository;
 
     public Game addGame(RequestDto requestDto) {
         if (gameRepository.existsByName(requestDto.getName()))
@@ -33,9 +40,13 @@ public class GameServiceImpl implements GameService {
                 .name(requestDto.getName())
                 .description(requestDto.getDescription())
                 .professor(professor).build();
-
         game = gameRepository.save(game);
-        levelService.addLevel(game.getId());
+        System.out.println(game.getId());
+        Level level = new Level();
+        level.setId(game.getId());
+        level.setGame(game);
+        level = levelRepository.save(level);
+
         return game;
     }
 
@@ -55,6 +66,7 @@ public class GameServiceImpl implements GameService {
         if (!gameRepository.existsById(gameId))
             throw new EntityNotFoundException("Ne postoji igra s id-em: " + gameId + ".");
 
+        questionService.deleteAllQuestion(gameId);
         levelService.deleteLevel(gameId);
         gameRepository.deleteById(gameId);
     }

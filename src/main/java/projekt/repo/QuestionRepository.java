@@ -12,7 +12,7 @@ public interface QuestionRepository extends JpaRepository<Question, Integer> {
 
     boolean existsByNameAndAndText(String name, String text);
 
-    List<Question> findAllByLevel(Level id);
+    List<Question> getAllByLevel(Level id);
 
     Question getById(Integer id);
 

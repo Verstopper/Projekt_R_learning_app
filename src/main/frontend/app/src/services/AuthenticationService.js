@@ -27,6 +27,7 @@ class AuthenticationService {
     }
 
     getQuestionIntoStorage(id) {
+        console.log("STAVLJAM U STORAGE" + id)
         sessionStorage.setItem(QUESTION_SESSION_ATTRIBUTE_NAME,id);
     }
 
