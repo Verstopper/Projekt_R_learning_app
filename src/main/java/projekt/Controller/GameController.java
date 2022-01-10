@@ -8,6 +8,7 @@ import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 import projekt.domain.Game;
 import projekt.domain.Request;
+import projekt.dto.GameUpdateDto;
 import projekt.dto.RequestDto;
 import projekt.service.GameService;
 import projekt.service.LevelService;
@@ -22,7 +23,6 @@ public class GameController {
 
     private GameService gameService;
 
-
     @PostMapping("/dodaj")
     public ResponseEntity<Game> addGame(@RequestBody @NonNull RequestDto requestDto) throws Exception {
         return ResponseEntity.ok(gameService.addGame(requestDto));
@@ -32,6 +32,12 @@ public class GameController {
     public ResponseEntity<String> deleteGame(@RequestBody @NonNull Request gameId) throws Exception {
         gameService.deleteGame(gameId.getIdigre());
         return ResponseEntity.ok("Igra uspješno izbrisana.");
+    }
+
+    @PostMapping("/uredi")
+    public ResponseEntity<String> updateGame(@RequestBody GameUpdateDto gameUpdateDto){
+        gameService.updateGame(gameUpdateDto);
+        return ResponseEntity.ok("Igra uspješno uređena.");
     }
 
     @PostMapping("/getAll")

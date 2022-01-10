@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import projekt.domain.Game;
 import projekt.domain.Level;
 import projekt.domain.Professor;
+import projekt.dto.GameUpdateDto;
 import projekt.dto.RequestDto;
 import projekt.repo.GameRepository;
 import projekt.repo.LevelRepository;
@@ -70,4 +71,14 @@ public class GameServiceImpl implements GameService {
         gameRepository.deleteById(gameId);
     }
 
+    @Override
+    public void updateGame(GameUpdateDto gameUpdateDto) {
+        Game game = gameRepository.findById(gameUpdateDto.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Ne postoji igra s id-em: " + gameUpdateDto.getId() + "."));
+
+        game.setName(gameUpdateDto.getName());
+        game.setDescription(gameUpdateDto.getDescription());
+
+        gameRepository.save(game);
+    }
 }
