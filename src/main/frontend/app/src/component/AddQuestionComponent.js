@@ -93,7 +93,7 @@ class AddQuestionComponent extends React.Component {
                             <input type="text" id="description" name="description" placeholder="description"
                                    value={this.state.description} onChange={this.handleChange} required/>
                         </div>
-                        <button className={"btn btn-primary"} type="submit">Registracija</button>
+                        <button className={"btn btn-primary"} type="submit">Promjeni</button>
                         <a className={"btn btn-danger"} href="javascript:history.go(-1)" >Odustani</a>
                     </form>
                 </section>

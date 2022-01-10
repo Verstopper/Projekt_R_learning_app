@@ -21,7 +21,7 @@ class QuestionRow extends Component{
         return(
             <Container>
                 <Row>
-                    <Col  md={4}>Nazic: {this.props.name}
+                    <Col  md={4}>Naziv: {this.props.name}
                         <p> Text: {this.props.text} </p> </Col>
                     <Col md={{ span: 4, offset: 4 }}><Button variant="danger">Izbriši</Button>
                         <Button variant="warning" onClick={() => goToQuestion(this.state.id)} href={"/api/ZabavnoUcenje/pitanjeuredi"}>Uredi</Button></Col>
