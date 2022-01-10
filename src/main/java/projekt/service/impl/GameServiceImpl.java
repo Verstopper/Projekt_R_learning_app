@@ -81,4 +81,9 @@ public class GameServiceImpl implements GameService {
 
         gameRepository.save(game);
     }
+
+    @Override
+    public Game getGameById(Integer id) {
+        return gameRepository.getById(id);
+    }
 }

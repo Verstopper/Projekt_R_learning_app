@@ -44,4 +44,9 @@ public class GameController {
     public ResponseEntity<List<Game>> showGame(@RequestBody Request username) throws Exception {
             return ResponseEntity.ok(gameService.getAllGamesForProfessor(username.getUsername()));
     }
+
+    @PostMapping("/dohvati")
+    public ResponseEntity<Game> getGameById(@RequestBody Integer id){
+        return ResponseEntity.ok(gameService.getGameById(id));
+    }
 }

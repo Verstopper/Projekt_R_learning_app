@@ -16,4 +16,6 @@ public interface GameService {
     List<Game> getAllGamesForProfessor(String oib) throws Exception;
 
     void updateGame(GameUpdateDto gameUpdateDto);
+
+    Game getGameById(Integer id);
 }

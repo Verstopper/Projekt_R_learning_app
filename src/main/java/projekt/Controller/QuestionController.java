@@ -13,7 +13,7 @@ import projekt.service.QuestionService;
 
 import java.util.List;
 
-@CrossOrigin(origins={ "http://localhost:3000", "http://localhost:4200" })
+@CrossOrigin(origins = {"http://localhost:3000", "http://localhost:4200"})
 @RestController
 @AllArgsConstructor
 @RequestMapping("/request")
@@ -22,7 +22,7 @@ public class QuestionController {
     private QuestionService questionService;
 
     @PostMapping("/dodaj")
-    public ResponseEntity<Question> addQuestion(@RequestBody RequestDto requestDto)  {
+    public ResponseEntity<Question> addQuestion(@RequestBody RequestDto requestDto) {
         return ResponseEntity.ok(questionService.addQuestion(requestDto));
     }
 
@@ -34,17 +34,17 @@ public class QuestionController {
 
     @PostMapping("/getNewQuestion")
     public ResponseEntity<Question> getNextQuestion(@RequestBody @NonNull Question question) {
-            return ResponseEntity.ok(questionService.getNextQuestion(question));
-        }
+        return ResponseEntity.ok(questionService.getNextQuestion(question));
+    }
 
-        @PostMapping("getAll")
+    @PostMapping("getAll")
     public ResponseEntity<List<Question>> getAll(@RequestBody @NonNull Request idigre) throws Exception {
-                List<Question> questions = questionService.getAll(idigre.getIdigre());
-                if(questions.isEmpty()) {
-                    return  null;
-                }
-        return ResponseEntity.ok(questions);
+        List<Question> questions = questionService.getAll(idigre.getIdigre());
+        if (questions.isEmpty()) {
+            return null;
         }
+        return ResponseEntity.ok(questions);
+    }
 
 
 }
