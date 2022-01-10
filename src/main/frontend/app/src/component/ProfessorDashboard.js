@@ -12,10 +12,11 @@ class GameRow extends Component{
     }
 
     render() {
-        function goToGame(id) {
+        function goToGame(id, name, description) {
             console.log("USLI SMO U FUJU")
             console.log("ID JE " + id)
-           AuthenticationService.getGameIntoStorage(id);
+            AuthenticationService.getGameIntoStorage(id, name, description);
+
            return
         }
 
@@ -32,7 +33,7 @@ class GameRow extends Component{
                 <Col  md={4}>Naziv igre: {this.props.name}
                 <p> Opis igre: {this.props.description} </p> </Col>
                 <Col md={{ span: 4, offset: 4 }}><Button variant="danger" onClick={() => deleteGame(this.props.id)}>Izbriši</Button>
-                    <Button variant="warning" href = "/api/ZabavnoUcenje/igrauredi" onClick={() => goToGame(this.props.id)} >Uredi</Button></Col>
+                    <Button variant="warning" href = "/api/ZabavnoUcenje/igrauredi" onClick={() => goToGame(this.props.id, this.props.name, this.props.description)} >Uredi</Button></Col>
             </Row>
 
 

@@ -35,6 +35,20 @@ class GameService {
         return response
     }
 
+    async updateGame(id, name, description){
+        let response = {success: false,}
+        let game;
+        let success = false;
+        try {
+            game = await api.post("/igra/uredi",
+                {name: name, description: description, id:id});
+            response.data= true;
+        }catch (err){
+            response.data = "Greška prilikom ažuriranja igre."
+        }
+        return response
+    }
+
 
 }
 

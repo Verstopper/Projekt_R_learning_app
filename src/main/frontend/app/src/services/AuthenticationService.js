@@ -4,6 +4,8 @@ export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
 export const NAME_SESSION_ATTRIBUTE_NAME = 'User'
 export const GAME_SESSION_ATTRIBUTE_NAME = 'gameid'
 export const QUESTION_SESSION_ATTRIBUTE_NAME = 'questionid'
+export const GAME_NAME_SESSION_ATTRIBUTE_NAME = 'gameName'
+export const GAME_DESCRIPTION_SESSION_ATTRIBUTE_NAME = 'gameDesc'
 const api = axios.create({
     baseURL: API_URL
 })
@@ -37,8 +39,10 @@ class AuthenticationService {
     }
 
 
-    getGameIntoStorage(id) {
+    getGameIntoStorage(id, name, description) {
         sessionStorage.setItem(GAME_SESSION_ATTRIBUTE_NAME,id);
+        sessionStorage.setItem(GAME_NAME_SESSION_ATTRIBUTE_NAME, name);
+        sessionStorage.setItem(GAME_DESCRIPTION_SESSION_ATTRIBUTE_NAME, description);
     }
 
     getGameFromStorage() {
