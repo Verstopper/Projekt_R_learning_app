@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.*;
 
 import projekt.domain.Question;
 import projekt.domain.Request;
+import projekt.dto.QuestionUpdateDto;
 import projekt.dto.RequestDto;
 
 import projekt.service.QuestionService;
@@ -44,6 +45,12 @@ public class QuestionController {
             return null;
         }
         return ResponseEntity.ok(questions);
+    }
+
+    @PostMapping("/uredi")
+    public ResponseEntity<String> updateQuestion(@RequestBody QuestionUpdateDto questionUpdateDto){
+        questionService.updateQuestion(questionUpdateDto);
+        return ResponseEntity.ok("Pitanje uspješno uređeno.");
     }
 
 

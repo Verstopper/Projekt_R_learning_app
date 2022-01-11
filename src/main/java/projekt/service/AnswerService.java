@@ -2,6 +2,7 @@ package projekt.service;
 
 import org.springframework.stereotype.Service;
 import projekt.domain.Answer;
+import projekt.dto.AnswerUpdateDto;
 import projekt.dto.RequestDto;
 
 import java.util.List;
@@ -16,5 +17,5 @@ public interface AnswerService {
 
     void deleteAllAnswers(Integer idQuestion);
 
-
+    void updateAnswer(AnswerUpdateDto answerUpdateDto);
 }

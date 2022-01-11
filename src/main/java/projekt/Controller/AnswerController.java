@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import projekt.domain.Answer;
 import projekt.domain.Request;
+import projekt.dto.AnswerUpdateDto;
 import projekt.dto.RequestDto;
 import projekt.service.AnswerService;
 
@@ -33,5 +34,11 @@ public class AnswerController {
     @PostMapping("/getAllAnswers")
     public ResponseEntity<List<Answer>> getAllAnswers(@RequestBody @NonNull Request questionId){
         return ResponseEntity.ok(answerService.getAll(questionId.getIdigre()));
+    }
+
+    @PostMapping("/uredi")
+    public ResponseEntity<String> updateAnswer(@RequestBody AnswerUpdateDto answerUpdateDto){
+        answerService.updateAnswer(answerUpdateDto);
+        return ResponseEntity.ok("Uspješno uređen odgovor.");
     }
 }

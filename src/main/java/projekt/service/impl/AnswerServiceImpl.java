@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import projekt.domain.Answer;
 import projekt.domain.Question;
+import projekt.dto.AnswerUpdateDto;
 import projekt.dto.RequestDto;
 import projekt.repo.AnswerRepository;
 import projekt.repo.QuestionRepository;
@@ -46,12 +47,10 @@ public class AnswerServiceImpl implements AnswerService {
     }
 
     @Override
-    public  void deleteAllAnswers(Integer questionid) {
-        Question question = questionRepository.getById(questionid);
-        List<Answer> lista = answerRepository.findAllByQuestion(question);
-        for(var a : lista) {
-            answerRepository.delete(a);
-        }
+    public  void deleteAllAnswers(Integer questionId) {
+        Question question = questionRepository.getById(questionId);
+        List<Answer> answers = answerRepository.findAllByQuestion(question).orElse(null);
+        answerRepository.deleteAll(answers);
     }
 
     @Override
@@ -59,11 +58,17 @@ public class AnswerServiceImpl implements AnswerService {
         Question question = questionRepository.findById(questionId)
                 .orElseThrow(() -> new EntityNotFoundException("Ne postoji pitanje s id-em: " + questionId + "."));
 
-        List<Answer> list = answerRepository.findAllByQuestion(question);
-        if(list.isEmpty()) {
-            return null;
+        return answerRepository.findAllByQuestion(question).orElse(null);
+    }
 
-        }
-        return list;
+    @Override
+    public void updateAnswer(AnswerUpdateDto answerUpdateDto) {
+        Answer answer = answerRepository.findById(answerUpdateDto.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Ne postoji odgovor s id-em: " + answerUpdateDto.getId() + "."));
+
+        answer.setCorrectness(answerUpdateDto.getCorrectness());
+        answer.setText(answerUpdateDto.getText());
+
+        answerRepository.save(answer);
     }
 }

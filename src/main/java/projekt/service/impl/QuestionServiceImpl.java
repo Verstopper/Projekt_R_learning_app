@@ -1,11 +1,11 @@
 package projekt.service.impl;
 
-
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import projekt.domain.Game;
 import projekt.domain.Level;
 import projekt.domain.Question;
+import projekt.dto.QuestionUpdateDto;
 import projekt.dto.RequestDto;
 import projekt.repo.GameRepository;
 import projekt.repo.LevelRepository;
@@ -74,11 +74,21 @@ public class QuestionServiceImpl implements QuestionService {
         return null;
     }
 
-
     @Override
     public List<Question> getAll(Integer id) {
         Game game = gameRepository.getById(id);
         return questionRepository.getAllByGame(game);
+    }
+
+    @Override
+    public void updateQuestion(QuestionUpdateDto questionUpdateDto) {
+        Question question = questionRepository.findById(questionUpdateDto.getId())
+                .orElseThrow(() -> new EntityNotFoundException("Ne postoji pitanje s id-em: " + questionUpdateDto.getId() + "."));
+
+        question.setName(questionUpdateDto.getName());
+        question.setText(questionUpdateDto.getText());
+
+        questionRepository.save(question);
     }
 }
 

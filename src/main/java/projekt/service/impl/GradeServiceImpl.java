@@ -56,8 +56,7 @@ public class GradeServiceImpl implements GradeService {
         Grade grade = gradeRepository.findById(gradeId)
                 .orElseThrow(() -> new EntityNotFoundException("Ne postoji razred s id-em: " + gradeId + "."));
 
-        if(gradeAddDto.getName() != null)
-            grade.setName(gradeAddDto.getName());
+        grade.setName(gradeAddDto.getName());
 
         gradeRepository.save(grade);
     }
