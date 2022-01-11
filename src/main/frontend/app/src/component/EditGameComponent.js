@@ -16,9 +16,9 @@ class QuestionRow extends Component {
 
     render() {
 
-        function goToQuestion(id) {
+        function goToQuestion(id, questionName, questionText) {
             console.log("ID QUESTION " + id)
-            AuthenticationService.getQuestionIntoStorage(id);
+            AuthenticationService.getQuestionIntoStorage(id, questionName, questionText);
             return
         }
 
@@ -34,7 +34,7 @@ class QuestionRow extends Component {
                         <p> Text: {this.props.text} </p></Col>
                     <Col md={{span: 4, offset: 4}}><Button variant="danger"
                                                            onClick={() => deleteQuestion(this.props.id)}>Izbriši</Button>
-                        <Button variant="warning" onClick={() => goToQuestion(this.props.id)}
+                        <Button variant="warning" onClick={() => goToQuestion(this.props.id, this.props.name, this.props.text)}
                                 href={"/api/ZabavnoUcenje/pitanjeuredi"}>Uredi</Button></Col>
                 </Row>
 

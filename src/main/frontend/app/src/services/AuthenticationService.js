@@ -6,6 +6,11 @@ export const GAME_SESSION_ATTRIBUTE_NAME = 'gameid'
 export const QUESTION_SESSION_ATTRIBUTE_NAME = 'questionid'
 export const GAME_NAME_SESSION_ATTRIBUTE_NAME = 'gameName'
 export const GAME_DESCRIPTION_SESSION_ATTRIBUTE_NAME = 'gameDesc'
+export const QUESTION_NAME_SESSION_ATTRIBUTE_NAME = 'questionName'
+export const QUESTION_TEXT_SESSION_ATTRIBUTE_NAME = 'questionText'
+export const ANSWER_TEXT_SESSION_ATTRIBUTE_NAME = 'answerText'
+export const ANSWER_CORRECTNESS_SESSION_ATTRIBUTE_NAME = 'answerCorr'
+export const ANSWER_SESSION_ATTRIBUTE_NAME = 'answerId'
 const api = axios.create({
     baseURL: API_URL
 })
@@ -28,9 +33,11 @@ class AuthenticationService {
         return user
     }
 
-    getQuestionIntoStorage(id) {
+    getQuestionIntoStorage(id, questionName, questionText) {
         console.log("STAVLJAM U STORAGE" + id)
         sessionStorage.setItem(QUESTION_SESSION_ATTRIBUTE_NAME,id);
+        sessionStorage.setItem(QUESTION_NAME_SESSION_ATTRIBUTE_NAME, questionName);
+        sessionStorage.setItem(QUESTION_TEXT_SESSION_ATTRIBUTE_NAME, questionText);
     }
 
     getQuestionFromStorage() {
@@ -43,6 +50,17 @@ class AuthenticationService {
         sessionStorage.setItem(GAME_SESSION_ATTRIBUTE_NAME,id);
         sessionStorage.setItem(GAME_NAME_SESSION_ATTRIBUTE_NAME, name);
         sessionStorage.setItem(GAME_DESCRIPTION_SESSION_ATTRIBUTE_NAME, description);
+    }
+
+    getAnswerIntoStorage(id, text, correctness){
+        sessionStorage.setItem(ANSWER_SESSION_ATTRIBUTE_NAME, id);
+        sessionStorage.setItem(ANSWER_TEXT_SESSION_ATTRIBUTE_NAME, text);
+        sessionStorage.setItem(ANSWER_CORRECTNESS_SESSION_ATTRIBUTE_NAME, correctness);
+    }
+
+    getAnswerFromStorage(){
+        let id_answer = sessionStorage.getItem(ANSWER_SESSION_ATTRIBUTE_NAME);
+        return id_answer;
     }
 
     getGameFromStorage() {

@@ -50,6 +50,21 @@ class AnswerService {
         }
         return response
     }
+
+    async updateAnswer(answer_id, updatedText, updatedCorrectness) {
+        let response = {success: false,}
+        let answer;
+        try {
+            answer = await api.post("/odgovor/uredi",
+                {id:answer_id,text:updatedText,correctness:updatedCorrectness});
+            response.data= answer.data;
+            response.success = true;
+        }catch (err){
+            response.success = false;
+            response.data = "Greška prilikom ažuriranja odgovora."
+        }
+        return response
+    }
 }
 
 export default new AnswerService()

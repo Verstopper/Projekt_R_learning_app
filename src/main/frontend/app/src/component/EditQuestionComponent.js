@@ -11,26 +11,37 @@ import AddAnswerComponent from "./AddAnswerComponent";
 import GameService from "../services/GameService";
 import ProfessorDashboard from "./ProfessorDashboard";
 import * as PropTypes from "prop-types";
+import EditGameComponent from "./EditGameComponent";
 
-class AnswerRow extends Component{
+class AnswerRow extends Component {
     constructor(props) {
         super(props);
     }
 
     render() {
 
+        function goToAnswer(id, answerText, answerCorrectness) {
+            console.log("ID ANSWER " + id)
+            AuthenticationService.getAnswerIntoStorage(id, answerText, answerCorrectness);
+            return
+        }
+
         function deleteAnswer(id) {
             AnswerService.deleteAnswers(id);
             window.location.reload(false);
             return
         }
-        return(
+
+        return (
             <Container>
                 <Row>
-                    <Col  md={4}>Naziv: {this.props.text}
-                        <p> Točnost: {this.props.correctness} </p> </Col>
-                    <Col md={{ span: 4, offset: 4 }}><Button variant="danger" onClick={() => deleteAnswer(this.props.id)}>Izbriši</Button>
-                        <Button variant="warning" href={""}>Uredi</Button></Col>
+                    <Col md={4}>Naziv: {this.props.text}
+                        <p> Točnost: {this.props.correctness} </p></Col>
+                    <Col md={{span: 4, offset: 4}}><Button variant="danger"
+                                                           onClick={() => deleteAnswer(this.props.id)}>Izbriši</Button>
+                        <Button variant="warning"
+                                onClick={() => goToAnswer(this.props.id, this.props.text, this.props.correctness)}
+                                href={"/api/ZabavnoUcenje/odgovoruredi"}>Uredi</Button></Col>
                 </Row>
 
 
@@ -51,7 +62,7 @@ Buttonutton.propTypes = {
     children: PropTypes.node
 };
 
-class EditQuestionComponent extends Component{
+class EditQuestionComponent extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -60,29 +71,32 @@ class EditQuestionComponent extends Component{
             password: '',
             success: undefined,
             answers: undefined,
-
+            updatedName: sessionStorage.getItem("questionName"),
+            updatedText: sessionStorage.getItem("questionText"),
+            defaultName: sessionStorage.getItem("questionName"),
+            defaultText: sessionStorage.getItem("questionText"),
         }
 
         this.handleQuestionUpdate = async (event) => {
-            let id_game = AuthenticationService.getGameFromStorage();
-            console.log("usao u handle update.....")
-            console.log("updatetdname: "+ this.state.updatedName);
-            console.log("updatetddescription: "+ this.state.updatedDescription);
-            console.log("id: "+ id_game);
+            let id_question = AuthenticationService.getQuestionFromStorage();
+            console.log("usao u handle update za question.....")
+            console.log("updatetdQuestionName: " + this.state.updatedName);
+            console.log("updatetdQuestionDescription: " + this.state.updatedText);
+            console.log("id: " + id_question);
             event.preventDefault();
-            let response = await GameService.updateGame(id_game,this.state.updatedName, this.state.updatedDescription);
+            let response = await QuestionService.updateQuestion(id_question, this.state.updatedName, this.state.updatedText);
             this.state.success = true;
-            if(response.status >= 400){
+            if (response.status >= 400) {
                 this.state.success = false;
-                this.setState({errors: 'Ažuriranje igre neuspjelo :(',})
+                this.setState({errors: 'Ažuriranje pitanja neuspjelo :(',})
             }
-            if(this.state.success){
-                return(<ProfessorDashboard/>)
+            if (this.state.success) {
+                return (<EditGameComponent/>)
             }
 
         }
 
-        this.handleChange = (event) =>{
+        this.handleChange = (event) => {
             this.setState({
                 [event.target.name]: event.target.value
             })
@@ -95,10 +109,10 @@ class EditQuestionComponent extends Component{
             let answers = await AnswerService.getAllAnswers(id_question)
             console.log(answers.questions)
             console.log(answers.data)
-            if(answers.success){
+            if (answers.success) {
                 let value = [];
                 console.log("UNDEFINED" + answers.answers)
-                for (let answer in answers.data){
+                for (let answer in answers.data) {
 
                     let obj = {
                         id: answers.data[answer].id,
@@ -111,7 +125,7 @@ class EditQuestionComponent extends Component{
                     answers: value,
                     success: true,
                 })
-            }else{
+            } else {
                 let value = answers.answers
                 this.setState({
                     answers: value,
@@ -124,48 +138,47 @@ class EditQuestionComponent extends Component{
     render() {
 
 
-
         let rows;
-        if(this.state.answers && this.state.success){
+        if (this.state.answers && this.state.success) {
             rows = []
-            for(let answer in this.state.answers){
+            for (let answer in this.state.answers) {
                 rows.push(<AnswerRow key={this.state.answers[answer].id}
-                                       id = {this.state.answers[answer].id}
-                                       correctness={this.state.answers[answer].correctness}
-                                       text={this.state.answers[answer].text}
+                                     id={this.state.answers[answer].id}
+                                     correctness={this.state.answers[answer].correctness}
+                                     text={this.state.answers[answer].text}
                 />)
                 console.log(rows)
             }
         }
-        if(this.state.answers && !this.state.success){
+        if (this.state.answers && !this.state.success) {
             rows = this.state.answers;
 
         }
 
         function goTo() {
             console.log("RADI GUMB")
-            return <AddAnswerComponent />
+            return <AddAnswerComponent/>
         }
 
-        return(
+        return (
             <div>
-                <NavBar />
+                <NavBar/>
                 <section>
                     <label>UREDITE SVOJE PITANJE</label>
                     <div className="">
                         <section className="container container-px container-py">
                             <form onSubmit={this.handleSubmit}>
                                 <div className="form-inputs">
-                                    <label htmlFor="name"></label>
+                                    <label htmlFor="updatedName"></label>
                                     <input type="text" id="updatedName" name="updatedName"
-                                           defaultValue={this.state.defaultname}
+                                           defaultValue={this.state.defaultName}
                                            value={this.state.updatedName} onChange={this.handleChange} required/>
                                 </div>
                                 <div className="form-inputs">
-                                    <label htmlFor="description"></label>
-                                    <input type="text" id="updatedDescription" name="updatedDescription"
-                                           defaultValue={this.state.defaultDescription}
-                                           value={this.state.updatedDescription} onChange={this.handleChange} required/>
+                                    <label htmlFor="updatedText"></label>
+                                    <input type="text" id="updatedText" name="updatedText"
+                                           defaultValue={this.state.defaultText}
+                                           value={this.state.updatedText} onChange={this.handleChange} required/>
                                 </div>
 
                                 {/*<div className="form-inputs">*/}
@@ -173,7 +186,9 @@ class EditQuestionComponent extends Component{
                                 {/*    <input type="text" id="oib" name="oib" placeholder="OIB"*/}
                                 {/*           value={this.state.oib} onChange={this.handleChange} required/>*/}
                                 {/*</div>*/}
-                                <button className={"btn btn-primary"} type="submit" onClick={this.handleQuestionUpdate}>Ažuriraj pitanje</button>
+                                <button className={"btn btn-primary"} type="submit"
+                                        onClick={this.handleQuestionUpdate}>Ažuriraj pitanje
+                                </button>
                                 <a className={"btn btn-danger"} href="javascript:history.go(-1)">Odustani</a>
                             </form>
                         </section>
@@ -181,8 +196,7 @@ class EditQuestionComponent extends Component{
                     <form onSubmit={this.handleSubmit}>
                         <button className={"btn btn-secondary"} type="submit">Pregled odgovora</button>
                     </form>
-                    <Button className={"btn btn-secondary"} href={"/api/ZabavnoUcenje/addAnswer"} >Dodaj odgovor</Button>
-
+                    <Button className={"btn btn-secondary"} href={"/api/ZabavnoUcenje/addAnswer"}>Dodaj odgovor</Button>
 
 
                     <form>
@@ -193,4 +207,5 @@ class EditQuestionComponent extends Component{
         )
     }
 }
+
 export default EditQuestionComponent;

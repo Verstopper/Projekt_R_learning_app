@@ -20,6 +20,7 @@ import EditGameComponent from "./EditGameComponent";
 import EditQuestionComponent from "./EditQuestionComponent";
 import AddQuestionComponent from "./AddQuestionComponent";
 import AddAnswerComponent from "./AddAnswerComponent";
+import EditAnswerComponent from "./EditAnswerComponent";
 
 function NavComponent() {
     return null;
@@ -44,6 +45,7 @@ class RouterComponent extends Component {
                     <Route path={"/api/ZabavnoUcenje/razred"} element={<AddGradeComponent/>}/>
                     <Route path={"/api/ZabavnoUcenje/pitanjeuredi"} element={ <Wrapper component={EditQuestionComponent} animate={true} />}/>
                     <Route path={"api/ZabavnoUcenje/igrauredi"} element={ <Wrapper component={EditGameComponent} animate={true} />}/>
+                    <Route path={"api/ZabavnoUcenje/odgovoruredi"} element={ <Wrapper component={EditAnswerComponent} animate={true} />}/>
                     <Route path={"/api/ZabavnoUcenje/dodajUcenika"} element={<Wrapper component={AddStudentComponent} animate={true} />}/>
                     <Route path={"/api/ZabavnoUcenje/addQuestion"} element={<AddQuestionComponent />}/>
                     <Route path={"/api/ZabavnoUcenje/addAnswer"} element={<AddAnswerComponent />}/>

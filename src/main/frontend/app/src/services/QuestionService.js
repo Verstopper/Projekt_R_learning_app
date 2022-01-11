@@ -54,6 +54,23 @@ class QuestionService {
         }
         return response
     }
+
+    async updateQuestion(id_question, updatedName, updatedText) {
+        let response = {success: false,}
+        let question;
+        try {
+            question = await api.post("/request/uredi",
+                {id:id_question,name:updatedName,text:updatedText});
+            response.data= question.data;
+            console.log("IU SERVISU DATA " + question.data)
+            response.success = true;
+        }catch (err){
+            response.success = false;
+            response.data = "Greška prilikom azuriranja pitanja."
+        }
+        return response
+
+    }
 }
 
 export  default new QuestionService()
