@@ -12,7 +12,6 @@ class LogoutComponent extends Component {
             AuthenticationService.logout();
             return <Navigate to={"/"}/>
         }
-
         //let message = <p> Not logged in. Log in <a href='/login'>here.</a></p>;
         //return <InvalidComponent message={message} />
     }

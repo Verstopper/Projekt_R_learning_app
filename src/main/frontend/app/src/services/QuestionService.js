@@ -22,7 +22,6 @@ class QuestionService {
         return response
     }
 
-
     async getAllQuestions(id_game) {
         let response = {success: false,}
         let questions;
@@ -69,7 +68,6 @@ class QuestionService {
             response.data = "Greška prilikom azuriranja pitanja."
         }
         return response
-
     }
 }
 

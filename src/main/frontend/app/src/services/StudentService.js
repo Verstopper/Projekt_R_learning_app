@@ -7,8 +7,6 @@ const api = axios.create({
 })
 class StudentService {
     async getAllGames(username) {
-
-
         let games;
         let success = false;
         try {
@@ -17,7 +15,6 @@ class StudentService {
         }catch (err){
            games = "Greška prilikom dodavanja igre."
         }
-
         return {
             games:games.data,
             success:success,
@@ -29,7 +26,6 @@ class StudentService {
         let url = '/api/ZabavnoUcenje/dodajUcenika'
         console.log("USERNAME LOGGEDIN" + usernameLoggedIn)
         let response = {success: false,}
-        // let student;
         let success = false;
         try {
             let student = await api.post(url,

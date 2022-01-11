@@ -1,9 +1,6 @@
-import ProfessorService from "../services/ProfessorService";
 import AuthenticationService from "../services/AuthenticationService";
 import NavBar from "./Navbar";
-
-import React, {Component, useState} from 'react';
-
+import React, {Component} from 'react';
 import {Button, Col, Container, Row} from "react-bootstrap";
 import QuestionService from "../services/QuestionService";
 import GameService from "../services/GameService";
@@ -19,7 +16,6 @@ class QuestionRow extends Component {
         function goToQuestion(id, questionName, questionText) {
             console.log("ID QUESTION " + id)
             AuthenticationService.getQuestionIntoStorage(id, questionName, questionText);
-            return
         }
 
         function deleteQuestion(id) {
@@ -34,15 +30,12 @@ class QuestionRow extends Component {
                         <p> Text: {this.props.text} </p></Col>
                     <Col md={{span: 4, offset: 4}}><Button variant="danger"
                                                            onClick={() => deleteQuestion(this.props.id)}>Izbriši</Button>
-                        <Button variant="warning" onClick={() => goToQuestion(this.props.id, this.props.name, this.props.text)}
+                        <Button variant="warning"
+                                onClick={() => goToQuestion(this.props.id, this.props.name, this.props.text)}
                                 href={"/api/ZabavnoUcenje/pitanjeuredi"}>Uredi</Button></Col>
                 </Row>
-
-
             </Container>
         )
-
-
     }
 }
 
@@ -55,29 +48,24 @@ class EditGameComponent extends Component {
             password: '',
             success: undefined,
             questions: undefined,
-            updatedName:  sessionStorage.getItem("gameName"),
+            updatedName: sessionStorage.getItem("gameName"),
             updatedDescription: sessionStorage.getItem("gameDesc"),
             defaultname: sessionStorage.getItem("gameName"),
-            defaultDescription : sessionStorage.getItem("gameDesc")
+            defaultDescription: sessionStorage.getItem("gameDesc")
         }
 
         this.handleGameUpdate = async (event) => {
             let id_game = AuthenticationService.getGameFromStorage();
-            console.log("usao u handle update.....")
-            console.log("updatetdname: "+ this.state.updatedName);
-            console.log("updatetddescription: "+ this.state.updatedDescription);
-            console.log("id: "+ id_game);
             event.preventDefault();
-            let response = await GameService.updateGame(id_game,this.state.updatedName, this.state.updatedDescription);
+            let response = await GameService.updateGame(id_game, this.state.updatedName, this.state.updatedDescription);
             this.state.success = true;
-            if(response.status >= 400){
+            if (response.status >= 400) {
                 this.state.success = false;
                 this.setState({errors: 'Ažuriranje igre neuspjelo :(',})
             }
-            if(this.state.success){
-                return(<ProfessorDashboard/>)
+            if (this.state.success) {
+                return (<ProfessorDashboard/>)
             }
-
         }
 
         this.handleChange = (event) => {
@@ -158,19 +146,14 @@ class EditGameComponent extends Component {
                                            defaultValue={this.state.defaultDescription}
                                            value={this.state.updatedDescription} onChange={this.handleChange} required/>
                                 </div>
-
-                                {/*<div className="form-inputs">*/}
-                                {/*    <label htmlFor="oib"></label>*/}
-                                {/*    <input type="text" id="oib" name="oib" placeholder="OIB"*/}
-                                {/*           value={this.state.oib} onChange={this.handleChange} required/>*/}
-                                {/*</div>*/}
-                                <button className={"btn btn-primary"} type="submit" onClick={this.handleGameUpdate}>Ažuriraj igru</button>
+                                <button className={"btn btn-primary"} type="submit"
+                                        onClick={this.handleGameUpdate}>Ažuriraj igru
+                                </button>
                                 <a className={"btn btn-danger"} href="javascript:history.go(-1)">Odustani</a>
                             </form>
                         </section>
                     </div>
                     <form onSubmit={this.handleSubmit}>
-
                         <button className={"btn btn-secondary"} type="submit">Pregled pitanja</button>
                     </form>
                     /

@@ -5,31 +5,32 @@ export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
 const api = axios.create({
     baseURL: API_URl
 })
+
 class AnswerService {
     async getAllAnswers(id_question) {
         let response = {success: false,}
         let answers;
         try {
             answers = await api.post("/odgovor/getAllAnswers",
-                {idigre:id_question});
-            response.data= answers.data;
+                {idigre: id_question});
+            response.data = answers.data;
             response.success = true;
-        }catch (err){
+        } catch (err) {
             response.success = false;
             response.data = "Greška prilikom pregleda pitanja."
         }
         return response
     }
 
-    async addAnswer(id_question,name,correctness) {
+    async addAnswer(id_question, name, correctness) {
         let response = {success: false,}
         let answer;
         try {
             answer = await api.post("/odgovor/dodaj",
-                {question:id_question,text:name,correctness:correctness});
-            response.data= answer.data;
+                {question: id_question, text: name, correctness: correctness});
+            response.data = answer.data;
             response.success = true;
-        }catch (err){
+        } catch (err) {
             response.success = false;
             response.data = "Greška prilikom dodavanja odgovora."
         }
@@ -41,10 +42,10 @@ class AnswerService {
         let answers;
         try {
             answers = await api.post("/odgovor/izbrisi",
-                {id_question:id_answer});
-            response.data= answers.data;
+                {id_question: id_answer});
+            response.data = answers.data;
             response.success = true;
-        }catch (err){
+        } catch (err) {
             response.success = false;
             response.data = "Greška prilikom pregleda pitanja."
         }
@@ -56,10 +57,10 @@ class AnswerService {
         let answer;
         try {
             answer = await api.post("/odgovor/uredi",
-                {id:answer_id,text:updatedText,correctness:updatedCorrectness});
-            response.data= answer.data;
+                {id: answer_id, text: updatedText, correctness: updatedCorrectness});
+            response.data = answer.data;
             response.success = true;
-        }catch (err){
+        } catch (err) {
             response.success = false;
             response.data = "Greška prilikom ažuriranja odgovora."
         }

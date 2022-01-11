@@ -1,5 +1,5 @@
 import React, {Component, useState} from 'react'
-import { validatePassword } from "./validateInfo";
+import {validatePassword} from "./validateInfo";
 import AuthenticationService from "../services/AuthenticationService";
 import {Navigate} from "react-router-dom";
 import InvalidComponent from "./InvalidComponent";
@@ -9,8 +9,6 @@ class RegstrationComponent extends React.Component {
 
     constructor(props) {
         super(props);
-        // console.log("     +++++       ")
-        // console.log(this.props.id)
         this.state = {
             oib: '',
             fullName: '',
@@ -21,66 +19,52 @@ class RegstrationComponent extends React.Component {
             hasLoginFailed: true,
             showSuccessMessage: false
         }
-        this.handleChange = (event) =>{
-            // console.log("here")
+        this.handleChange = (event) => {
             this.setState(
                 {
-                    [event.target.name]
-                        : event.target.value
+                    [event.target.name]: event.target.value
                 }
             )
-            // console.log("---" + this.state);
         }
         this.handleSubmit = async (event) => {
-            // console.log("here")
             event.preventDefault();
             let err = {}
-            //err = validatePassword(this.state.password);
-            //err.password = validatePassword(this.state.password)
-            //console.log(err)
             console.log(err.password);
             console.log("i am here");
-            console.log(this.state.username + " " +  this.state.password)
-            if(!err.password){
+            console.log(this.state.username + " " + this.state.password)
+            if (!err.password) {
                 let response = await ProfessorService.professorSignUp(this.state.oib, this.state.username, this.state.password, this.state.fullName, this.state.email);
-                if(response.status >= 400){
+                if (response.status >= 400) {
                     this.setState(
                         {
                             errors: 'Registracija neuspjela',
                         }
                     )
                 }
-
-                //console.log(response);
                 AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
                 this.setState({
                     hasLoginFailed: false,
                 })
-            }
-            else{
+            } else {
                 this.setState(
                     {
                         errors: err,
                     }
                 )
             }
-            // console.log(errs)
-
         }
     }
 
     render() {
 
-        if(!this.state.hasLoginFailed)
+        if (!this.state.hasLoginFailed)
             return <Navigate to='/'/>
 
         const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
-        if(isUserLoggedIn){
+        if (isUserLoggedIn) {
             let message = <p> Already logged in. Go to main page <a href='/'>here.</a></p>;
-            return <InvalidComponent message={message} />
+            return <InvalidComponent message={message}/>
         }
-
-
 
         return (
             <div className="">
@@ -118,8 +102,6 @@ class RegstrationComponent extends React.Component {
             </div>
         );
     }
-
 }
-
 
 export default RegstrationComponent;

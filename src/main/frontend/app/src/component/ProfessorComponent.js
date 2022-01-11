@@ -1,12 +1,10 @@
 import React, {Component, useState} from "react";
-import { Navigate } from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import {validatePassword, validateUsername} from "./validateInfo";
 import StudentComponent from "./StudentComponent";
 import AuthenticationService from "../services/AuthenticationService";
 import InvalidComponent from "./InvalidComponent";
 import ProfessorDashboard from "./ProfessorDashboard";
-
-
 
 class ProfessorComponent extends Component {
 
@@ -26,7 +24,6 @@ class ProfessorComponent extends Component {
             )
         }
         this.handleSubmit = async (event) => {
-            console.log("hej hej")
             event.preventDefault();
             let errUser = validateUsername(this.state.username)
             let errPass = validatePassword(this.state.password)
@@ -64,35 +61,33 @@ class ProfessorComponent extends Component {
         }
     }
 
-    render(){
+    render() {
         const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
-        if(isUserLoggedIn){
-            return <ProfessorDashboard />
-            /*let message = <p> Već ste prijavljeni. Vratite se na početnu stranicu <a href='/'>ovdje.</a></p>;
-            return <InvalidComponent message={message} />*/
+        if (isUserLoggedIn) {
+            return <ProfessorDashboard/>
         }
         //replace username with id
         let renderValue;
-        if(this.state.existsInDB && !this.state.success){
-            renderValue =  <Navigate to={{
+        if (this.state.existsInDB && !this.state.success) {
+            renderValue = <Navigate to={{
                 pathname: '/api/ZabavnoUcenje/profesor/login',
-                state: { username: this.state.username},
-            }} /> ;
-        }else{
+                state: {username: this.state.username},
+            }}/>;
+        } else {
             renderValue = (
                 <div className="">
                     <section className="container container-px container-py">
-                        <form  onSubmit={this.handleSubmit}>
+                        <form onSubmit={this.handleSubmit}>
                             <div className="form-inputs">
                                 {/*<label htmlFor="username">Username</label>*/}
                                 <input required type="text" id="username" name="username" placeholder="Korisničko ime"
                                        value={this.state.username} onChange={this.handleChange}/>
                                 {/*<label htmlFor="password">Password</label>*/}
-                                <input required autoComplete={"off"} type="text" id="password" name="password" placeholder="Lozinka"
+                                <input required autoComplete={"off"} type="text" id="password" name="password"
+                                       placeholder="Lozinka"
                                        value={this.state.password} onChange={this.handleChange}/>
                             </div>
                             {this.state.errors && <p>{this.state.errors}</p>}
-
                             <button className="btn btn-primary" type="submit">Login</button>
                             <a className={"btn btn-danger"} href={"/"}>Odustani</a>
                         </form>
@@ -102,7 +97,6 @@ class ProfessorComponent extends Component {
         }
         return renderValue;
     }
-
 }
 
 export default ProfessorComponent

@@ -1,16 +1,12 @@
 import React, {Component, useState} from 'react'
-import  { Navigate } from 'react-router-dom'
+import {Navigate} from 'react-router-dom'
 import AuthenticationService from "../services/AuthenticationService";
 import InvalidComponent from "./InvalidComponent";
 //import axios from 'axios';
 import {validateUsername} from "./validateInfo";
 import StudentGameComponent from "./StudentGameComponent";
 
-
-
 class StudentComponent extends Component {
-
-
 
     constructor(props) {
         super(props);
@@ -23,76 +19,62 @@ class StudentComponent extends Component {
             existsInD: false,
             errorDB: false,
         }
-        this.handleChange = (event) =>{
-            //  console.log("here")
+        this.handleChange = (event) => {
             this.setState(
                 {
-                    [event.target.name]
-                        : event.target.value
+                    [event.target.name]: event.target.value
                 }
             )
-             //console.log("---" + this.state);
         }
         this.handleSubmit = async (event) => {
-            // console.log("here")
             event.preventDefault();
             let errs = validateUsername(this.state.username)
-            //console.log(errs);
-            if(!errs){
-                // check if exists in DB
-                //if doesnt exist in DB => error
-                let response = await  AuthenticationService.loginUcenik(this.state.username);
-                //console.log(response.data);
-
-                //console.log("here")
-
-                if(response.data){
+            if (!errs) {
+                let response = await AuthenticationService.loginUcenik(this.state.username);
+                if (response.data) {
                     this.setState({
                         existsInDB: true,
                         login: true,
                     })
-                }else{
+                } else {
                     this.setState({
                         errors: 'Učenik ne postoji!',
                     })
                 }
-            }else{
+            } else {
                 this.setState(
                     {
                         errors: errs,
                     }
                 )
             }
-
         }
     }
 
     render() {
         const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
         console.log("USER JE LOGINAN VALJDA  " + isUserLoggedIn)
-        if(isUserLoggedIn){
+        if (isUserLoggedIn) {
             let message = <p> Already logged in. Go to main page <a href='/'>here.</a></p>;
-            return <StudentGameComponent />
+            return <StudentGameComponent/>
         }
         //replace username with id
         let renderValue;
-        if(this.state.existsInDB && this.state.login){
+        if (this.state.existsInDB && this.state.login) {
             //renderValue = <Navigate to={{
-              //  pathname:   `/api/ZabavnoUcenje/ucenik/${this.state.username}`,
-                //state: { username: this.state.username},
+            //  pathname:   `/api/ZabavnoUcenje/ucenik/${this.state.username}`,
+            //state: { username: this.state.username},
             //}}
             ///> ;
-            AuthenticationService.registerSuccessfulLogin(this.state.username," ");
+            AuthenticationService.registerSuccessfulLogin(this.state.username, " ");
             AuthenticationService.putStudentinSession();
-
-            return <StudentGameComponent />
-
-        }else{
+            return <StudentGameComponent/>
+        } else {
             console.log("StudentComponent dobar")
             renderValue = (
                 <div className="wrapper fadeInDown">
                     <section className="container container-px container-py">
-                        <form className="korisnik__odabir"  onSubmit={this.handleSubmit}>
+                        <form className="korisnik__odabir" onSubmit={this.handleSubmit}>
                             <div className="form-inputs">
                                 {/*<label htmlFor="username">Username</label>*/}
                                 <input type="text" id="username" name="username" placeholder="Korisničko ime"
@@ -122,7 +104,6 @@ class StudentComponent extends Component {
         return renderValue;
         console.log("bok od StudentComponent");
     }
-
 }
 
-export default  StudentComponent
+export default StudentComponent

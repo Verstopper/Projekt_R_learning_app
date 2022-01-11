@@ -14,10 +14,10 @@ class GameService {
         let success = false;
         try {
             game = await api.post("/igra/dodaj",
-                {name: name, description: description, username:username});
-            response.data= game;
+                {name: name, description: description, username: username});
+            response.data = game;
             response.success = true;
-        }catch (err){
+        } catch (err) {
             response.data = "Greška prilikom dodavanja igre."
             response.success = false;
         }
@@ -31,29 +31,27 @@ class GameService {
         try {
             game = await api.post("/igra/brisi",
                 {idigre: game_id});
-            response.data= game.data;
+            response.data = game.data;
             response.success = true;
-        }catch (err){
+        } catch (err) {
             response.data = "Greška prilikom dodavanja igre."
         }
         return response
     }
 
-    async updateGame(id, name, description){
+    async updateGame(id, name, description) {
         let response = {success: false,}
         let game;
         let success = false;
         try {
             game = await api.post("/igra/uredi",
-                {id:id, name: name, description: description});
-            response.data= true;
-        }catch (err){
+                {id: id, name: name, description: description});
+            response.data = true;
+        } catch (err) {
             response.data = "Greška prilikom ažuriranja igre."
         }
         return response
     }
-
-
 }
 
 export default new GameService()

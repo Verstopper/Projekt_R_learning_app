@@ -1,15 +1,10 @@
-import ProfessorService from "../services/ProfessorService";
 import AuthenticationService from "../services/AuthenticationService";
 import NavBar from "./Navbar";
-
-import React, {Component, useState} from 'react';
-
+import React, {Component} from 'react';
 import {Button, Col, Container, Row} from "react-bootstrap";
 import QuestionService from "../services/QuestionService";
 import AnswerService from "../services/AnswerService";
 import AddAnswerComponent from "./AddAnswerComponent";
-import GameService from "../services/GameService";
-import ProfessorDashboard from "./ProfessorDashboard";
 import * as PropTypes from "prop-types";
 import EditGameComponent from "./EditGameComponent";
 
@@ -23,13 +18,11 @@ class AnswerRow extends Component {
         function goToAnswer(id, answerText, answerCorrectness) {
             console.log("ID ANSWER " + id)
             AuthenticationService.getAnswerIntoStorage(id, answerText, answerCorrectness);
-            return
         }
 
         function deleteAnswer(id) {
             AnswerService.deleteAnswers(id);
             window.location.reload(false);
-            return
         }
 
         return (
@@ -43,12 +36,8 @@ class AnswerRow extends Component {
                                 onClick={() => goToAnswer(this.props.id, this.props.text, this.props.correctness)}
                                 href={"/api/ZabavnoUcenje/odgovoruredi"}>Uredi</Button></Col>
                 </Row>
-
-
             </Container>
         )
-
-
     }
 }
 
@@ -137,7 +126,6 @@ class EditQuestionComponent extends Component {
 
     render() {
 
-
         let rows;
         if (this.state.answers && this.state.success) {
             rows = []
@@ -180,12 +168,6 @@ class EditQuestionComponent extends Component {
                                            defaultValue={this.state.defaultText}
                                            value={this.state.updatedText} onChange={this.handleChange} required/>
                                 </div>
-
-                                {/*<div className="form-inputs">*/}
-                                {/*    <label htmlFor="oib"></label>*/}
-                                {/*    <input type="text" id="oib" name="oib" placeholder="OIB"*/}
-                                {/*           value={this.state.oib} onChange={this.handleChange} required/>*/}
-                                {/*</div>*/}
                                 <button className={"btn btn-primary"} type="submit"
                                         onClick={this.handleQuestionUpdate}>Ažuriraj pitanje
                                 </button>
@@ -197,8 +179,6 @@ class EditQuestionComponent extends Component {
                         <button className={"btn btn-secondary"} type="submit">Pregled odgovora</button>
                     </form>
                     <Button className={"btn btn-secondary"} href={"/api/ZabavnoUcenje/addAnswer"}>Dodaj odgovor</Button>
-
-
                     <form>
                         {rows && rows}
                     </form>

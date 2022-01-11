@@ -3,7 +3,6 @@ import {Link, Navigate} from "react-router-dom";
 import AuthenticationService from "../services/AuthenticationService";
 import {render} from "@testing-library/react";
 
-
 class NavBar extends Component {
 
     constructor(props) {
@@ -34,7 +33,6 @@ class NavBar extends Component {
         if (this.state.logout) {
             return <Navigate to={"/"}/>
         }
-
 
             return (
             <header>

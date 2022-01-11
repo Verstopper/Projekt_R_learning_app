@@ -49,14 +49,11 @@ class RouterComponent extends Component {
                     <Route path={"/api/ZabavnoUcenje/dodajUcenika"} element={<Wrapper component={AddStudentComponent} animate={true} />}/>
                     <Route path={"/api/ZabavnoUcenje/addQuestion"} element={<AddQuestionComponent />}/>
                     <Route path={"/api/ZabavnoUcenje/addAnswer"} element={<AddAnswerComponent />}/>
-
                 </Routes>
                 <Routes>
                     <Route path="/" element={<MainIndexComponent /> }/>
                 </Routes>
-
             </Router>
-
         )
     }
 }

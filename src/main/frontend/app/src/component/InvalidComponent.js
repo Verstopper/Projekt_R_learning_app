@@ -6,7 +6,6 @@ class InvalidComponent extends Component {
         super(props);
         //  console.log(this.props.message);
     }
-
     render() {
         return (
             <div>
@@ -17,6 +16,5 @@ class InvalidComponent extends Component {
         );
     }
 }
-
 
 export default InvalidComponent;

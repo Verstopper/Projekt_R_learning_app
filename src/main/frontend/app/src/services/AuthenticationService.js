@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const API_URL = 'http://localhost:8080'
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
 export const NAME_SESSION_ATTRIBUTE_NAME = 'User'
@@ -28,14 +29,14 @@ class AuthenticationService {
 
     getLoggedInUserName() {
         let user = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME)
-        console.log("Userrrrrrrrrr"  + user)
+        console.log("Userrrrrrrrrr" + user)
         if (user === null) return ''
         return user
     }
 
     getQuestionIntoStorage(id, questionName, questionText) {
         console.log("STAVLJAM U STORAGE" + id)
-        sessionStorage.setItem(QUESTION_SESSION_ATTRIBUTE_NAME,id);
+        sessionStorage.setItem(QUESTION_SESSION_ATTRIBUTE_NAME, id);
         sessionStorage.setItem(QUESTION_NAME_SESSION_ATTRIBUTE_NAME, questionName);
         sessionStorage.setItem(QUESTION_TEXT_SESSION_ATTRIBUTE_NAME, questionText);
     }
@@ -47,18 +48,18 @@ class AuthenticationService {
 
 
     getGameIntoStorage(id, name, description) {
-        sessionStorage.setItem(GAME_SESSION_ATTRIBUTE_NAME,id);
+        sessionStorage.setItem(GAME_SESSION_ATTRIBUTE_NAME, id);
         sessionStorage.setItem(GAME_NAME_SESSION_ATTRIBUTE_NAME, name);
         sessionStorage.setItem(GAME_DESCRIPTION_SESSION_ATTRIBUTE_NAME, description);
     }
 
-    getAnswerIntoStorage(id, text, correctness){
+    getAnswerIntoStorage(id, text, correctness) {
         sessionStorage.setItem(ANSWER_SESSION_ATTRIBUTE_NAME, id);
         sessionStorage.setItem(ANSWER_TEXT_SESSION_ATTRIBUTE_NAME, text);
         sessionStorage.setItem(ANSWER_CORRECTNESS_SESSION_ATTRIBUTE_NAME, correctness);
     }
 
-    getAnswerFromStorage(){
+    getAnswerFromStorage() {
         let id_answer = sessionStorage.getItem(ANSWER_SESSION_ATTRIBUTE_NAME);
         return id_answer;
     }
@@ -70,7 +71,7 @@ class AuthenticationService {
 
     getRole() {
         let user = sessionStorage.getItem(NAME_SESSION_ATTRIBUTE_NAME)
-        if(user == "student") {
+        if (user == "student") {
             return user
         }
     }
@@ -81,9 +82,8 @@ class AuthenticationService {
     }
 
     putStudentinSession() {
-        sessionStorage.setItem(NAME_SESSION_ATTRIBUTE_NAME,"student")
+        sessionStorage.setItem(NAME_SESSION_ATTRIBUTE_NAME, "student")
     }
-
 
 
     /*registerProfesor(oib, korisnicko_ime, lozinka, ime_i_prezime, email) {
@@ -103,10 +103,9 @@ class AuthenticationService {
 
     loginUcenik(username) {
         let url = "/api/ZabavnoUcenje/ucenik/login";
-        return api.post(url,{username:username})
+        return api.post(url, {username: username})
     }
-
-
 }
+
 export default new
 AuthenticationService()

@@ -1,18 +1,15 @@
-import React, {Component, useState} from 'react'
-import { validatePassword } from "./validateInfo";
+import React, {Component} from 'react'
 import AuthenticationService from "../services/AuthenticationService";
-import {Navigate} from "react-router-dom";
-import InvalidComponent from "./InvalidComponent";
 import ProfessorService from "../services/ProfessorService";
-import GameService from "../services/GameService";
 import ProfessorDashboard from "./ProfessorDashboard";
 import StudentService from "../services/StudentService";
 
-class GradeItem extends Component{
+class GradeItem extends Component {
     constructor(props) {
         super(props);
     }
-    render(){
+
+    render() {
         return <option value={this.props.name}>{this.props.name}</option>
     }
 }
@@ -21,8 +18,6 @@ class AddStudentComponent extends React.Component {
 
     constructor(props) {
         super(props);
-        // console.log("     +++++       ")
-        // console.log(this.props.id)
         this.state = {
             success: false,
             username: '',
@@ -39,19 +34,14 @@ class AddStudentComponent extends React.Component {
             )
         }
         this.handleSubmit = async (event) => {
-            // console.log("here")
             event.preventDefault();
             let err = {}
-            //err = validatePassword(this.state.password);
-            //err.password = validatePassword(this.state.password)
-            //console.log(err)
             console.log(err.password);
             console.log("i am here");
-            //console.log("ime ucenika:" + this.state.name + ", username ucenika: " +  this.state.username)
-            if(!err.password){
+            if (!err.password) {
                 let response = await StudentService.addStudent(this.state.fullName, this.state.username, this.state.grade);
                 this.state.success = true;
-                if(response.status >= 400){
+                if (response.status >= 400) {
                     this.state.success = false;
                     this.setState(
                         {
@@ -59,17 +49,15 @@ class AddStudentComponent extends React.Component {
                         }
                     )
                 }
-            }
-            else{
+            } else {
                 this.setState(
                     {
                         errors: err,
                     }
                 )
             }
-            // console.log(errs)
-            if(this.state.success){
-                return(
+            if (this.state.success) {
+                return (
                     <ProfessorDashboard/>
                 )
             }
@@ -78,10 +66,10 @@ class AddStudentComponent extends React.Component {
 
     async componentDidMount() {
         let usernameOfProfessor = AuthenticationService.getLoggedInUserName();
-        await ProfessorService.getAllGrades(usernameOfProfessor).then( res => {
+        await ProfessorService.getAllGrades(usernameOfProfessor).then(res => {
             console.log("res " + res)
             this.setState({
-                data : res.data,
+                data: res.data,
             })
         });
         console.log("+++++++++++++++++")
@@ -93,17 +81,17 @@ class AddStudentComponent extends React.Component {
 
     render() {
         let rows;
-        if(this.state.data){
-            rows=[]
-            for(let grade in this.state.data){
+        if (this.state.data) {
+            rows = []
+            for (let grade in this.state.data) {
                 rows.push(<GradeItem key={this.state.data[grade].id}
-                                     name={this.state.data[grade].name} />)
+                                     name={this.state.data[grade].name}/>)
             }
         }
         console.log(rows);
 
-        if(this.state.success){
-            return(
+        if (this.state.success) {
+            return (
                 <ProfessorDashboard/>
             )
         }
@@ -114,27 +102,23 @@ class AddStudentComponent extends React.Component {
             return <InvalidComponent message={message} />
         }*/
 
-
-
         return (
             <div className="">
                 <section className="container container-px container-py">
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-inputs">
-                            <label htmlFor="name"></label>
+                            {/*<label htmlFor="name"></label>*/}
                             <input type="text" id="fullName" name="fullName" placeholder="Ime učenika"
                                    value={this.state.fullName} onChange={this.handleChange} required/>
                         </div>
                         <div className="form-inputs">
-                            <label htmlFor="username"></label>
+                            {/*<label htmlFor="username"></label>*/}
                             <input type="text" id="username" name="username" placeholder="Korisničko ime učenika"
                                    value={this.state.username} onChange={this.handleChange} required/>
                         </div>
                         <div className="form-group">
                             <label htmlFor="grade">Odabir razreda</label>
                             <select className="dropdown" name="grade" onChange={this.handleChange} required>
-                                {/*<option>1.a</option>*/}
-                                {/*<option>blabla</option>*/}
                                 {rows && rows}
                             </select>
                         </div>
@@ -145,8 +129,6 @@ class AddStudentComponent extends React.Component {
             </div>
         );
     }
-
 }
-
 
 export default AddStudentComponent;
