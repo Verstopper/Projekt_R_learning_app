@@ -6,6 +6,7 @@ import InvalidComponent from "./InvalidComponent";
 import ProfessorService from "../services/ProfessorService";
 import QuestionService from "../services/QuestionService";
 import {Dropdown} from "react-bootstrap";
+import AnswerService from "../services/AnswerService";
 
 class AddAnswerComponent extends React.Component {
 
@@ -15,19 +16,24 @@ class AddAnswerComponent extends React.Component {
         // console.log(this.props.id)
         this.state = {
             name: '',
-            description: '',
+            name2: '',
+            name3: '',
+            name4: '',
+            text: '',
+            text2: '',
+            text3: '',
+            text4: '',
             errors: {},
             hasLoginFailed: true,
             showSuccessMessage: false
         }
 
 
-        this.handleChange = (event) =>{
+        this.handleChange = (event) => {
             // console.log("here")
             this.setState(
                 {
-                    [event.target.name]
-                        : event.target.value
+                    [event.target.name]: event.target.value
                 }
             )
             // console.log("---" + this.state);
@@ -36,46 +42,97 @@ class AddAnswerComponent extends React.Component {
             // console.log("here")
             event.preventDefault();
             let err = {}
-            let idGame = AuthenticationService.getGameFromStorage();
-            let response = await QuestionService.addQuestion(idGame,this.state.name,this.state.description);
-            if(response.success == false){
+            let idquestion = AuthenticationService.getQuestionFromStorage();
+            let response = await AnswerService.addAnswer(idquestion, this.state.name, this.state.text)
+            let response2 = await AnswerService.addAnswer(idquestion, this.state.name2, this.state.text2)
+            let response3 = await AnswerService.addAnswer(idquestion, this.state.name3, this.state.text3)
+            let response4 = await AnswerService.addAnswer(idquestion, this.state.name4, this.state.text4)
+            if (response.success == false || response2.success == false || response3.success == false || response4.success == false ) {
                 this.setState(
                     {
                         errors: 'Dodvanje pitanja je bilo neuspješno',
                     }
                 )
+
+
+                // console.log(errs)
+
+
             }
-
-            // console.log(errs)
-
         }
     }
 
+
     render() {
-
-        const options = [
-            'DA', 'NE'
-        ];
-        const defaultOption = options[0];
-
-
-
         return (
             <div className="">
                 <section className="container container-px container-py">
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-inputs">
-                            <label htmlFor="name"></label>
+
                             <input type="text" id="name" name="name" placeholder="Naziv odgovora"
                                    value={this.state.name} onChange={this.handleChange} required/>
                         </div>
                         <div className="form-inputs">
                             <label htmlFor="description"></label>
-                            <Dropdown type="text" id="description" name="description"  options={options} requierd onChange={this.handleChange} value={defaultOption} placeholder="Odaberi točnost odgovora" />;
+                            <h5>Točnost:</h5>
+                            <select name="text" id="text"  onChange={this.handleChange} required>
+                                <option value="DA">DA</option>
+                                <option value="NE">NE</option>
 
-
+                            </select>
+                        <p>
+                        </p>
                         </div>
-                        <button className={"btn btn-primary"} type="submit">Dodaj pitanje</button>
+                        <div className="form-inputs">
+
+                            <input type="text" id="name2" name="name2" placeholder="Naziv odgovora"
+                                   value={this.state.name2} onChange={this.handleChange} required/>
+                        </div>
+                        <div className="form-inputs">
+                            <label htmlFor="description"></label>
+                            <h5>Točnost:</h5>
+                            <select name="text2" id="text2"  onChange={this.handleChange} required>
+                                <option value="DA">DA</option>
+                                <option value="NE">NE</option>
+
+                            </select>
+                            <p>
+                            </p>
+                        </div>
+                        <div className="form-inputs">
+                            <label htmlFor="name"></label>
+                            <input type="text" id="name3" name="name3" placeholder="Naziv odgovora"
+                                   value={this.state.name3} onChange={this.handleChange} required/>
+                        </div>
+                        <div className="form-inputs">
+                            <label htmlFor="description"></label>
+                            <h5>Točnost:</h5>
+                            <select name="text3" id="text3"  onChange={this.handleChange} required>
+                                <option value="DA">DA</option>
+                                <option value="NE">NE</option>
+
+                            </select>
+                            <p>
+                            </p>
+                        </div>
+                        <div className="form-inputs">
+                            <label htmlFor="name"></label>
+                            <input type="text" id="name4" name="name4" placeholder="Naziv odgovora"
+                                   value={this.state.name4} onChange={this.handleChange} required/>
+                        </div>
+                        <div className="form-inputs">
+                            <label htmlFor="description"></label>
+                            <h5>Točnost:</h5>
+                            <select name="text4" id="text4"  onChange={this.handleChange}required>
+                                <option value="DA">DA</option>
+                                <option value="NE">NE</option>
+
+                            </select>
+                            <p>
+                            </p>
+                        </div>
+                        <button className={"btn btn-primary"} type="submit">Dodaj odgovore</button>
                         <a className={"btn btn-danger"} href="javascript:history.go(-1)" >Odustani</a>
                     </form>
                 </section>

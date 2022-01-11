@@ -21,6 +21,21 @@ class AnswerService {
         return response
     }
 
+    async addAnswer(id_question,name,correctness) {
+        let response = {success: false,}
+        let answer;
+        try {
+            answer = await api.post("/odgovor/dodaj",
+                {question:id_question,text:name,correctness:correctness});
+            response.data= answer.data;
+            response.success = true;
+        }catch (err){
+            response.success = false;
+            response.data = "Greška prilikom dodavanja odgovora."
+        }
+        return response
+    }
+
     async deleteAnswers(id_answer) {
         let response = {success: false,}
         let answers;
