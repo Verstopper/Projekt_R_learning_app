@@ -1,23 +1,27 @@
 import React, {Component, useState} from 'react'
 import { validatePassword } from "./validateInfo";
 import AuthenticationService from "../services/AuthenticationService";
-import {Navigate} from "react-router-dom";
+import {Navigate, Redirect, useHistory} from "react-router-dom";
 import InvalidComponent from "./InvalidComponent";
 import ProfessorService from "../services/ProfessorService";
 import GameService from "../services/GameService";
 import ProfessorDashboard from "./ProfessorDashboard";
 import {logDOM} from "@testing-library/react";
+import ProfessorComponent from "./ProfessorComponent";
+import {Button} from "react-bootstrap";
+
 
 
 class AddGameComponent extends React.Component {
 
 
     constructor(props) {
+
         super(props);
 
 
         this.state = {
-            success: undefined,
+            success: true,
             name: '',
             description: '',
             oib: '',
@@ -37,22 +41,16 @@ class AddGameComponent extends React.Component {
 
             event.preventDefault();
             let err = {}
-            const header = document.querySelector("header");
 
-            const hidden = document.querySelector("#hidden")
-            if (header.classList.contains("is-active")) {
-                header.classList.remove("is-active")
-                hidden.style.display = 'none'
-            } else {
-                header.classList.add("is-active")
-                hidden.style.display = 'block'
-            }
+
+
             if(!err.password){
                 let username = AuthenticationService.getLoggedInUserName();
                 let response = await GameService.addGame(this.state.name, this.state.description, username);
-                console.log("STATUS" + response.status + " su"  + this.state.success)
-                if(response.success == false){
+                console.log(response)
+                if(response == false){
                     this.state.success = false;
+                    console.log("usli smo " + this.state.success)
                     this.setState(
                         {
                             errors: 'Dodavanje igre neuspješno.',
@@ -61,6 +59,10 @@ class AddGameComponent extends React.Component {
                 }else {
 
                     this.state.success = true;
+                    console.log("usli smo " + this.state.success)
+                    window.location.href = "/api/ZabavnoUcenje/profesor/pregledIgara";
+
+
                 }
             }
             else{
@@ -77,12 +79,7 @@ class AddGameComponent extends React.Component {
 
     render() {
 
-        if(this.state.success){
-            return <Navigate to={{
-                pathname: `/api/ZabavnoUcenje/profesor/pregledIgara`,
-                state: {username: this.state.username},
-            }}/>
-        }
+
 
 
 
@@ -92,7 +89,14 @@ class AddGameComponent extends React.Component {
             return <InvalidComponent message={message} />
         }*/
 
+        let pom;
+        function goTo() {
+            console.log("USLO JE U GO TO")
+            return <ProfessorDashboard />
 
+
+
+        }
 
         return (
 
@@ -115,20 +119,13 @@ class AddGameComponent extends React.Component {
                         {/*    <input type="text" id="oib" name="oib" placeholder="OIB"*/}
                         {/*           value={this.state.oib} onChange={this.handleChange} required/>*/}
                         {/*</div>*/}
-                        <button className={"btn btn-primary"} type="submit"  >Dodaj igru</button>
-                        <a className={"btn btn-danger"} href="javascript:history.go(-1)">Odustani</a>
-                    </form>
-                    <div id="hidden">
-                        {/*
-                        check djelatnik is logged in, session
-*/}
-                        {!this.state.success &&
-                        <div>
-                            <label >Dogodila se pogreška prilikom dodavanja igre.Pokušajte ponovno ili se vratite na početnu stranicu.</label>
-                        </div>
+                        {
+                            !this.state.success && <p>Došlo je do greške prilikom dodavanja igre. Pokušajte ponovno</p>
                         }
+                        <Button className={"btn btn-primary"} type="submit" onClick={() => goTo()} >Dodaj igru</Button>
+                        <Button className={"btn btn-danger"} href="javascript:history.go(-1)">Odustani</Button>
+                    </form>
 
-                    </div>
                 </section>
             </div>
 
