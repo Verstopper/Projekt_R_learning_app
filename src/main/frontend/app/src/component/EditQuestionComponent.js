@@ -8,6 +8,8 @@ import {Button, Col, Container, Row} from "react-bootstrap";
 import QuestionService from "../services/QuestionService";
 import AnswerService from "../services/AnswerService";
 import AddAnswerComponent from "./AddAnswerComponent";
+import GameService from "../services/GameService";
+import ProfessorDashboard from "./ProfessorDashboard";
 
 class AnswerRow extends Component{
     constructor(props) {
@@ -46,7 +48,30 @@ class EditQuestionComponent extends Component{
             errors: '',
             password: '',
             success: undefined,
-            answers: undefined
+            answers: undefined,
+            updatedName:
+            updatedDescription:
+            defaultname:
+            defaultDescription:
+        }
+
+        this.handleQuestionUpdate = async (event) => {
+            let id_game = AuthenticationService.getGameFromStorage();
+            console.log("usao u handle update.....")
+            console.log("updatetdname: "+ this.state.updatedName);
+            console.log("updatetddescription: "+ this.state.updatedDescription);
+            console.log("id: "+ id_game);
+            event.preventDefault();
+            let response = await GameService.updateGame(id_game,this.state.updatedName, this.state.updatedDescription);
+            this.state.success = true;
+            if(response.status >= 400){
+                this.state.success = false;
+                this.setState({errors: 'Ažuriranje igre neuspjelo :(',})
+            }
+            if(this.state.success){
+                return(<ProfessorDashboard/>)
+            }
+
         }
 
         this.handleChange = (event) =>{
@@ -119,6 +144,32 @@ class EditQuestionComponent extends Component{
                 <NavBar />
                 <section>
                     <label>UREDITE SVOJE PITANJE</label>
+                    <div className="">
+                        <section className="container container-px container-py">
+                            <form onSubmit={this.handleSubmit}>
+                                <div className="form-inputs">
+                                    <label htmlFor="name"></label>
+                                    <input type="text" id="updatedName" name="updatedName"
+                                           defaultValue={this.state.defaultname}
+                                           value={this.state.updatedName} onChange={this.handleChange} required/>
+                                </div>
+                                <div className="form-inputs">
+                                    <label htmlFor="description"></label>
+                                    <input type="text" id="updatedDescription" name="updatedDescription"
+                                           defaultValue={this.state.defaultDescription}
+                                           value={this.state.updatedDescription} onChange={this.handleChange} required/>
+                                </div>
+
+                                {/*<div className="form-inputs">*/}
+                                {/*    <label htmlFor="oib"></label>*/}
+                                {/*    <input type="text" id="oib" name="oib" placeholder="OIB"*/}
+                                {/*           value={this.state.oib} onChange={this.handleChange} required/>*/}
+                                {/*</div>*/}
+                                <button className={"btn btn-primary"} type="submit" onClick={this.handleQuestionUpdate}>Ažuriraj pitanje</button>
+                                <a className={"btn btn-danger"} href="javascript:history.go(-1)">Odustani</a>
+                            </form>
+                        </section>
+                    </div>
                     <form onSubmit={this.handleSubmit}>
                         <button className={"btn btn-secondary"} type="submit">Pregled odgovora</button>
                     </form>

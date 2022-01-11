@@ -19,7 +19,7 @@ public class Game {
     @Column(name = "id_igre")
     private Integer id;
 
-    @Column(name = "naziv", nullable = false, length = 100)
+    @Column(name = "name", nullable = false, length = 100)
     private String name;
 
     @Column(name = "opis", nullable = false, length = 1000)

@@ -55,17 +55,20 @@ class EditGameComponent extends Component {
             password: '',
             success: undefined,
             questions: undefined,
-            updatedName: '',
-            updatedDescription: '',
+            updatedName:  sessionStorage.getItem("gameName"),
+            updatedDescription: sessionStorage.getItem("gameDesc"),
+            defaultname: sessionStorage.getItem("gameName"),
+            defaultDescription : sessionStorage.getItem("gameDesc")
         }
 
         this.handleGameUpdate = async (event) => {
+            let id_game = AuthenticationService.getGameFromStorage();
             console.log("usao u handle update.....")
-            console.log("name: "+ this.props.name);
-            console.log("description: "+ this.props.description);
-            console.log("id: "+ this.state.id);
+            console.log("updatetdname: "+ this.state.updatedName);
+            console.log("updatetddescription: "+ this.state.updatedDescription);
+            console.log("id: "+ id_game);
             event.preventDefault();
-            let response = await GameService.updateGame(this.props.name, this.props.description, this.state.id);
+            let response = await GameService.updateGame(id_game,this.state.updatedName, this.state.updatedDescription);
             this.state.success = true;
             if(response.status >= 400){
                 this.state.success = false;
@@ -145,15 +148,15 @@ class EditGameComponent extends Component {
                             <form onSubmit={this.handleSubmit}>
                                 <div className="form-inputs">
                                     <label htmlFor="name"></label>
-                                    <input type="text" id="name" name="name"
-                                           defaultValue={sessionStorage.getItem("gameName")}
-                                           value={this.props.name} onChange={this.handleChange} required/>
+                                    <input type="text" id="updatedName" name="updatedName"
+                                           defaultValue={this.state.defaultname}
+                                           value={this.state.updatedName} onChange={this.handleChange} required/>
                                 </div>
                                 <div className="form-inputs">
                                     <label htmlFor="description"></label>
-                                    <input type="text" id="description" name="description"
-                                           defaultValue={sessionStorage.getItem("gameDesc")}
-                                           value={this.props.description} onChange={this.handleChange} required/>
+                                    <input type="text" id="updatedDescription" name="updatedDescription"
+                                           defaultValue={this.state.defaultDescription}
+                                           value={this.state.updatedDescription} onChange={this.handleChange} required/>
                                 </div>
 
                                 {/*<div className="form-inputs">*/}

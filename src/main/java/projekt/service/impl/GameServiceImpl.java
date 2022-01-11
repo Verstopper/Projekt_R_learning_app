@@ -71,10 +71,9 @@ public class GameServiceImpl implements GameService {
         Game game = gameRepository.findById(gameUpdateDto.getId())
                 .orElseThrow(() -> new EntityNotFoundException("Ne postoji igra s id-em: " + gameUpdateDto.getId() + "."));
 
-        game.setName(gameUpdateDto.getName());
-        game.setDescription(gameUpdateDto.getDescription());
+        gameRepository.updateDescription(gameUpdateDto.getDescription(),game.getId());
+        gameRepository.updateName(gameUpdateDto.getName(),game.getId());
 
-        gameRepository.save(game);
     }
 
     @Override

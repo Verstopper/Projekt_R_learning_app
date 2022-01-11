@@ -45,7 +45,7 @@ class GameService {
         let success = false;
         try {
             game = await api.post("/igra/uredi",
-                {name: name, description: description, id:id});
+                {id:id, name: name, description: description});
             response.data= true;
         }catch (err){
             response.data = "Greška prilikom ažuriranja igre."
