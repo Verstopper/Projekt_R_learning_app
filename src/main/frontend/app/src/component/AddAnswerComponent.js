@@ -5,8 +5,9 @@ import {Navigate} from "react-router-dom";
 import InvalidComponent from "./InvalidComponent";
 import ProfessorService from "../services/ProfessorService";
 import QuestionService from "../services/QuestionService";
+import {Dropdown} from "react-bootstrap";
 
-class AddQuestionComponent extends React.Component {
+class AddAnswerComponent extends React.Component {
 
     constructor(props) {
         super(props);
@@ -19,6 +20,8 @@ class AddQuestionComponent extends React.Component {
             hasLoginFailed: true,
             showSuccessMessage: false
         }
+
+
         this.handleChange = (event) =>{
             // console.log("here")
             this.setState(
@@ -33,15 +36,15 @@ class AddQuestionComponent extends React.Component {
             // console.log("here")
             event.preventDefault();
             let err = {}
-                let idGame = AuthenticationService.getGameFromStorage();
-                let response = await QuestionService.addQuestion(idGame,this.state.name,this.state.description);
-                if(response.success == false){
-                    this.setState(
-                        {
-                            errors: 'Dodvanje pitanja je bilo neuspješno',
-                        }
-                    )
-                }
+            let idGame = AuthenticationService.getGameFromStorage();
+            let response = await QuestionService.addQuestion(idGame,this.state.name,this.state.description);
+            if(response.success == false){
+                this.setState(
+                    {
+                        errors: 'Dodvanje pitanja je bilo neuspješno',
+                    }
+                )
+            }
 
             // console.log(errs)
 
@@ -50,7 +53,10 @@ class AddQuestionComponent extends React.Component {
 
     render() {
 
-
+        const options = [
+            'DA', 'NE'
+        ];
+        const defaultOption = options[0];
 
 
 
@@ -60,13 +66,14 @@ class AddQuestionComponent extends React.Component {
                     <form onSubmit={this.handleSubmit}>
                         <div className="form-inputs">
                             <label htmlFor="name"></label>
-                            <input type="text" id="name" name="name" placeholder="Naziv pitanja"
+                            <input type="text" id="name" name="name" placeholder="Naziv odgovora"
                                    value={this.state.name} onChange={this.handleChange} required/>
                         </div>
                         <div className="form-inputs">
                             <label htmlFor="description"></label>
-                            <input type="text" id="description" name="description" placeholder="Opis pitanja"
-                                   value={this.state.description} onChange={this.handleChange} required/>
+                            <Dropdown type="text" id="description" name="description"  options={options} requierd onChange={this.handleChange} value={defaultOption} placeholder="Odaberi točnost odgovora" />;
+
+
                         </div>
                         <button className={"btn btn-primary"} type="submit">Dodaj pitanje</button>
                         <a className={"btn btn-danger"} href="javascript:history.go(-1)" >Odustani</a>
@@ -79,4 +86,4 @@ class AddQuestionComponent extends React.Component {
 }
 
 
-export default AddQuestionComponent;
+export default AddAnswerComponent;

@@ -26,6 +26,6 @@ public class Question {
     private String text;
 
     @ManyToOne(optional = false)
-    @JoinColumn(name = "id_nivo", nullable = false)
-    private Level level;
+    @JoinColumn(name = "id_igre", nullable = false)
+    private Game game;
 }

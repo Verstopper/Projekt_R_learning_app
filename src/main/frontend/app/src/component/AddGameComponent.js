@@ -6,52 +6,61 @@ import InvalidComponent from "./InvalidComponent";
 import ProfessorService from "../services/ProfessorService";
 import GameService from "../services/GameService";
 import ProfessorDashboard from "./ProfessorDashboard";
+import {logDOM} from "@testing-library/react";
+
 
 class AddGameComponent extends React.Component {
 
 
     constructor(props) {
         super(props);
-        // console.log("     +++++       ")
-        // console.log(this.props.id)
+
+
         this.state = {
-            success: false,
+            success: undefined,
             name: '',
             description: '',
             oib: '',
             showSuccessMessage: false
         }
         this.handleChange = (event) =>{
-            // console.log("here")
+
             this.setState(
                 {
                     [event.target.name]
                         : event.target.value
                 }
             )
-            // console.log("---" + this.state);
+
         }
         this.handleSubmit = async (event) => {
-            // console.log("here")
+
             event.preventDefault();
             let err = {}
-            //err = validatePassword(this.state.password);
-            //err.password = validatePassword(this.state.password)
-            //console.log(err)
-            console.log(err.password);
-            console.log("i am here");
-            console.log("ime igre:" + this.state.name + ", opis igre: " +  this.state.description)
+            const header = document.querySelector("header");
+
+            const hidden = document.querySelector("#hidden")
+            if (header.classList.contains("is-active")) {
+                header.classList.remove("is-active")
+                hidden.style.display = 'none'
+            } else {
+                header.classList.add("is-active")
+                hidden.style.display = 'block'
+            }
             if(!err.password){
                 let username = AuthenticationService.getLoggedInUserName();
                 let response = await GameService.addGame(this.state.name, this.state.description, username);
-                this.state.success = true;
-                if(response.status >= 400){
+                console.log("STATUS" + response.status + " su"  + this.state.success)
+                if(response.success == false){
                     this.state.success = false;
                     this.setState(
                         {
                             errors: 'Dodavanje igre neuspješno.',
                         }
                     )
+                }else {
+
+                    this.state.success = true;
                 }
             }
             else{
@@ -61,22 +70,21 @@ class AddGameComponent extends React.Component {
                     }
                 )
             }
-            // console.log(errs)
-            if(this.state.success){
-                return(
-                    <ProfessorDashboard/>
-                )
-            }
+
+
         }
     }
 
     render() {
 
         if(this.state.success){
-            return(
-                <ProfessorDashboard/>
-            )
+            return <Navigate to={{
+                pathname: `/api/ZabavnoUcenje/profesor/pregledIgara`,
+                state: {username: this.state.username},
+            }}/>
         }
+
+
 
         /*const isUserLoggedIn = AuthenticationService.isUserLoggedIn();
         if(isUserLoggedIn){
@@ -87,6 +95,7 @@ class AddGameComponent extends React.Component {
 
 
         return (
+
             <div className="">
                 <section className="container container-px container-py">
                     <form onSubmit={this.handleSubmit}>
@@ -109,8 +118,20 @@ class AddGameComponent extends React.Component {
                         <button className={"btn btn-primary"} type="submit"  >Dodaj igru</button>
                         <a className={"btn btn-danger"} href="javascript:history.go(-1)">Odustani</a>
                     </form>
+                    <div id="hidden">
+                        {/*
+                        check djelatnik is logged in, session
+*/}
+                        {!this.state.success &&
+                        <div>
+                            <label >Dogodila se pogreška prilikom dodavanja igre.Pokušajte ponovno ili se vratite na početnu stranicu.</label>
+                        </div>
+                        }
+
+                    </div>
                 </section>
             </div>
+
         );
     }
 

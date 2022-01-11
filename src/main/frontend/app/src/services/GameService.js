@@ -1,4 +1,5 @@
 import axios from "axios";
+import LogoutComponent from "../component/LogOutComponent";
 
 const API_URl = 'http://localhost:8080'
 export const USER_NAME_SESSION_ATTRIBUTE_NAME = 'authenticatedUser'
@@ -14,11 +15,14 @@ class GameService {
         try {
             game = await api.post("/igra/dodaj",
                 {name: name, description: description, username:username});
-            response.data= true;
+            response.data= game;
+            response.success = true;
         }catch (err){
             response.data = "Greška prilikom dodavanja igre."
+            response.success = false;
         }
-        return response
+        console.log("U SERVISU SUCCES JE " + response.success)
+        return response.success
     }
 
     async deleteGame(game_id) {

@@ -6,6 +6,23 @@ const api = axios.create({
     baseURL: API_URl
 })
 class QuestionService {
+    async addQuestion(id_game,name,text) {
+        let response = {success: false,}
+        let question;
+        try {
+            question = await api.post("/request/dodaj",
+                {game:id_game,name:name,text:text});
+            response.data= question.data;
+            console.log("IU SERVISU DATA " + question.data)
+            response.success = true;
+        }catch (err){
+            response.success = false;
+            response.data = "Greška prilikom dodaje pitanja."
+        }
+        return response
+    }
+
+
     async getAllQuestions(id_game) {
         let response = {success: false,}
         let questions;

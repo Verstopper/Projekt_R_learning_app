@@ -7,6 +7,7 @@ import React, {Component, useState} from 'react';
 import {Button, Col, Container, Row} from "react-bootstrap";
 import QuestionService from "../services/QuestionService";
 import AnswerService from "../services/AnswerService";
+import AddAnswerComponent from "./AddAnswerComponent";
 
 class AnswerRow extends Component{
     constructor(props) {
@@ -26,7 +27,7 @@ class AnswerRow extends Component{
                     <Col  md={4}>Naziv: {this.props.text}
                         <p> Točnost: {this.props.correctness} </p> </Col>
                     <Col md={{ span: 4, offset: 4 }}><Button variant="danger" onClick={() => deleteAnswer(this.props.id)}>Izbriši</Button>
-                        <Button variant="warning" href={"/"}>Uredi</Button></Col>
+                        <Button variant="warning" href={""}>Uredi</Button></Col>
                 </Row>
 
 
@@ -107,6 +108,12 @@ class EditQuestionComponent extends Component{
             rows = this.state.answers;
 
         }
+
+        function goTo() {
+            console.log("RADI GUMB")
+            return <AddAnswerComponent />
+        }
+
         return(
             <div>
                 <NavBar />
@@ -114,8 +121,9 @@ class EditQuestionComponent extends Component{
                     <label>UREDITE SVOJE PITANJE</label>
                     <form onSubmit={this.handleSubmit}>
                         <button className={"btn btn-secondary"} type="submit">Pregled odgovora</button>
-                        <button className={"btn btn-secondary"} >Dodaj odgovor</button>
-                    </form>/
+                    </form>
+                    <button className={"btn btn-secondary"} onClick={() => goTo()}  >Dodaj odgovor</button>
+
 
 
                     <form>

@@ -3,9 +3,11 @@ package projekt.service.impl;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import projekt.domain.Game;
 import projekt.domain.Level;
 import projekt.domain.Question;
 import projekt.dto.RequestDto;
+import projekt.repo.GameRepository;
 import projekt.repo.LevelRepository;
 import projekt.repo.QuestionRepository;
 import projekt.service.AnswerService;
@@ -23,15 +25,15 @@ public class QuestionServiceImpl implements QuestionService {
     private QuestionRepository questionRepository;
     private LevelRepository levelRepository;
     private AnswerService answerService;
+    private GameRepository gameRepository;
 
     @Override
     public Question addQuestion(RequestDto requestDto){
-        Level level = levelRepository.getById(requestDto.getLevel());
-
+        Game game = gameRepository.getById(requestDto.getGame());
         Question question = Question.builder()
                 .name(requestDto.getName())
                 .text(requestDto.getText())
-                .level(level)
+                .game(game)
                 .build();
 
 
@@ -51,9 +53,9 @@ public class QuestionServiceImpl implements QuestionService {
     }
 
     @Override
-    public  void  deleteAllQuestion(Integer leveId) {
-        Level level = levelRepository.getById(leveId);
-        List<Question> lista = questionRepository.getAllByLevel(level);
+    public  void  deleteAllQuestion(Integer gameId) {
+        Game game = gameRepository.getById(gameId);
+        List<Question> lista = questionRepository.getAllByGame(game);
         for(var q :lista) {
             answerService.deleteAllAnswers(q.getId());
             questionRepository.delete(q);
@@ -75,9 +77,8 @@ public class QuestionServiceImpl implements QuestionService {
 
     @Override
     public List<Question> getAll(Integer id) {
-        Level level = levelRepository.getById(id);
-
-        return questionRepository.getAllByLevel(level);
+        Game game = gameRepository.getById(id);
+        return questionRepository.getAllByGame(game);
     }
 }
 

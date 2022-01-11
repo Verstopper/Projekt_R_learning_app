@@ -19,6 +19,7 @@ import Wrapper from "./Wrapper";
 import EditGameComponent from "./EditGameComponent";
 import EditQuestionComponent from "./EditQuestionComponent";
 import AddQuestionComponent from "./AddQuestionComponent";
+import AddAnswerComponent from "./AddAnswerComponent";
 
 function NavComponent() {
     return null;
@@ -45,6 +46,7 @@ class RouterComponent extends Component {
                     <Route path={"api/ZabavnoUcenje/igrauredi"} element={ <Wrapper component={EditGameComponent} animate={true} />}/>
                     <Route path={"/api/ZabavnoUcenje/dodajUcenika"} element={<Wrapper component={AddStudentComponent} animate={true} />}/>
                     <Route path={"/api/ZabavnoUcenje/addQuestion"} element={<AddQuestionComponent />}/>
+                    <Route path={"/api/ZabavnoUcenje/addAnswer"} element={<AddAnswerComponent />}/>
 
                 </Routes>
                 <Routes>

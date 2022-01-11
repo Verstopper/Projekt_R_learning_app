@@ -42,10 +42,6 @@ public class GameServiceImpl implements GameService {
                 .description(requestDto.getDescription())
                 .professor(professor).build();
         game = gameRepository.save(game);
-        Level level = Level.builder()
-                .id(game.getId()).game(game).build();
-
-        level = levelRepository.save(level);
 
         return game;
     }
@@ -67,7 +63,6 @@ public class GameServiceImpl implements GameService {
             throw new EntityNotFoundException("Ne postoji igra s id-em: " + gameId + ".");
 
         questionService.deleteAllQuestion(gameId);
-        levelService.deleteLevel(gameId);
         gameRepository.deleteById(gameId);
     }
 
