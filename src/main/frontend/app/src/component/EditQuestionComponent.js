@@ -10,6 +10,7 @@ import AnswerService from "../services/AnswerService";
 import AddAnswerComponent from "./AddAnswerComponent";
 import GameService from "../services/GameService";
 import ProfessorDashboard from "./ProfessorDashboard";
+import * as PropTypes from "prop-types";
 
 class AnswerRow extends Component{
     constructor(props) {
@@ -40,6 +41,16 @@ class AnswerRow extends Component{
     }
 }
 
+function Buttonutton(props) {
+    return null;
+}
+
+Buttonutton.propTypes = {
+    onClick: PropTypes.func,
+    className: PropTypes.string,
+    children: PropTypes.node
+};
+
 class EditQuestionComponent extends Component{
     constructor(props) {
         super(props);
@@ -49,10 +60,7 @@ class EditQuestionComponent extends Component{
             password: '',
             success: undefined,
             answers: undefined,
-            updatedName:
-            updatedDescription:
-            defaultname:
-            defaultDescription:
+
         }
 
         this.handleQuestionUpdate = async (event) => {
@@ -173,7 +181,7 @@ class EditQuestionComponent extends Component{
                     <form onSubmit={this.handleSubmit}>
                         <button className={"btn btn-secondary"} type="submit">Pregled odgovora</button>
                     </form>
-                    <button className={"btn btn-secondary"} onClick={() => goTo()}  >Dodaj odgovor</button>
+                    <Button className={"btn btn-secondary"} href={"/api/ZabavnoUcenje/addAnswer"} >Dodaj odgovor</Button>
 
 
 

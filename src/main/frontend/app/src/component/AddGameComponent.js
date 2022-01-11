@@ -122,7 +122,7 @@ class AddGameComponent extends React.Component {
                         {
                             !this.state.success && <p>Došlo je do greške prilikom dodavanja igre. Pokušajte ponovno</p>
                         }
-                        <Button className={"btn btn-primary"} type="submit" onClick={() => goTo()} >Dodaj igru</Button>
+                        <Button className={"btn btn-primary"} type="submit"  >Dodaj igru</Button>
                         <Button className={"btn btn-danger"} href="javascript:history.go(-1)">Odustani</Button>
                     </form>
 

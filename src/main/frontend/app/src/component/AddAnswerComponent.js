@@ -5,7 +5,7 @@ import {Navigate} from "react-router-dom";
 import InvalidComponent from "./InvalidComponent";
 import ProfessorService from "../services/ProfessorService";
 import QuestionService from "../services/QuestionService";
-import {Dropdown} from "react-bootstrap";
+import {Button, Dropdown} from "react-bootstrap";
 import AnswerService from "../services/AnswerService";
 
 class AddAnswerComponent extends React.Component {
@@ -25,7 +25,8 @@ class AddAnswerComponent extends React.Component {
             text4: '',
             errors: {},
             hasLoginFailed: true,
-            showSuccessMessage: false
+            showSuccessMessage: false,
+            success : true
         }
 
 
@@ -52,18 +53,27 @@ class AddAnswerComponent extends React.Component {
                     {
                         errors: 'Dodvanje pitanja je bilo neuspješno',
                     }
-                )
+
+            )
+                this.state.success = false;
+                window.location.href = "/api/ZabavnoUcenje/pitanjeuredi";
+
 
 
                 // console.log(errs)
 
 
             }
+            else {
+                this.state.success = true;
+            }
         }
     }
 
 
     render() {
+
+
         return (
             <div className="">
                 <section className="container container-px container-py">
@@ -132,8 +142,11 @@ class AddAnswerComponent extends React.Component {
                             <p>
                             </p>
                         </div>
-                        <button className={"btn btn-primary"} type="submit">Dodaj odgovore</button>
-                        <a className={"btn btn-danger"} href="javascript:history.go(-1)" >Odustani</a>
+                        {
+                            !this.state.success && <p>Došlo je do greške prilikom dodavanja igre. Pokušajte ponovno</p>
+                        }
+                        <Button className={"btn btn-primary"} type="submit" >Dodaj odgovor</Button>
+                        <Button className={"btn btn-danger"} href="javascript:history.go(-1)" >Odustani</Button>
                     </form>
                 </section>
             </div>
