@@ -6,11 +6,12 @@ import projekt.domain.Answer;
 import projekt.domain.Question;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface AnswerRepository extends JpaRepository<Answer, Integer> {
     boolean existsByTextAndQuestionAndCorrectness(String text, Question question, String correctness);
-    List<Answer> findAllByQuestion(Question q);
+    Optional<List<Answer>> findAllByQuestion(Question question);
 
 
 }
