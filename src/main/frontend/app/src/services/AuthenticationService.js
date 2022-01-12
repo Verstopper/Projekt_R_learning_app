@@ -69,6 +69,14 @@ class AuthenticationService {
         return id_game
     }
 
+    getGameNameFormStorage() {
+        sessionStorage.getItem(GAME_NAME_SESSION_ATTRIBUTE_NAME);
+
+    }
+    getDescriptionFromStorage() {
+        sessionStorage.getItem(GAME_DESCRIPTION_SESSION_ATTRIBUTE_NAME);
+    }
+
     getRole() {
         let user = sessionStorage.getItem(NAME_SESSION_ATTRIBUTE_NAME)
         if (user == "student") {

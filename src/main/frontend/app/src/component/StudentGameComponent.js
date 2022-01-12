@@ -13,11 +13,16 @@ class StudentRow extends Component {
     }
 
     render() {
+        function inStorage(id,name,description) {
+            AuthenticationService.getGameIntoStorage(id,name,description);
+            window.location.href = "/api/ZabavnoUcenje/Igra";
+        }
+
         return (<Container>
             <Row>
                 <Col md={{span: 2, offset: 5}}>Naziv igre: {this.props.name}
                     <p> Opis igre: {this.props.description} </p></Col>
-                <Button variant="success">IGRAJ</Button>
+                <Button variant="success" onClick={() => inStorage(this.props.id,this.props.name,this.props.description)}>IGRAJ</Button>
             </Row>
         </Container>)
     }
@@ -48,10 +53,12 @@ class StudentGameComponent extends Component {
             if (games.success) {
                 let value = [];
                 for (let game in games.games) {
+
                     let obj = {
                         id: games.games[game].id,
                         name: games.games[game].name,
                         description: games.games[game].description,
+
                     }
                     value.push(obj)
                 }
@@ -83,10 +90,13 @@ class StudentGameComponent extends Component {
         if (this.state.games && this.state.success) {
             rows = []
             for (let game in this.state.games) {
-                console.log(this.state.games[game].oib)
+                console.log("oib" + this.state.games[game].oib)
                 rows.push(<StudentRow key={this.state.games[game].id}
+                                      id = {this.state.games[game].id}
                                       name={this.state.games[game].name}
                                       description={this.state.games[game].description}
+                                      oib = {this.state.games[game].description}
+
                     // oib = {this.state.games[game].oib
                 />)
                 // professor = {this.state.games[game]})
