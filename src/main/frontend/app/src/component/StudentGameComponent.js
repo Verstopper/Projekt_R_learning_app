@@ -17,7 +17,7 @@ class StudentRow extends Component {
             <Row>
                 <Col md={{span: 2, offset: 5}}>Naziv igre: {this.props.name}
                     <p> Opis igre: {this.props.description} </p></Col>
-                <Button variant="warning">IGRAJ</Button>
+                <Button variant="success">IGRAJ</Button>
             </Row>
         </Container>)
     }
@@ -95,6 +95,13 @@ class StudentGameComponent extends Component {
 
         if (this.state.games && !this.state.success)
             rows = rows.state.games;
+
+        function logout() {
+
+            AuthenticationService.logout();
+            window.location.href = "/";
+        }
+
         return (
             <div>
                 <NavBar/>
@@ -103,7 +110,7 @@ class StudentGameComponent extends Component {
                         <button className={"btn btn-primary"} type="submit">Pogledaj sve igre koje možes igrati</button>
                     </form>
                     <form onSubmit={this.handleSubmit}>
-                        <button type="submit">ODJAVA</button>
+                        <button onClick={() => logout()}>ODJAVA</button>
                     </form>
                     <form>
                         {rows && rows}

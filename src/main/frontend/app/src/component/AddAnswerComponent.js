@@ -1,135 +1,246 @@
-import React from 'react'
+import React, {Component, useState} from 'react'
+
 import AuthenticationService from "../services/AuthenticationService";
-import {Button} from "react-bootstrap";
+
+import {Button, Dropdown} from "react-bootstrap";
 import AnswerService from "../services/AnswerService";
+import LogoutComponent from "./LogOutComponent";
 
 class AddAnswerComponent extends React.Component {
 
+
     constructor(props) {
         super(props);
+        // console.log("     +++++       ")
+        // console.log(this.props.id)
         this.state = {
             name: '',
             name2: '',
             name3: '',
             name4: '',
-            text: '',
-            text2: '',
-            text3: '',
-            text4: '',
+            check1: true,
+            check2: true,
+            check3: true,
+            check4: true,
             errors: {},
             hasLoginFailed: true,
             showSuccessMessage: false,
-            success: true
+            success: true,
+            wrong: true
         }
 
 
         this.handleChange = (event) => {
+
             this.setState(
                 {
-                    [event.target.name]: event.target.value
+                    [event.target.name]: event.target.value,
+
+                }
+            )
+
+        }
+
+
+        function setFalse() {
+            console.log("USLI SMO")
+            this.setState(
+                {
+                    wrong: false
+
                 }
             )
         }
-        this.handleSubmit = async (event) => {
-            event.preventDefault();
 
-            let idquestion = AuthenticationService.getQuestionFromStorage();
-            let response = await AnswerService.addAnswer(idquestion, this.state.name, this.state.text)
-            let response2 = await AnswerService.addAnswer(idquestion, this.state.name2, this.state.text2)
-            let response3 = await AnswerService.addAnswer(idquestion, this.state.name3, this.state.text3)
-            let response4 = await AnswerService.addAnswer(idquestion, this.state.name4, this.state.text4)
-            if (response.success === false || response2.success === false || response3.success === false || response4.success === false) {
+        this.handleSubmit = async (event) => {
+            console.log("CHCEK1 " + this.state.check1 + " CHECK2 " + this.state.check2 + " check3 " + this.state.check3 + " check4 " + this.state.check4)
+            event.preventDefault();
+            if(this.state.check1 == true  && this.state.check3 == true &&  this.state.check2 == true &&  this.state.check4 == true) {
+                console.log("SVI SU PTAZNI")
                 this.setState(
                     {
-                        errors: 'Dodvanje pitanja je bilo neuspješno',
+                        wrong: false
+
                     }
                 )
-                this.state.success = false;
-                window.location.href = "/api/ZabavnoUcenje/pitanjeuredi";
+            }
+            if(this.state.check1 == false && this.state.check2 == false) {
+                console.log("dva su ista")
+                this.setState(
+                    {
+                        wrong: false
 
+                    }
+                )
+            } else if(this.state.check1 == false && this.state.check3 == false) {
+                console.log("dva su ista")
+                this.setState(
+                    {
+                        wrong: false
+
+                    }
+                )
+            }else if(this.state.check1 == false && this.state.check4 == false) {
+                console.log("dva su ista")
+                this.setState(
+                    {
+                        wrong: false
+
+                    }
+                )
+            }else if(this.state.check2 == false && this.state.check3 == false) {
+                console.log("dva su ista")
+                this.setState(
+                    {
+                        wrong: false
+
+                    }
+                )
+            }else if(this.state.check2 == false && this.state.check4 == false) {
+                console.log("dva su ista")
+                this.setState(
+                    {
+                        wrong: false
+
+                    }
+                )
+            }else if(this.state.check3 == false && this.state.check4 == false) {
+                console.log("dva su ista")
+                this.setState(
+                    {
+                        wrong: false
+
+                    }
+                )
+            }
+            let err = {}
+            console.log("this.state.wrong" + this.state.wrong)
+            if (this.state.wrong) {
+                console.log("ULAZIM IZ NEKOM MENI NEPOZNATOG RAZLOGA")
+                let idquestion = AuthenticationService.getQuestionFromStorage();
+                let response = await AnswerService.addAnswer(idquestion, this.state.name, this.state.check1, this.state.name2, this.state.check2, this.state.name3, this.state.check3,this.state.name4, this.state.check4)
+
+                if (response.success == false ) {
+                    this.setState(
+                        {
+                            errors: 'Dodvanje odgovora je bilo neuspješno',
+                        }
+                    )
+                    this.state.success = false;
+                    window.location.href = "/api/ZabavnoUcenje/pitanjeuredi";
+
+
+                    // console.log(errs)
+
+
+                } else {
+                    this.state.success = true;
+                    window.location.href = "/api/ZabavnoUcenje/pitanjeuredi";
+                }
             } else {
-                this.state.success = true;
+                this.setState({
+                    errors: 'Dodvanje odgovora je bilo neuspješno',
+                })
             }
         }
+
     }
+        render()
+        {
 
 
-    render() {
+            return (
+                <div className="">
+                    <section className="container container-px container-py">
+                        <form onSubmit={this.handleSubmit}>
+                            <div className="form-inputs">
 
-        return (
-            <div className="">
-                <section className="container container-px container-py">
-                    <form onSubmit={this.handleSubmit}>
-                        <div className="form-inputs">
-                            <input type="text" id="name" name="name" placeholder="Naziv odgovora"
-                                   value={this.state.name} onChange={this.handleChange} required/>
-                        </div>
-                        <div className="form-inputs">
-                            {/*<label htmlFor="description"></label>*/}
-                            <h5>Točnost:</h5>
-                            <select name="text" id="text" onChange={this.handleChange} required>
-                                <option value="DA">DA</option>
-                                <option value="NE">NE</option>
-                            </select>
-                            <p>
-                            </p>
-                        </div>
-                        <div className="form-inputs">
-                            <input type="text" id="name2" name="name2" placeholder="Naziv odgovora"
-                                   value={this.state.name2} onChange={this.handleChange} required/>
-                        </div>
-                        <div className="form-inputs">
-                            {/*<label htmlFor="description"></label>*/}
-                            <h5>Točnost:</h5>
-                            <select name="text2" id="text2" onChange={this.handleChange} required>
-                                <option value="DA">DA</option>
-                                <option value="NE">NE</option>
-                            </select>
-                            <p>
-                            </p>
-                        </div>
-                        <div className="form-inputs">
-                            {/*<label htmlFor="name"></label>*/}
-                            <input type="text" id="name3" name="name3" placeholder="Naziv odgovora"
-                                   value={this.state.name3} onChange={this.handleChange} required/>
-                        </div>
-                        <div className="form-inputs">
-                            {/*<label htmlFor="description"></label>*/}
-                            <h5>Točnost:</h5>
-                            <select name="text3" id="text3" onChange={this.handleChange} required>
-                                <option value="DA">DA</option>
-                                <option value="NE">NE</option>
-                            </select>
-                            <p>
-                            </p>
-                        </div>
-                        <div className="form-inputs">
-                            {/*<label htmlFor="name"></label>*/}
-                            <input type="text" id="name4" name="name4" placeholder="Naziv odgovora"
-                                   value={this.state.name4} onChange={this.handleChange} required/>
-                        </div>
-                        <div className="form-inputs">
-                            {/*<label htmlFor="description"></label>*/}
-                            <h5>Točnost:</h5>
-                            <select name="text4" id="text4" onChange={this.handleChange} required>
-                                <option value="DA">DA</option>
-                                <option value="NE">NE</option>
-                            </select>
-                            <p>
-                            </p>
-                        </div>
-                        {
-                            !this.state.success && <p>Došlo je do greške prilikom dodavanja igre. Pokušajte ponovno</p>
-                        }
-                        <Button className={"btn btn-primary"} type="submit">Dodaj odgovor</Button>
-                        <Button className={"btn btn-danger"} href="javascript:history.go(-1)">Odustani</Button>
-                    </form>
-                </section>
-            </div>
-        );
+                                <input type="text" id="name" name="name" placeholder="Naziv odgovora"
+                                       value={this.state.name} onChange={this.handleChange} required/>
+                            </div>
+                            <div className="form-inputs">
+                                <label htmlFor="description"></label>
+
+
+                                <h5>Ovaj odgovor je točan:</h5>
+                                <div>
+                                    <input className="form-check-input" type="checkbox" name="check1" id="check1"
+                                           value={false} onChange={this.handleChange}
+                                           aria-label="TOČAN ODGOVOR"/>
+                                </div>
+
+                                <p>
+                                </p>
+                            </div>
+                            <div className="form-inputs">
+
+                                <input type="text" id="name2" name="name2" placeholder="Naziv odgovora"
+                                       value={this.state.name2} onChange={this.handleChange} required/>
+                            </div>
+                            <div className="form-inputs">
+                                <label htmlFor="description"></label>
+
+                                <h5>Ovaj odgovor je točan:</h5>
+                                <div>
+                                    <input className="form-check-input" type="checkbox" id="check2" name="check2"
+                                           value={false} onChange={this.handleChange}
+                                           aria-label="TOČAN ODGOVOR"/>
+                                </div>
+
+                                <p>
+                                </p>
+                            </div>
+                            <div className="form-inputs">
+                                <label htmlFor="name"></label>
+                                <input type="text" id="name3" name="name3" placeholder="Naziv odgovora"
+                                       value={this.state.name3} onChange={this.handleChange} required/>
+                            </div>
+                            <div className="form-inputs">
+                                <label htmlFor="description"></label>
+
+                                <h5>Ovaj odgovor je točan:</h5>
+                                <div>
+                                    <input className="form-check-input" type="checkbox" id="check3" name="check3"
+                                           value={false} onChange={this.handleChange}
+                                           aria-label="TOČAN ODGOVOR"/>
+                                </div>
+                                <p>
+                                </p>
+                            </div>
+                            <div className="form-inputs">
+                                <label htmlFor="name"></label>
+                                <input type="text" id="name4" name="name4" placeholder="Naziv odgovora"
+                                       value={this.state.name4} onChange={this.handleChange} required/>
+                            </div>
+                            <div className="form-inputs">
+                                <label htmlFor="description"></label>
+
+                                <h5>Ovaj odgovor je točan:</h5>
+                                <div>
+                                    <input className="form-check-input" type="checkbox" id="check4" name="check4"
+                                           value={false} onChange={this.handleChange}
+                                           aria-label="TOČAN ODGOVOR"/>
+                                </div>
+
+                                <p>
+                                </p>
+                            </div>
+                            {
+                                !this.state.success &&
+                                <p>Došlo je do greške prilikom dodavanja igre. Pokušajte ponovno</p>
+                            }
+                            {
+                                !this.state.wrong && <p>SAMO JEDAN ODGOVOR JE TOČAN!</p>
+                            }
+                            <Button className={"btn btn-primary"} type="submit">Dodaj odgovor</Button>
+                            <Button className={"btn btn-danger"} href="javascript:history.go(-1)">Odustani</Button>
+                        </form>
+                    </section>
+                </div>
+            );
+        }
+
     }
-
-}
 
 
 export default AddAnswerComponent;

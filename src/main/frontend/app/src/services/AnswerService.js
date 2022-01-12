@@ -22,15 +22,31 @@ class AnswerService {
         return response
     }
 
-    async addAnswer(id_question, name, correctness) {
+    async addAnswer(id_question,name,correctness,name2,correctness2,name3,correctness3,name4,correctness4) {
         let response = {success: false,}
         let answer;
+        let cor = "DA";
+        let cor2 = "DA";
+        let cor3 = "DA";
+        let cor4 = "DA";
         try {
+            if(correctness == true) {
+                cor = "NE"
+            }
+            if(correctness2 == true) {
+                cor2 = "NE"
+            }
+            if(correctness3 == true) {
+                cor3 = "NE"
+            }
+            if(correctness4 == true) {
+                cor4 = "NE"
+            }
             answer = await api.post("/odgovor/dodaj",
-                {question: id_question, text: name, correctness: correctness});
-            response.data = answer.data;
+                {question:id_question,text:name,correctness:cor,text2:name2,correctness2:cor2,text3:name3,correctness3:cor3,text4:name4,correctness4:cor4});
+            response.data= answer.data;
             response.success = true;
-        } catch (err) {
+        }catch (err){
             response.success = false;
             response.data = "Greška prilikom dodavanja odgovora."
         }
@@ -42,10 +58,10 @@ class AnswerService {
         let answers;
         try {
             answers = await api.post("/odgovor/izbrisi",
-                {id_question: id_answer});
-            response.data = answers.data;
+                {id_question:id_answer});
+            response.data= answers.data;
             response.success = true;
-        } catch (err) {
+        }catch (err){
             response.success = false;
             response.data = "Greška prilikom pregleda pitanja."
         }

@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.*;
 import projekt.domain.Answer;
 import projekt.domain.Request;
 import projekt.dto.AnswerUpdateDto;
-import projekt.dto.RequestDto;
 import projekt.service.AnswerService;
 
 import java.util.List;
@@ -21,7 +20,7 @@ public class AnswerController {
     private AnswerService answerService;
 
     @PostMapping("/dodaj")
-    public ResponseEntity<Answer> addAnswer(@RequestBody @NonNull RequestDto requestDto){
+    public ResponseEntity<Boolean> addAllAnswer(@RequestBody @NonNull AnswerUpdateDto requestDto){
         return ResponseEntity.ok(answerService.addAnswer(requestDto));
     }
 

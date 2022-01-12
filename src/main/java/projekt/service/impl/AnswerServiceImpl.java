@@ -22,7 +22,7 @@ public class AnswerServiceImpl implements AnswerService {
     QuestionRepository questionRepository;
 
     @Override
-    public Answer addAnswer(RequestDto requestDto) {
+    public boolean addAnswer(AnswerUpdateDto requestDto) {
         Question question = questionRepository.findById(requestDto.getQuestion())
                 .orElseThrow(() -> new EntityNotFoundException("Ne postoji pitanje s id-em: " + requestDto.getQuestion() + "."));
 
@@ -31,11 +31,38 @@ public class AnswerServiceImpl implements AnswerService {
                 .question(question)
                 .correctness(requestDto.getCorrectness())
                 .build();
+        Answer answer2 = Answer.builder()
+                .text(requestDto.getText2())
+                .question(question)
+                .correctness(requestDto.getCorrectness2())
+                .build();
+        Answer answer3 = Answer.builder()
+                .text(requestDto.getText3())
+                .question(question)
+                .correctness(requestDto.getCorrectness3())
+                .build();
+        Answer answer4 = Answer.builder()
+                .text(requestDto.getText4())
+                .question(question)
+                .correctness(requestDto.getCorrectness4())
+                .build();
 
         if(answerRepository.existsByTextAndQuestionAndCorrectness(answer.getText(),answer.getQuestion(),answer.getCorrectness()))
             throw new EntityExistsException("Već postoji takav odgovor.");
 
-        return  answerRepository.save(answer);
+        if(answerRepository.existsByTextAndQuestionAndCorrectness(answer2.getText(),answer.getQuestion(),answer.getCorrectness()))
+            throw new EntityExistsException("Već postoji takav odgovor.");
+
+        if(answerRepository.existsByTextAndQuestionAndCorrectness(answer3.getText(),answer.getQuestion(),answer.getCorrectness()))
+            throw new EntityExistsException("Već postoji takav odgovor.");
+
+        if(answerRepository.existsByTextAndQuestionAndCorrectness(answer4.getText(),answer.getQuestion(),answer.getCorrectness()))
+            throw new EntityExistsException("Već postoji takav odgovor.");
+        answerRepository.save(answer);
+        answerRepository.save(answer2);
+        answerRepository.save(answer3);
+        answerRepository.save(answer4);
+        return true;
     }
 
     @Override

@@ -32,6 +32,7 @@ class AddQuestionComponent extends React.Component {
                     }
                 )
             }
+            window.location.href = "/api/ZabavnoUcenje/igrauredi";
         }
     }
 

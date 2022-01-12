@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public interface AnswerService {
-    Answer addAnswer(RequestDto answer);
+    boolean addAnswer(AnswerUpdateDto answer);
 
     List<Answer> getAll(Integer questionId);
 
