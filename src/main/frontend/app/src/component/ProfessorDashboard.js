@@ -20,7 +20,7 @@ class GameRow extends Component {
 
         function deleteGame(id) {
             let confirmed = window.confirm("Jeste li sigurni da želite izbrisati igru?")
-            if(confirmed) GameService.deleteGame(id);
+            if (confirmed) GameService.deleteGame(id);
             console.log("ID IGRE JE " + id);
             // let response = GameService.deleteGame(id);
             window.location.reload(false);
@@ -94,6 +94,7 @@ class ProfessorDashboard extends Component {
     }
 
     render() {
+
 
         let rows;
         if (this.state.games && this.state.success) {
