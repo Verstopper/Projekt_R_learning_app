@@ -1,4 +1,4 @@
-import ProfessorService from "../services/ProfessorService";
+/*import ProfessorService from "../services/ProfessorService";
 import AuthenticationService from "../services/AuthenticationService";
 import NavBar from "./Navbar";
 import React, {Component, useState} from 'react';
@@ -97,3 +97,5 @@ class GameComponent extends Component {
 }
 
 export default GameComponent
+
+*/

@@ -28,8 +28,6 @@ class AddAnswerComponent extends React.Component {
             success: true,
             wrong: true
         }
-
-
         this.handleChange = (event) => {
 
             this.setState(
@@ -40,8 +38,6 @@ class AddAnswerComponent extends React.Component {
             )
 
         }
-
-
         function setFalse() {
             console.log("USLI SMO")
             this.setState(
@@ -56,7 +52,7 @@ class AddAnswerComponent extends React.Component {
             console.log("CHCEK1 " + this.state.check1 + " CHECK2 " + this.state.check2 + " check3 " + this.state.check3 + " check4 " + this.state.check4)
             event.preventDefault();
             if(this.state.check1 == true  && this.state.check3 == true &&  this.state.check2 == true &&  this.state.check4 == true) {
-                console.log("SVI SU PTAZNI")
+
                 this.setState(
                     {
                         wrong: false
@@ -65,7 +61,7 @@ class AddAnswerComponent extends React.Component {
                 )
             }
             if(this.state.check1 == false && this.state.check2 == false) {
-                console.log("dva su ista")
+
                 this.setState(
                     {
                         wrong: false
@@ -73,7 +69,7 @@ class AddAnswerComponent extends React.Component {
                     }
                 )
             } else if(this.state.check1 == false && this.state.check3 == false) {
-                console.log("dva su ista")
+
                 this.setState(
                     {
                         wrong: false
@@ -81,7 +77,7 @@ class AddAnswerComponent extends React.Component {
                     }
                 )
             }else if(this.state.check1 == false && this.state.check4 == false) {
-                console.log("dva su ista")
+
                 this.setState(
                     {
                         wrong: false
@@ -89,7 +85,7 @@ class AddAnswerComponent extends React.Component {
                     }
                 )
             }else if(this.state.check2 == false && this.state.check3 == false) {
-                console.log("dva su ista")
+
                 this.setState(
                     {
                         wrong: false
@@ -97,7 +93,7 @@ class AddAnswerComponent extends React.Component {
                     }
                 )
             }else if(this.state.check2 == false && this.state.check4 == false) {
-                console.log("dva su ista")
+
                 this.setState(
                     {
                         wrong: false
@@ -105,7 +101,7 @@ class AddAnswerComponent extends React.Component {
                     }
                 )
             }else if(this.state.check3 == false && this.state.check4 == false) {
-                console.log("dva su ista")
+
                 this.setState(
                     {
                         wrong: false
