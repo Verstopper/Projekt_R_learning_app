@@ -150,7 +150,7 @@ class EditGameComponent extends Component {
                                 <button className={"btn btn-primary"} type="submit"
                                         onClick={this.handleGameUpdate}>Ažuriraj igru
                                 </button>
-                                <a className={"btn btn-danger"} href="javascript:history.go(-1)">Odustani</a>
+                                <a className={"btn btn-danger"} href="/api/ZabavnoUcenje/profesor/pregledIgara">Odustani</a>
                             </form>
                         </section>
                     </div>
