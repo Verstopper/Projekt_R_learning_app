@@ -19,7 +19,8 @@ class QuestionRow extends Component {
         }
 
         function deleteQuestion(id) {
-            let response = QuestionService.deleteAllQuestions(id);
+            let confirmed = window.confirm("Jeste li sigurni da želite izbrisati pitanje?")
+            if(confirmed) QuestionService.deleteAllQuestions(id);
             window.location.reload(false);
         }
 

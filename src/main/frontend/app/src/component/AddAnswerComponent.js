@@ -51,7 +51,7 @@ class AddAnswerComponent extends React.Component {
         this.handleSubmit = async (event) => {
             console.log("CHCEK1 " + this.state.check1 + " CHECK2 " + this.state.check2 + " check3 " + this.state.check3 + " check4 " + this.state.check4)
             event.preventDefault();
-            if(this.state.check1 == true  && this.state.check3 == true &&  this.state.check2 == true &&  this.state.check4 == true) {
+            if(this.state.check1 === true  && this.state.check3 === true &&  this.state.check2 === true &&  this.state.check4 === true) {
 
                 this.setState(
                     {
@@ -60,7 +60,7 @@ class AddAnswerComponent extends React.Component {
                     }
                 )
             }
-            if(this.state.check1 == false && this.state.check2 == false) {
+            if(this.state.check1 === false && this.state.check2 === false) {
 
                 this.setState(
                     {
@@ -68,7 +68,7 @@ class AddAnswerComponent extends React.Component {
 
                     }
                 )
-            } else if(this.state.check1 == false && this.state.check3 == false) {
+            } else if(this.state.check1 === false && this.state.check3 === false) {
 
                 this.setState(
                     {
@@ -76,7 +76,7 @@ class AddAnswerComponent extends React.Component {
 
                     }
                 )
-            }else if(this.state.check1 == false && this.state.check4 == false) {
+            }else if(this.state.check1 === false && this.state.check4 === false) {
 
                 this.setState(
                     {
@@ -84,7 +84,7 @@ class AddAnswerComponent extends React.Component {
 
                     }
                 )
-            }else if(this.state.check2 == false && this.state.check3 == false) {
+            }else if(this.state.check2 === false && this.state.check3 === false) {
 
                 this.setState(
                     {
@@ -92,7 +92,7 @@ class AddAnswerComponent extends React.Component {
 
                     }
                 )
-            }else if(this.state.check2 == false && this.state.check4 == false) {
+            }else if(this.state.check2 === false && this.state.check4 === false) {
 
                 this.setState(
                     {
@@ -100,7 +100,7 @@ class AddAnswerComponent extends React.Component {
 
                     }
                 )
-            }else if(this.state.check3 == false && this.state.check4 == false) {
+            }else if(this.state.check3 === false && this.state.check4 === false) {
 
                 this.setState(
                     {
@@ -116,7 +116,7 @@ class AddAnswerComponent extends React.Component {
                 let idquestion = AuthenticationService.getQuestionFromStorage();
                 let response = await AnswerService.addAnswer(idquestion, this.state.name, this.state.check1, this.state.name2, this.state.check2, this.state.name3, this.state.check3,this.state.name4, this.state.check4)
 
-                if (response.success == false ) {
+                if (response.success === false ) {
                     this.setState(
                         {
                             errors: 'Dodavanje odgovora je bilo neuspješno',

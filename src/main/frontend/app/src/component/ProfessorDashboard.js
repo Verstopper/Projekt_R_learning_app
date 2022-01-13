@@ -1,12 +1,12 @@
 import ProfessorService from "../services/ProfessorService";
 import AuthenticationService from "../services/AuthenticationService";
 import NavBar from "./Navbar";
-import React, {Component, useState} from 'react';
+import React, {Component} from 'react';
 import {Button, Col, Container, Row} from "react-bootstrap";
 import GameService from "../services/GameService";
-import Popup from './Popup';
 
 class GameRow extends Component {
+    game;
     constructor(props) {
         super(props);
     }
@@ -19,10 +19,12 @@ class GameRow extends Component {
         }
 
         function deleteGame(id) {
+            let confirmed = window.confirm("Jeste li sigurni da želite izbrisati igru?")
+            if(confirmed) GameService.deleteGame(id);
             console.log("ID IGRE JE " + id);
-            let response = GameService.deleteGame(id);
+            // let response = GameService.deleteGame(id);
             window.location.reload(false);
-            console.log("RESPONCE NAKON BRISANJA" + response)
+            // console.log("RESPONCE NAKON BRISANJA" + response)
         }
 
         return (

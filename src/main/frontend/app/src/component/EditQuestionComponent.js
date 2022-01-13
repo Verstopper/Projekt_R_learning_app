@@ -21,7 +21,8 @@ class AnswerRow extends Component {
         }
 
         function deleteAnswer(id) {
-            AnswerService.deleteAnswers(id);
+            let confirmed = window.confirm("Jeste li sigurni da želite izbrisati odgovor?");
+            if(confirmed) AnswerService.deleteAnswers(id);
             window.location.reload(false);
         }
 
