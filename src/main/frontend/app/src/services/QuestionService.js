@@ -29,7 +29,8 @@ class QuestionService {
             questions = await api.post("/request/getAll",
                 {idigre:id_game});
             response.data= questions.data;
-
+            console.log("DAAAATAAA");
+            console.log(questions.data)
             response.success = true;
         }catch (err){
             response.success = false;
