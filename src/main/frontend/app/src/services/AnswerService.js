@@ -22,6 +22,23 @@ class AnswerService {
         return response
     }
 
+    async getNumberOfAnswers(id_question) {
+        let response = {success: false,}
+        let answers;
+        try {
+            answers = await api.post("/odgovor/getNumberOfAnswers",
+                {id_question: id_question});
+            response.data = answers.data;
+            response.success = true;
+        } catch (err) {
+            response.success = false;
+            response.data = "Greška prilikom pregleda pitanja."
+        }
+        return response
+    }
+
+
+
     async addAnswer(id_question,name,correctness,name2,correctness2,name3,correctness3,name4,correctness4) {
         let response = {success: false,}
         let answer;

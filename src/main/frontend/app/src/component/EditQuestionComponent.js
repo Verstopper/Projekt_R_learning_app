@@ -143,9 +143,16 @@ class EditQuestionComponent extends Component {
 
         }
 
-        function goTo() {
-            console.log("RADI GUMB")
-            return <AddAnswerComponent/>
+        async function showButton() {
+            let number = await AnswerService.getNumberOfAnswers(AuthenticationService.getQuestionFromStorage());
+            console.log("NNN " + number.data)
+            if(number.data != 4 ) {
+                console.log("A")
+                return true
+            }
+
+            return false
+
         }
 
         return (
@@ -153,7 +160,7 @@ class EditQuestionComponent extends Component {
                 <NavBar/>
                 <section>
                     <label>UREDITE SVOJE PITANJE</label>
-                    <div className="">
+                    <div onLoad={showButton()} className="">
                         <section className="container container-px container-py">
                             <form onSubmit={this.handleSubmit}>
                                 <div className="form-inputs">
@@ -178,7 +185,7 @@ class EditQuestionComponent extends Component {
                     <form onSubmit={this.handleSubmit}>
                         <button className={"btn btn-secondary"} type="submit">Pregled odgovora</button>
                     </form>
-                    <Button className={"btn btn-secondary"} href={"/api/ZabavnoUcenje/addAnswer"}>Dodaj odgovor</Button>
+                    <Button className={"btn btn-secondary"} disabled={showButton()} href={"/api/ZabavnoUcenje/addAnswer"}>Dodaj odgovor</Button>
                     <form>
                         {rows && rows}
                     </form>

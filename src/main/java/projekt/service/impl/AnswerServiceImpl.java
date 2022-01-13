@@ -65,6 +65,12 @@ public class AnswerServiceImpl implements AnswerService {
         return true;
     }
 
+
+    @Override
+    public Integer getNumberOfAnswers(Integer id_question) {
+        return answerRepository.countAnswerByQuestion(questionRepository.getById(id_question));
+    }
+
     @Override
     public void deleteAnswer(Integer answerId) {
         if (!answerRepository.existsById(answerId))

@@ -24,6 +24,13 @@ public class AnswerController {
         return ResponseEntity.ok(answerService.addAnswer(requestDto));
     }
 
+    @PostMapping("/getNumberOfAnswers")
+    public ResponseEntity<Integer> getNumberOfAnswers(@RequestBody @NonNull Request request){
+        return ResponseEntity.ok(answerService.getNumberOfAnswers(request.getId_question()));
+    }
+
+
+
     @PostMapping("/izbrisi")
     public ResponseEntity<String> deleteAnswer(@RequestBody @NonNull Request answerId) {
         answerService.deleteAnswer(answerId.getId_question());

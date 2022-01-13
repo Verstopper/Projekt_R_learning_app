@@ -25,7 +25,7 @@ class EditAnswerComponent extends React.Component {
                 this.setState({errors: 'Ažuriranje odgovora neuspjelo :(',})
             }
             if (this.state.success) {
-                return (<EditGameComponent/>)
+                window.location.href = "/api/ZabavnoUcenje/pitanjeuredi";
             }
         }
 

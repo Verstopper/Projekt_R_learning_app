@@ -15,6 +15,8 @@ public interface AnswerService {
 
     void deleteAnswer(Integer answer);
 
+    Integer getNumberOfAnswers(Integer id_question);
+
     void deleteAllAnswers(Integer idQuestion);
 
     void updateAnswer(AnswerUpdateDto answerUpdateDto);

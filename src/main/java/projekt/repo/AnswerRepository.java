@@ -12,6 +12,7 @@ import java.util.Optional;
 public interface AnswerRepository extends JpaRepository<Answer, Integer> {
     boolean existsByTextAndQuestionAndCorrectness(String text, Question question, String correctness);
     Optional<List<Answer>> findAllByQuestion(Question question);
+    Integer countAnswerByQuestion(Question q);
 
 
 }
