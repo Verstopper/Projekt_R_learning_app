@@ -1,6 +1,6 @@
 import AuthenticationService from "../services/AuthenticationService";
 import NavBar from "./Navbar";
-import React, {Component} from 'react';
+import React, {Component, useRef} from 'react';
 import {Button, Col, Container, Row} from "react-bootstrap";
 import QuestionService from "../services/QuestionService";
 import AnswerService from "../services/AnswerService";
@@ -41,17 +41,8 @@ class AnswerRow extends Component {
     }
 }
 
-function Buttonutton(props) {
-    return null;
-}
-
-Buttonutton.propTypes = {
-    onClick: PropTypes.func,
-    className: PropTypes.string,
-    children: PropTypes.node
-};
-
 class EditQuestionComponent extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -64,7 +55,22 @@ class EditQuestionComponent extends Component {
             updatedText: sessionStorage.getItem("questionText"),
             defaultName: sessionStorage.getItem("questionName"),
             defaultText: sessionStorage.getItem("questionText"),
+            show: false,
+            data: AnswerService.getNumberOfAnswers(AuthenticationService.getQuestionFromStorage())
+
         }
+
+
+        this.state.data.then((result) =>{
+            console.log("GELDAMO" + result.data)
+            if(result.data == 4) {
+            console.log("USLI SMO U NUTRA " + result)
+            this.setState({show:true})}
+        } , reason => {
+            console.log("GRESKA")
+        })
+
+
 
         this.handleQuestionUpdate = async (event) => {
             let id_question = AuthenticationService.getQuestionFromStorage();
@@ -90,6 +96,7 @@ class EditQuestionComponent extends Component {
                 [event.target.name]: event.target.value
             })
         }
+
 
         this.handleSubmit = async (event) => {
             event.preventDefault();
@@ -143,25 +150,13 @@ class EditQuestionComponent extends Component {
 
         }
 
-        async function showButton() {
-            let number = await AnswerService.getNumberOfAnswers(AuthenticationService.getQuestionFromStorage());
-            console.log("NNN " + number.data)
-            if(number.data != 4 ) {
-                console.log("A")
-                return true
-            }
-
-            return false
-
-        }
 
         return (
             <div>
                 <NavBar/>
                 <section>
                     <label>UREDITE SVOJE PITANJE</label>
-                    {/*<div onLoad={showButton()} className="">*/}
-                    <div className="">
+                    <div   className="">
                         <section className="container container-px container-py">
                             <form onSubmit={this.handleSubmit}>
                                 <div className="form-inputs">
@@ -189,7 +184,7 @@ class EditQuestionComponent extends Component {
 
                     {/*<Button className={"btn btn-secondary"} disabled={showButton()} href={"/api/ZabavnoUcenje/addAnswer"}>Dodaj odgovor</Button>*/}
 
-                    <Button className={"btn btn-secondary"} href={"/api/ZabavnoUcenje/addAnswer"}>Dodaj odgovor</Button>
+                    <Button className={"btn btn-secondary"} disabled={this.state.show} href={"/api/ZabavnoUcenje/addAnswer"}>Dodaj odgovor</Button>
                     <form>
                         {rows && rows}
                     </form>
