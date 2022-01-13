@@ -160,7 +160,8 @@ class EditQuestionComponent extends Component {
                 <NavBar/>
                 <section>
                     <label>UREDITE SVOJE PITANJE</label>
-                    <div onLoad={showButton()} className="">
+                    {/*<div onLoad={showButton()} className="">*/}
+                    <div className="">
                         <section className="container container-px container-py">
                             <form onSubmit={this.handleSubmit}>
                                 <div className="form-inputs">
@@ -185,7 +186,10 @@ class EditQuestionComponent extends Component {
                     <form onSubmit={this.handleSubmit}>
                         <button className={"btn btn-secondary"} type="submit">Pregled odgovora</button>
                     </form>
-                    <Button className={"btn btn-secondary"} disabled={showButton()} href={"/api/ZabavnoUcenje/addAnswer"}>Dodaj odgovor</Button>
+
+                    {/*<Button className={"btn btn-secondary"} disabled={showButton()} href={"/api/ZabavnoUcenje/addAnswer"}>Dodaj odgovor</Button>*/}
+
+                    <Button className={"btn btn-secondary"} href={"/api/ZabavnoUcenje/addAnswer"}>Dodaj odgovor</Button>
                     <form>
                         {rows && rows}
                     </form>
