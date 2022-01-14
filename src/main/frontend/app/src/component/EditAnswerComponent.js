@@ -59,7 +59,7 @@ class EditAnswerComponent extends React.Component {
                             </p>
                         </div>
                         <Button className={"btn btn-primary"} type="submit">Ažuriraj odgovor</Button>
-                        <Button className={"btn btn-danger"} href="javascript:history.go(-1)">Odustani</Button>
+                        <Button className={"btn btn-danger"} href="/api/ZabavnoUcenje/pitanjeuredi">Odustani</Button>
                     </form>
                 </section>
             </div>

@@ -18,10 +18,10 @@ class AddAnswerComponent extends React.Component {
             name2: '',
             name3: '',
             name4: '',
-            check1: true,
-            check2: true,
-            check3: true,
-            check4: true,
+            check1: false,
+            check2: false,
+            check3: false,
+            check4: false,
             errors: {},
             hasLoginFailed: true,
             showSuccessMessage: false,
@@ -51,7 +51,7 @@ class AddAnswerComponent extends React.Component {
         this.handleSubmit = async (event) => {
             console.log("CHCEK1 " + this.state.check1 + " CHECK2 " + this.state.check2 + " check3 " + this.state.check3 + " check4 " + this.state.check4)
             event.preventDefault();
-            if(this.state.check1 == true  && this.state.check3 == true &&  this.state.check2 == true &&  this.state.check4 == true) {
+            if(this.state.check1 === true  && this.state.check3 === true &&  this.state.check2 === true &&  this.state.check4 === true) {
 
                 this.setState(
                     {
@@ -60,7 +60,7 @@ class AddAnswerComponent extends React.Component {
                     }
                 )
             }
-            if(this.state.check1 == false && this.state.check2 == false) {
+            if(this.state.check1 === false && this.state.check2 === false) {
 
                 this.setState(
                     {
@@ -68,7 +68,7 @@ class AddAnswerComponent extends React.Component {
 
                     }
                 )
-            } else if(this.state.check1 == false && this.state.check3 == false) {
+            } else if(this.state.check1 === false && this.state.check3 === false) {
 
                 this.setState(
                     {
@@ -76,7 +76,7 @@ class AddAnswerComponent extends React.Component {
 
                     }
                 )
-            }else if(this.state.check1 == false && this.state.check4 == false) {
+            }else if(this.state.check1 === false && this.state.check4 === false) {
 
                 this.setState(
                     {
@@ -84,7 +84,7 @@ class AddAnswerComponent extends React.Component {
 
                     }
                 )
-            }else if(this.state.check2 == false && this.state.check3 == false) {
+            }else if(this.state.check2 === false && this.state.check3 === false) {
 
                 this.setState(
                     {
@@ -92,7 +92,7 @@ class AddAnswerComponent extends React.Component {
 
                     }
                 )
-            }else if(this.state.check2 == false && this.state.check4 == false) {
+            }else if(this.state.check2 === false && this.state.check4 === false) {
 
                 this.setState(
                     {
@@ -100,7 +100,7 @@ class AddAnswerComponent extends React.Component {
 
                     }
                 )
-            }else if(this.state.check3 == false && this.state.check4 == false) {
+            }else if(this.state.check3 === false && this.state.check4 === false) {
 
                 this.setState(
                     {
@@ -116,10 +116,10 @@ class AddAnswerComponent extends React.Component {
                 let idquestion = AuthenticationService.getQuestionFromStorage();
                 let response = await AnswerService.addAnswer(idquestion, this.state.name, this.state.check1, this.state.name2, this.state.check2, this.state.name3, this.state.check3,this.state.name4, this.state.check4)
 
-                if (response.success == false ) {
+                if (response.success === false ) {
                     this.setState(
                         {
-                            errors: 'Dodvanje odgovora je bilo neuspješno',
+                            errors: 'Dodavanje odgovora je bilo neuspješno',
                         }
                     )
                     this.state.success = false;
@@ -160,8 +160,8 @@ class AddAnswerComponent extends React.Component {
 
                                 <h5>Ovaj odgovor je točan:</h5>
                                 <div>
-                                    <input className="form-check-input" type="checkbox" name="check1" id="check1"
-                                           value={false} onChange={this.handleChange}
+                                    <input className="form-check-input" type="radio" name="correctOne" id="correctOne"
+                                           value={this.state.check1} onChange={this.handleChange}
                                            aria-label="TOČAN ODGOVOR"/>
                                 </div>
 
@@ -178,8 +178,8 @@ class AddAnswerComponent extends React.Component {
 
                                 <h5>Ovaj odgovor je točan:</h5>
                                 <div>
-                                    <input className="form-check-input" type="checkbox" id="check2" name="check2"
-                                           value={false} onChange={this.handleChange}
+                                    <input className="form-check-input" type="radio" id="correctOne" name="correctOne"
+                                           value={this.state.check2} onChange={this.handleChange}
                                            aria-label="TOČAN ODGOVOR"/>
                                 </div>
 
@@ -196,8 +196,8 @@ class AddAnswerComponent extends React.Component {
 
                                 <h5>Ovaj odgovor je točan:</h5>
                                 <div>
-                                    <input className="form-check-input" type="checkbox" id="check3" name="check3"
-                                           value={false} onChange={this.handleChange}
+                                    <input className="form-check-input" type="radio" id="correctOne" name="correctOne"
+                                           value={this.state.check3} onChange={this.handleChange}
                                            aria-label="TOČAN ODGOVOR"/>
                                 </div>
                                 <p>
@@ -213,8 +213,8 @@ class AddAnswerComponent extends React.Component {
 
                                 <h5>Ovaj odgovor je točan:</h5>
                                 <div>
-                                    <input className="form-check-input" type="checkbox" id="check4" name="check4"
-                                           value={false} onChange={this.handleChange}
+                                    <input className="form-check-input" type="radio" id="correctOne" name="correctOne"
+                                           value={this.state.check4} onChange={this.handleChange}
                                            aria-label="TOČAN ODGOVOR"/>
                                 </div>
 
@@ -226,7 +226,7 @@ class AddAnswerComponent extends React.Component {
                                 <p>Došlo je do greške prilikom dodavanja igre. Pokušajte ponovno</p>
                             }
                             {
-                                !this.state.wrong && <p>SAMO JEDAN ODGOVOR JE TOČAN!</p>
+                                this.state.wrong && <p>SAMO JEDAN ODGOVOR JE TOČAN!</p>
                             }
                             <Button className={"btn btn-primary"} type="submit">Dodaj odgovor</Button>
                             <Button className={"btn btn-danger"} href="javascript:history.go(-1)">Odustani</Button>

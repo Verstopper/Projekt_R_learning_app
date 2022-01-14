@@ -21,7 +21,8 @@ class AnswerRow extends Component {
         }
 
         function deleteAnswer(id) {
-            AnswerService.deleteAnswers(id);
+            let confirmed = window.confirm("Jeste li sigurni da želite izbrisati odgovor?");
+            if(confirmed) AnswerService.deleteAnswers(id);
             window.location.reload(false);
         }
 
@@ -174,7 +175,7 @@ class EditQuestionComponent extends Component {
                                 <button className={"btn btn-primary"} type="submit"
                                         onClick={this.handleQuestionUpdate}>Ažuriraj pitanje
                                 </button>
-                                <a className={"btn btn-danger"} href="javascript:history.go(-1)">Odustani</a>
+                                <a className={"btn btn-danger"} href="/api/ZabavnoUcenje/igrauredi">Odustani</a>
                             </form>
                         </section>
                     </div>
