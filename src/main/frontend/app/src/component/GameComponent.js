@@ -1,4 +1,4 @@
-/*import ProfessorService from "../services/ProfessorService";
+import ProfessorService from "../services/ProfessorService";
 import AuthenticationService from "../services/AuthenticationService";
 import NavBar from "./Navbar";
 import React, {Component, useState} from 'react';
@@ -8,6 +8,7 @@ import Popup from './Popup';
 import QuestionService from "../services/QuestionService";
 import {forEach} from "react-bootstrap/ElementChildren";
 import triggerBrowserReflow from "react-bootstrap/triggerBrowserReflow";
+import AnswerService from "../services/AnswerService";
 
 
 class QuestionRow extends Component {
@@ -16,16 +17,12 @@ class QuestionRow extends Component {
     }
 
     render() {
-        console.log("PROPs")
-        console.log(this.props)
 
 
         return (
 
-           <div>
-
-
-           )}</div>
+            <div>
+                )}</div>
         )
 
     }
@@ -33,15 +30,56 @@ class QuestionRow extends Component {
 
 class GameComponent extends Component {
 
+
     constructor(props) {
         super(props);
         this.state = {
             defaultName: AuthenticationService.getGameNameFormStorage(),
-            defaultDescription : AuthenticationService.getDescriptionFromStorage(),
+            defaultDescription: AuthenticationService.getDescriptionFromStorage(),
             success: false,
-            questions: ''
+            questions: '',
+            brojac: 0,
+            idpitanja: '',
+            namepitanja: '',
+            textpitanja: '',
+            odgovor1: '',
+            odgovor2: '',
+            odgovor3: '',
+            odgovor4: '',
+            kraj: false
+        }
+
+
+        this.handleNext = async (event) => {
+
+            event.preventDefault();
+            let yes = await QuestionService.getAllQuestions(AuthenticationService.getGameFromStorage());
+            console.log("BROJ PITANJA " + yes.data.length)
+            if (this.state.brojac == yes.data.length - 1) {// ovo oznacava zadnje pitanje
+                this.setState({
+                    kraj: true
+                })
+            }
+
+
+            if (!this.state.kraj) {
+                let idQuestion = yes.data[this.state.brojac].id;
+                let allAnswers = await AnswerService.getAllAnswers(idQuestion);
+
+                this.setState(({
+                    idpitanja: yes.data[this.state.brojac].id,
+                    namepitanja: yes.data[this.state.brojac].name,
+                    textpitanja: yes.data[this.state.brojac].text,
+                    brojac: ++this.state.brojac,
+                    odgovor1: allAnswers.data[0].text,
+                    odgovor2: allAnswers.data[1].text,
+                    odgovor3: allAnswers.data[2].text,
+                }));
+            }
+
 
         }
+
 
         this.handleChange = (event) => {
             this.setState({
@@ -52,14 +90,6 @@ class GameComponent extends Component {
         this.handleSubmit = async (event) => {
             event.preventDefault();
 
-            let yes = await QuestionService.getAllQuestions(AuthenticationService.getGameFromStorage());
-            if(yes.success) {
-                this.setState( {
-                    questions : yes.data,
-                    success: true
-                })
-            }
-
         }
 
 
@@ -68,34 +98,37 @@ class GameComponent extends Component {
     render() {
 
         let rows;
-        if(this.state.success) {
-        rows = []
-
-        this.state.questions.forEach((item,i) => rows.push(<QuestionRow key={item.id} name={item.name} i={i++}/>))
-        }
 
         return (
             <div>
                 <NavBar/>
 
-                    <p> IGRAŠ IGRU:  + {this.state.defaultName} </p>
-                    <p>OPIS: {this.state.defaultDescription}</p>
-                <form className="korisnik__odabir" onSubmit={this.handleSubmit}>
-                    <button className="btn btn-primary" type="submit">ZAPOČNI IGRU</button>
-                    <a className={"btn btn-danger"} href={"/"}>Odustani</a>
-                </form>
+                <p> IGRAŠ IGRU: + {this.state.defaultName} </p>
+                <p>OPIS: {this.state.defaultDescription}</p>
+
                 <p>ISPOD JE ROW hehe</p>
-                <form>{this.state.questions.map((item) => (
-                    <p>{item.id}</p>
-                ) ) }</form>
 
 
+                    <p>{this.state.idpitanja}</p>
+                    <p>{this.state.namepitanja}</p>
+                    <p>{this.state.textpitanja}</p>
+                    <p>{this.state.odgovor1}</p>
+                    <p>{this.state.odgovor2}</p>
+                    <p>{this.state.odgovor3}</p>
+                    <p>{this.state.kraj} </p>
 
+
+                <form onSubmit={this.handleNext}>
+                    <input className="btn btn-primary" type="submit"/>
+                </form>
+                <div>
+                    {rows && rows}
+                </div>
             </div>
         )
     }
 }
 
-export default GameComponent
 
-*/
+    export default GameComponent
+
