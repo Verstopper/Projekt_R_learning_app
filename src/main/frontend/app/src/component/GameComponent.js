@@ -46,6 +46,7 @@ class GameComponent extends Component {
             odgovor2: '',
             odgovor3: '',
             odgovor4: '',
+            chosenOne: undefined,
             kraj: false
         }
 
@@ -100,6 +101,10 @@ class GameComponent extends Component {
         let count1 = 0;
         this.handleColor1 = (e)=>{
             console.log("this is working fine");
+            this.setState({
+                [e.target.name]: e.target.value
+            })
+            console.log("ovo je chosenOne 1" + this.state.chosenOne);
             e.preventDefault();
             console.log(e.target);
             if (count1 == 0) {
@@ -114,6 +119,10 @@ class GameComponent extends Component {
         let count2 = 0;
         this.handleColor2 = (e)=>{
             console.log("this is working fine");
+            this.setState({
+                [e.target.name]: e.target.value
+            })
+            console.log("ovo je chosenOne 2" + this.state.chosenOne);
             e.preventDefault();
             console.log(e.target);
             if (count2 == 0) {
@@ -128,6 +137,10 @@ class GameComponent extends Component {
         let count3 = 0;
         this.handleColor3 = (e)=>{
             console.log("this is working fine");
+            this.setState({
+                [e.target.name]: e.target.value
+            })
+            console.log("ovo je chosenOne 3" + this.state.chosenOne);
             e.preventDefault();
             console.log(e.target);
             if (count3 == 0) {
@@ -142,6 +155,10 @@ class GameComponent extends Component {
         let count4 = 0;
         this.handleColor4 = (e)=>{
             console.log("this is working fine");
+            this.setState({
+                [e.target.name]: e.target.value
+            })
+            console.log("ovo je chosenOne 4" + this.state.chosenOne);
             e.preventDefault();
             console.log(e.target);
             if (count4 == 0) {
@@ -179,12 +196,12 @@ class GameComponent extends Component {
 
                 <div className="button-box text-center container">
                     <div style={{height: 10 + 'rem'}} className={"row"}>
-                            <button id='' type="button" className='btn btn-info col' onClick={this.handleColor1}>{this.state.odgovor1}</button>
-                            <button id='' type="button" className='btn btn-info col' onClick={this.handleColor2}>{this.state.odgovor2}</button>
+                            <button value={this.state.chosenOne} id='chosenOne' name={"chosenOne"} type="radio" className='btn btn-info col' onClick={this.handleColor1}>{this.state.odgovor1}</button>
+                            <button value={this.state.chosenOne} id='chosenOne' name={"chosenOne"}  type="radio" className='btn btn-info col' onClick={this.handleColor2}>{this.state.odgovor2}</button>
                     </div>
                     <div style={{height: 10 + 'rem'}} className={"row"}>
-                        <button id='' type="button" className='btn btn-info col' onClick={this.handleColor3}>{this.state.odgovor3}</button>
-                        <button id='' type="button" className='btn btn-info col' onClick={this.handleColor4}>{this.state.odgovor4}</button>
+                        <button value={this.state.chosenOne} id='chosenOne' name={"chosenOne"} type="radio" className='btn btn-info col' onClick={this.handleColor3}>{this.state.odgovor3}</button>
+                        <button value={this.state.chosenOne} id='chosenOne' name={"chosenOne"} type="radio" className='btn btn-info col' onClick={this.handleColor4}>{this.state.odgovor4}</button>
                     </div>
 
                 </div>
