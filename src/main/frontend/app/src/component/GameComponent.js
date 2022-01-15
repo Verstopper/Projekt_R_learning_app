@@ -94,12 +94,66 @@ class GameComponent extends Component {
         }
 
         //ovo radi samo u jednom smjeru popravit cu kasnije --Mislav
-        this.handleColor = (e)=>{
+        //sad radi za sve gumbe i kad se stisne jednom ode u zuto, drugi put kad se stisne u plavo itd...
+        //sad bi tu mozda bilo fora staviti da zapamti koji je stisnut i kad se stisne submit se poboja
+        // koji je bio tocan a koji netocan na ovu foru samo sa zeleno crveno (success je zeleno, danger je crveno)
+        let count1 = 0;
+        this.handleColor1 = (e)=>{
             console.log("this is working fine");
             e.preventDefault();
-            e.target.className = 'btn btn-warning col '
             console.log(e.target);
+            if (count1 == 0) {
+                e.target.className = 'btn btn-warning col '
+                count1 = 1;
+            }
+            else {
+                e.target.className = 'btn btn-info col '
+                count1 = 0;
+            }
         }
+        let count2 = 0;
+        this.handleColor2 = (e)=>{
+            console.log("this is working fine");
+            e.preventDefault();
+            console.log(e.target);
+            if (count2 == 0) {
+                e.target.className = 'btn btn-warning col '
+                count2 = 1;
+            }
+            else {
+                e.target.className = 'btn btn-info col '
+                count2 = 0;
+            }
+        }
+        let count3 = 0;
+        this.handleColor3 = (e)=>{
+            console.log("this is working fine");
+            e.preventDefault();
+            console.log(e.target);
+            if (count3 == 0) {
+                e.target.className = 'btn btn-warning col '
+                count3 = 1;
+            }
+            else {
+                e.target.className = 'btn btn-info col '
+                count3 = 0;
+            }
+        }
+        let count4 = 0;
+        this.handleColor4 = (e)=>{
+            console.log("this is working fine");
+            e.preventDefault();
+            console.log(e.target);
+            if (count4 == 0) {
+                e.target.className = 'btn btn-warning col '
+                count4 = 1;
+            }
+            else {
+                e.target.className = 'btn btn-info col '
+                count4 = 0;
+            }
+        }
+
 
 
     }
@@ -124,14 +178,13 @@ class GameComponent extends Component {
 
 
                 <div className="button-box text-center container">
-                    <div style={{height: 150 + 'px'}} className={"row"}>
-                            {/*ovdje sam isprobao kak se mjenja boja gumba onClick, uredit cu kasnije za tocno/netocno*/}
-                            <button id='' type="button" className='btn btn-info col' onClick={this.handleColor}>{this.state.odgovor1}</button>
-                            <button id='' type="button" className='btn btn-info col'>{this.state.odgovor2}</button>
+                    <div style={{height: 10 + 'rem'}} className={"row"}>
+                            <button id='' type="button" className='btn btn-info col' onClick={this.handleColor1}>{this.state.odgovor1}</button>
+                            <button id='' type="button" className='btn btn-info col' onClick={this.handleColor2}>{this.state.odgovor2}</button>
                     </div>
-                    <div style={{height: 150 + 'px'}} className={"row"}>
-                        <button id='' type="button" className='btn btn-info col'>{this.state.odgovor1}</button>
-                        <button id='' type="button" className='btn btn-info col'>{this.state.odgovor2}</button>
+                    <div style={{height: 10 + 'rem'}} className={"row"}>
+                        <button id='' type="button" className='btn btn-info col' onClick={this.handleColor3}>{this.state.odgovor3}</button>
+                        <button id='' type="button" className='btn btn-info col' onClick={this.handleColor4}>{this.state.odgovor4}</button>
                     </div>
 
                 </div>
