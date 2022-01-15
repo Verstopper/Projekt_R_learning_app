@@ -74,6 +74,7 @@ class GameComponent extends Component {
                     odgovor1: allAnswers.data[0].text,
                     odgovor2: allAnswers.data[1].text,
                     odgovor3: allAnswers.data[2].text,
+                    odgovor4: allAnswers.data[3].text,
                 }));
             }
 
@@ -90,6 +91,14 @@ class GameComponent extends Component {
         this.handleSubmit = async (event) => {
             event.preventDefault();
 
+        }
+
+        //ovo radi samo u jednom smjeru popravit cu kasnije --Mislav
+        this.handleColor = (e)=>{
+            console.log("this is working fine");
+            e.preventDefault();
+            e.target.className = 'btn btn-warning col '
+            console.log(e.target);
         }
 
 
@@ -109,13 +118,33 @@ class GameComponent extends Component {
                 <p>ISPOD JE ROW hehe</p>
 
 
-                    <p>{this.state.idpitanja}</p>
-                    <p>{this.state.namepitanja}</p>
-                    <p>{this.state.textpitanja}</p>
-                    <p>{this.state.odgovor1}</p>
-                    <p>{this.state.odgovor2}</p>
-                    <p>{this.state.odgovor3}</p>
-                    <p>{this.state.kraj} </p>
+                <div className={"container-md"}>
+
+                </div>
+
+
+                <div className="button-box text-center container">
+                    <div style={{height: 150 + 'px'}} className={"row"}>
+                            {/*ovdje sam isprobao kak se mjenja boja gumba onClick, uredit cu kasnije za tocno/netocno*/}
+                            <button id='' type="button" className='btn btn-info col' onClick={this.handleColor}>{this.state.odgovor1}</button>
+                            <button id='' type="button" className='btn btn-info col'>{this.state.odgovor2}</button>
+                    </div>
+                    <div style={{height: 150 + 'px'}} className={"row"}>
+                        <button id='' type="button" className='btn btn-info col'>{this.state.odgovor1}</button>
+                        <button id='' type="button" className='btn btn-info col'>{this.state.odgovor2}</button>
+                    </div>
+
+                </div>
+
+
+                <p>{this.state.idpitanja}</p>
+                <p>{this.state.namepitanja}</p>
+                <p>{this.state.textpitanja}</p>
+                <p>{this.state.odgovor1}</p>
+                <p>{this.state.odgovor2}</p>
+                <p>{this.state.odgovor3}</p>
+                <p>{this.state.odgovor4}</p>
+                <p>{this.state.kraj} </p>
 
 
                 <form onSubmit={this.handleNext}>
@@ -130,5 +159,5 @@ class GameComponent extends Component {
 }
 
 
-    export default GameComponent
+export default GameComponent
 
