@@ -53,27 +53,49 @@ class GameComponent extends Component {
             tocan3:'',
             tocan4:'',
             chosenOne: undefined,
-            kraj: false
+            kraj: false,
+            pushedNext : false,
+            confirmed : false,
         }
 
 
         this.handleNext = async (event) => {
-
             event.preventDefault();
             let confirmed = false;
             let goNext = true;
-            if(this.state.chosenOne == undefined) {
-                 confirmed = window.confirm("Jeste li sigurni da želite preskočiti ovo pitanje?" +
-                    "Niti jedan odgovro nije odabran");
-                 if(confirmed) {
-                     goNext = true;
-                 } else {
-                     goNext = false;
-                 }
+            let prvo = false;
+            if(this.state.pushedNext) {
+                if (this.state.chosenOne == undefined) {
+                    confirmed = window.confirm("Jeste li sigurni da želite preskočiti ovo pitanje?" +
+                        "Niti jedan odgovro nije odabran");
+                    if (confirmed) {
+                        goNext = true;
+                    } else {
+                        goNext = false;
+                    }
 
+                }else if(!this.state.confirmed) {
+                    confirmed = window.confirm("Jeste li sigurni da ne želite provjeriti ovaj odgovor?")
+                    if(confirmed) {
+                        goNext = true;
+                    } else {
+                        goNext = false;
+                    }
+                }
+            } else {
+                prvo = true;
             }
+
+            this.setState({
+                pushedNext: true
+            })
+            console.log("GO NEXT" +  goNext);
             if(goNext) {
-                resetColors();
+                console.log("USLI SMO U PITANJA")
+                if(!prvo) {
+                    resetColors();
+                }
+
                 let yes = await QuestionService.getAllQuestions(AuthenticationService.getGameFromStorage());
                 console.log("BROJ PITANJA " + yes.data.length)
                 if (this.state.brojac == yes.data.length) {// ovo oznacava zadnje pitanje
@@ -104,12 +126,14 @@ class GameComponent extends Component {
                     }));
                 }
                 this.setState({
-                    chosenOne: undefined
+                    chosenOne: undefined,
+                    confirmed : false
                 })
             }
         }
 
         function resetColors(){
+            document.getElementById("checkAns").className="btn btn-warning"
             document.getElementById("chosenOneAns1").className="btn btn-info col"
             document.getElementById("chosenOneAns2").className="btn btn-info col"
             document.getElementById("chosenOneAns3").className="btn btn-info col"
@@ -135,6 +159,9 @@ class GameComponent extends Component {
 
         this.handleAnswer = async (e) => {
             e.preventDefault();
+            this.setState({
+                confirmed: true
+            })
             if (this.state.chosenOne != undefined) {
                 console.log("izabran je odgovor idemo provjeirtit")
                 console.log(this.state.chosenOne)
@@ -181,85 +208,6 @@ class GameComponent extends Component {
 
         }
 
-        //ovo radi samo u jednom smjeru popravit cu kasnije --Mislav
-        //sad radi za sve gumbe i kad se stisne jednom ode u zuto, drugi put kad se stisne u plavo itd...
-        //sad bi tu mozda bilo fora staviti da zapamti koji je stisnut i kad se stisne submit se poboja
-        // koji je bio tocan a koji netocan na ovu foru samo sa zeleno crveno (success je zeleno, danger je crveno)
-        // let count1 = 0;
-        // this.handleColor1 = (e)=>{
-        //     e.preventDefault();
-        //     console.log("this is working fine");
-        //     this.setState({
-        //         chosenOne : e.target.value
-        //     })
-        //     console.log("ovo je chosenOne 1" + this.state.chosenOne);
-        //
-        //     console.log(e.target);
-        //     if (count1 == 0) {
-        //         e.target.className = 'btn btn-warning col '
-        //         count1 = 1;
-        //     }
-        //     else {
-        //         e.target.className = 'btn btn-info col '
-        //         count1 = 0;
-        //     }
-        // }
-        // let count2 = 0;
-        // this.handleColor2 = (e)=>{
-        //     console.log("this is working fine");
-        //     this.setState({
-        //         [e.target.name]: e.target.value
-        //     })
-        //     console.log("ovo je chosenOne 2" + this.state.chosenOne);
-        //     e.preventDefault();
-        //     console.log(e.target);
-        //     if (count2 == 0) {
-        //         e.target.className = 'btn btn-warning col '
-        //         count2 = 1;
-        //     }
-        //     else {
-        //         e.target.className = 'btn btn-info col '
-        //         count2 = 0;
-        //     }
-        // }
-        // let count3 = 0;
-        // this.handleColor3 = (e)=>{
-        //     console.log("this is working fine");
-        //     this.setState({
-        //         [e.target.name]: e.target.value
-        //     })
-        //     console.log("ovo je chosenOne 3" + this.state.chosenOne);
-        //     e.preventDefault();
-        //     console.log(e.target);
-        //     if (count3 == 0) {
-        //         e.target.className = 'btn btn-warning col '
-        //         count3 = 1;
-        //     }
-        //     else {
-        //         e.target.className = 'btn btn-info col '
-        //         count3 = 0;
-        //     }
-        // }
-        // let count4 = 0;
-        // this.handleColor4 = (e)=>{
-        //     console.log("this is working fine");
-        //     this.setState({
-        //         [e.target.name]: e.target.value
-        //     })
-        //     console.log("ovo je chosenOne 4" + this.state.chosenOne);
-        //     e.preventDefault();
-        //     console.log(e.target);
-        //     if (count4 == 0) {
-        //         e.target.className = 'btn btn-warning col '
-        //         count4 = 1;
-        //     }
-        //     else {
-        //         e.target.className = 'btn btn-info col '
-        //         count4 = 0;
-        //     }
-        // }
-
-
 
     }
 
@@ -281,22 +229,31 @@ class GameComponent extends Component {
 
                 </div>
 
+                { this.state.pushedNext && !this.state.kraj &&
+                    <div className="button-box text-center container">
+                        <div style={{height: 10 + 'rem'}}>{this.state.textpitanja}</div>
+                        <div style={{height: 10 + 'rem'}} className={"row"}>
+                            <button value={this.state.tocan1} id='chosenOneAns1' name={"chosenOne"}
+                                    className='btn btn-info col'
+                                    onClick={this.handleChange}>{this.state.odgovor1}</button>
+                            <button value={this.state.tocan2} id='chosenOneAns2' name={"chosenOne"}
+                                    className='btn btn-info col'
+                                    onClick={this.handleChange}>{this.state.odgovor2}</button>
+                        </div>
+                        <div style={{height: 10 + 'rem'}} className={"row"}>
+                            <button value={this.state.tocan3} id='chosenOneAns3' name={"chosenOne"}
+                                    className='btn btn-info col'
+                                    onClick={this.handleChange}>{this.state.odgovor3}</button>
+                            <button value={this.state.tocan4} id='chosenOneAns4' name={"chosenOne"}
+                                    className='btn btn-info col'
+                                    onClick={this.handleChange}>{this.state.odgovor4}</button>
+                        </div>
 
-                <div className="button-box text-center container">
-                    <div style={{height: 10 + 'rem'}} className={"row"}>
-                            <button value={this.state.tocan1} id='chosenOneAns1' name={"chosenOne"} className='btn btn-info col' onClick={this.handleChange}>{this.state.odgovor1}</button>
-                            <button value={this.state.tocan2} id='chosenOneAns2' name={"chosenOne"} className='btn btn-info col' onClick={this.handleChange}>{this.state.odgovor2}</button>
                     </div>
-                    <div style={{height: 10 + 'rem'}} className={"row"}>
-                        <button value={this.state.tocan3} id='chosenOneAns3' name={"chosenOne"} className='btn btn-info col' onClick={this.handleChange}>{this.state.odgovor3}</button>
-                        <button value={this.state.tocan4} id='chosenOneAns4' name={"chosenOne"} className='btn btn-info col' onClick={this.handleChange}>{this.state.odgovor4}</button>
-                    </div>
-
-                </div>
-
+                }
                 <div>
                     <button className={"btn btn-primary"} onClick={this.handleNext}>Sljedeće pitanje</button>
-                    <button className={"btn btn-warning"} onClick={this.handleAnswer} type={"submit"}>Provjeri odgovor</button>
+                    <button className={"btn btn-warning"} onClick={this.handleAnswer} id = "checkAns" type={"submit"}>Provjeri odgovor</button>
                 </div>
 
 
