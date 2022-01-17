@@ -9,6 +9,8 @@ import QuestionService from "../services/QuestionService";
 import {forEach} from "react-bootstrap/ElementChildren";
 import triggerBrowserReflow from "react-bootstrap/triggerBrowserReflow";
 import AnswerService from "../services/AnswerService";
+import {render} from "@testing-library/react";
+import {getElement} from "bootstrap/js/src/util";
 
 
 class QuestionRow extends Component {
@@ -58,6 +60,7 @@ class GameComponent extends Component {
         this.handleNext = async (event) => {
 
             event.preventDefault();
+            resetColors();
             let yes = await QuestionService.getAllQuestions(AuthenticationService.getGameFromStorage());
             console.log("BROJ PITANJA " + yes.data.length)
             if (this.state.brojac == yes.data.length - 1) {// ovo oznacava zadnje pitanje
@@ -83,11 +86,19 @@ class GameComponent extends Component {
                     tocan1: allAnswers.data[0].correctness,
                     tocan2: allAnswers.data[1].correctness,
                     tocan3: allAnswers.data[2].correctness,
-                    toacn4: allAnswers.data[3].correctness
+                    tocan4: allAnswers.data[3].correctness
 
                 }));
             }
 
+
+        }
+
+        function resetColors(){
+            document.getElementById("chosenOneAns1").className="btn btn-info col"
+            document.getElementById("chosenOneAns2").className="btn btn-info col"
+            document.getElementById("chosenOneAns3").className="btn btn-info col"
+            document.getElementById("chosenOneAns4").className="btn btn-info col"
 
         }
 
@@ -96,8 +107,10 @@ class GameComponent extends Component {
 
         this.handleChange = (event) => {
             this.setState({
-                [event.target.name]: event.target.value
+                [event.target.name]: event.target.id
             })
+            resetColors();
+
         }
 
         this.handleSubmit = async (event) => {
@@ -110,32 +123,41 @@ class GameComponent extends Component {
             if(this.state.chosenOne != undefined) {
                 console.log("izabran je odgovor idemo provjeirtit")
                 console.log(this.state.chosenOne)
-                if(this.state.chosenOne == 1) {
+                if(this.state.chosenOne == "chosenOneAns1") {
                     if(this.state.tocan1 == "DA") {
+                        document.getElementById("chosenOneAns1").className="btn btn-success col"
                         e.target.className = 'btn btn-success col '
                     }else {
-                        e.target.className = 'btn btn-error col '
+                        document.getElementById("chosenOneAns1").className="btn btn-danger col"
+                        e.target.className = 'btn btn-danger col '
                     }
-                }if(this.state.chosenOne == 12) {
-                    if(this.state.tocan1 == "DA") {
-                        e.target.className = 'btn btn-success col '
+                }if(this.state.chosenOne == "chosenOneAns2") {
+                    if(this.state.tocan2 == "DA") {
+                        document.getElementById("chosenOneAns2").className="btn btn-success col"
+                            e.target.className = 'btn btn-success col '
                     }else {
-                        e.target.className = 'btn btn-error col '
+                        document.getElementById("chosenOneAns2").className="btn btn-danger col"
+                        e.target.className = 'btn btn-danger col '
                     }
-                }if(this.state.chosenOne == 3) {
-                    if(this.state.tocan1 == "DA") {
+                }if(this.state.chosenOne == "chosenOneAns3") {
+                    if(this.state.tocan3 == "DA") {
+                        document.getElementById("chosenOneAns3").className="btn btn-success col"
                         e.target.className = 'btn btn-success col '
                     }else {
-                        e.target.className = 'btn btn-error col '
+                        document.getElementById("chosenOneAns3").className="btn btn-danger col"
+                        e.target.className = 'btn btn-danger col '
                     }
-                }if(this.state.chosenOne == 4) {
+                }if(this.state.chosenOne == "chosenOneAns4") {
                     if(this.state.tocan1 == "DA") {
+                        document.getElementById("chosenOneAns4").className="btn btn-success col"
                         e.target.className = 'btn btn-success col '
                     }else {
-                        e.target.className = 'btn btn-error col '
+                        document.getElementById("chosenOneAns4").className="btn btn-danger col"
+                        e.target.className = 'btn btn-danger col '
                     }
                 }
             } else {
+                //render(<h1>Nije izabran niti jedan odgovor!</h1>)
                 console.log("nije izabran niti jedan odgovor") }
         }
 
@@ -143,79 +165,79 @@ class GameComponent extends Component {
         //sad radi za sve gumbe i kad se stisne jednom ode u zuto, drugi put kad se stisne u plavo itd...
         //sad bi tu mozda bilo fora staviti da zapamti koji je stisnut i kad se stisne submit se poboja
         // koji je bio tocan a koji netocan na ovu foru samo sa zeleno crveno (success je zeleno, danger je crveno)
-        let count1 = 0;
-        this.handleColor1 = (e)=>{
-            e.preventDefault();
-            console.log("this is working fine");
-            this.setState({
-                chosenOne : e.target.value
-            })
-            console.log("ovo je chosenOne 1" + this.state.chosenOne);
-
-            console.log(e.target);
-            if (count1 == 0) {
-                e.target.className = 'btn btn-warning col '
-                count1 = 1;
-            }
-            else {
-                e.target.className = 'btn btn-info col '
-                count1 = 0;
-            }
-        }
-        let count2 = 0;
-        this.handleColor2 = (e)=>{
-            console.log("this is working fine");
-            this.setState({
-                [e.target.name]: e.target.value
-            })
-            console.log("ovo je chosenOne 2" + this.state.chosenOne);
-            e.preventDefault();
-            console.log(e.target);
-            if (count2 == 0) {
-                e.target.className = 'btn btn-warning col '
-                count2 = 1;
-            }
-            else {
-                e.target.className = 'btn btn-info col '
-                count2 = 0;
-            }
-        }
-        let count3 = 0;
-        this.handleColor3 = (e)=>{
-            console.log("this is working fine");
-            this.setState({
-                [e.target.name]: e.target.value
-            })
-            console.log("ovo je chosenOne 3" + this.state.chosenOne);
-            e.preventDefault();
-            console.log(e.target);
-            if (count3 == 0) {
-                e.target.className = 'btn btn-warning col '
-                count3 = 1;
-            }
-            else {
-                e.target.className = 'btn btn-info col '
-                count3 = 0;
-            }
-        }
-        let count4 = 0;
-        this.handleColor4 = (e)=>{
-            console.log("this is working fine");
-            this.setState({
-                [e.target.name]: e.target.value
-            })
-            console.log("ovo je chosenOne 4" + this.state.chosenOne);
-            e.preventDefault();
-            console.log(e.target);
-            if (count4 == 0) {
-                e.target.className = 'btn btn-warning col '
-                count4 = 1;
-            }
-            else {
-                e.target.className = 'btn btn-info col '
-                count4 = 0;
-            }
-        }
+        // let count1 = 0;
+        // this.handleColor1 = (e)=>{
+        //     e.preventDefault();
+        //     console.log("this is working fine");
+        //     this.setState({
+        //         chosenOne : e.target.value
+        //     })
+        //     console.log("ovo je chosenOne 1" + this.state.chosenOne);
+        //
+        //     console.log(e.target);
+        //     if (count1 == 0) {
+        //         e.target.className = 'btn btn-warning col '
+        //         count1 = 1;
+        //     }
+        //     else {
+        //         e.target.className = 'btn btn-info col '
+        //         count1 = 0;
+        //     }
+        // }
+        // let count2 = 0;
+        // this.handleColor2 = (e)=>{
+        //     console.log("this is working fine");
+        //     this.setState({
+        //         [e.target.name]: e.target.value
+        //     })
+        //     console.log("ovo je chosenOne 2" + this.state.chosenOne);
+        //     e.preventDefault();
+        //     console.log(e.target);
+        //     if (count2 == 0) {
+        //         e.target.className = 'btn btn-warning col '
+        //         count2 = 1;
+        //     }
+        //     else {
+        //         e.target.className = 'btn btn-info col '
+        //         count2 = 0;
+        //     }
+        // }
+        // let count3 = 0;
+        // this.handleColor3 = (e)=>{
+        //     console.log("this is working fine");
+        //     this.setState({
+        //         [e.target.name]: e.target.value
+        //     })
+        //     console.log("ovo je chosenOne 3" + this.state.chosenOne);
+        //     e.preventDefault();
+        //     console.log(e.target);
+        //     if (count3 == 0) {
+        //         e.target.className = 'btn btn-warning col '
+        //         count3 = 1;
+        //     }
+        //     else {
+        //         e.target.className = 'btn btn-info col '
+        //         count3 = 0;
+        //     }
+        // }
+        // let count4 = 0;
+        // this.handleColor4 = (e)=>{
+        //     console.log("this is working fine");
+        //     this.setState({
+        //         [e.target.name]: e.target.value
+        //     })
+        //     console.log("ovo je chosenOne 4" + this.state.chosenOne);
+        //     e.preventDefault();
+        //     console.log(e.target);
+        //     if (count4 == 0) {
+        //         e.target.className = 'btn btn-warning col '
+        //         count4 = 1;
+        //     }
+        //     else {
+        //         e.target.className = 'btn btn-info col '
+        //         count4 = 0;
+        //     }
+        // }
 
 
 
@@ -242,17 +264,28 @@ class GameComponent extends Component {
 
                 <div className="button-box text-center container">
                     <div style={{height: 10 + 'rem'}} className={"row"}>
-                            <button value={1} id='chosenOne' name={"chosenOne"} type="radio" className='btn btn-info col' onClick={this.handleColor1}>{this.state.odgovor1}</button>
-                            <button value={2} id='chosenOne' name={"chosenOne"}  type="radio" className='btn btn-info col' onClick={this.handleColor2}>{this.state.odgovor2}</button>
+                            <button value={this.state.tocan1} id='chosenOneAns1' name={"chosenOne"} className='btn btn-info col' onClick={this.handleChange}>{this.state.odgovor1}</button>
+                            <button value={this.state.tocan2} id='chosenOneAns2' name={"chosenOne"} className='btn btn-info col' onClick={this.handleChange}>{this.state.odgovor2}</button>
                     </div>
                     <div style={{height: 10 + 'rem'}} className={"row"}>
-                        <button value={3} id='chosenOne' name={"chosenOne"} type="radio" className='btn btn-info col' onClick={this.handleColor3}>{this.state.odgovor3}</button>
-                        <button value={4} id='chosenOne' name={"chosenOne"} type="radio" className='btn btn-info col' onClick={this.handleColor4}>{this.state.odgovor4}</button>
+                        <button value={this.state.tocan3} id='chosenOneAns3' name={"chosenOne"} className='btn btn-info col' onClick={this.handleChange}>{this.state.odgovor3}</button>
+                        <button value={this.state.tocan4} id='chosenOneAns4' name={"chosenOne"} className='btn btn-info col' onClick={this.handleChange}>{this.state.odgovor4}</button>
                     </div>
 
                 </div>
 
+                <div>
+                    <button className={"btn btn-primary"} onClick={this.handleNext}>Sljedeće pitanje</button>
+                    <button className={"btn btn-warning"} onClick={this.handleAnswer} type={"submit"}>Provjeri odgovor</button>
+                </div>
 
+
+                <p>ovo je chosen one: {this.state.chosenOne}+++++</p>
+                <p>{this.state.tocan1}</p>
+                <p>{this.state.tocan2}</p>
+                <p>{this.state.tocan3}</p>
+                <p>{this.state.tocan4}</p>
+                <p>-------------------------</p>
                 <p>{this.state.idpitanja}</p>
                 <p>{this.state.namepitanja}</p>
                 <p>{this.state.textpitanja}</p>
@@ -263,12 +296,13 @@ class GameComponent extends Component {
                 <p>{this.state.kraj} </p>
 
 
-                <form onSubmit={this.handleAnswer}>
-                    <input className="btn btn-secondary" type="submit"/>
-                </form>
-                <form onSubmit={this.handleNext}>
-                    <input className="btn btn-primary" type="submit"/>
-                </form>
+                {/*<form onSubmit={this.handleAnswer}>*/}
+                {/*    <input className="btn btn-secondary" type="submit"/>*/}
+                {/*</form>*/}
+                {/*<form onSubmit={this.handleNext}>*/}
+                {/*    <input className="btn btn-primary" type="submit"/>*/}
+
+                {/*</form>*/}
 
                 <div>
                     {rows && rows}
