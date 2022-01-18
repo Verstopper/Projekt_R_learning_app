@@ -31,13 +31,13 @@ class AuthenticationService {
 
     getLoggedInUserName() {
         let user = sessionStorage.getItem(USER_NAME_SESSION_ATTRIBUTE_NAME)
-        console.log("Userrrrrrrrrr" + user)
+
         if (user === null) return ''
         return user
     }
 
     getQuestionIntoStorage(id, questionName, questionText) {
-        console.log("STAVLJAM U STORAGE" + id)
+
         sessionStorage.setItem(QUESTION_SESSION_ATTRIBUTE_NAME, id);
         sessionStorage.setItem(QUESTION_NAME_SESSION_ATTRIBUTE_NAME, questionName);
         sessionStorage.setItem(QUESTION_TEXT_SESSION_ATTRIBUTE_NAME, questionText);
@@ -72,7 +72,7 @@ class AuthenticationService {
     }
     addCorrectAnswersIntoStorage() {
         let number = sessionStorage.getItem(TRUE_NUMBER_SESSION_ATTRIBUTE_NAME);
-        console.log("number " + number)
+
         let n = (parseInt(number))
         n++;
         sessionStorage.setItem(TRUE_NUMBER_SESSION_ATTRIBUTE_NAME, n);
@@ -85,10 +85,10 @@ class AuthenticationService {
     }
 
     inicializeNumberOfAnswers() {
-        console.log("inicijalaziacija")
+
         sessionStorage.setItem(TRUE_NUMBER_SESSION_ATTRIBUTE_NAME, "0");
         let nu = sessionStorage.getItem(TRUE_NUMBER_SESSION_ATTRIBUTE_NAME);
-        console.log(nu)
+
     }
     getNumberOfQuestionsFromStorage() {
         let num = sessionStorage.getItem(NUMBER_OF_ANSWERS_SESSION_ATTRIBUTE_NAME);
@@ -135,7 +135,7 @@ class AuthenticationService {
     loginProfessor(korisnicko_ime, lozinka) {
         let url = "/api/ZabavnoUcenje/profesor/login";
         let mess = api.post(url, {username: korisnicko_ime, password: lozinka})
-        console.log(mess)
+
         return mess
         //return api.post(url, {username: korisnicko_ime, password: lozinka})
     }

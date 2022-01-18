@@ -78,9 +78,9 @@ class GameComponent extends Component {
             this.setState({
                 pushedNext: true
             })
-            console.log("GO NEXT" + goNext);
+
             if (goNext) {
-                console.log("USLI SMO U PITANJA")
+
                 if (!prvo) {
                     resetColors();
                 }
@@ -88,7 +88,6 @@ class GameComponent extends Component {
                 let yes = await QuestionService.getAllQuestions(AuthenticationService.getGameFromStorage());
                 AuthenticationService.getNumberOfQuestionsIntoStorage(yes.data.length);
 
-                console.log("BROJ PITANJA " + yes.data.length)
                 if (this.state.brojac == yes.data.length) {// ovo oznacava zadnje pitanje
                     this.setState({
                         kraj: true
@@ -116,9 +115,7 @@ class GameComponent extends Component {
 
                     }));
                 }
-                console.log("TRUTH")
-                console.log(this.state.truth)
-                console.log("chosenone " + this.state.chosenOne)
+
                 if (this.state.truth != true) {
 
                     if (this.state.chosenOne == "chosenOneAns1") {
@@ -183,13 +180,13 @@ class GameComponent extends Component {
                         confirmed: true
                     })
                     if (this.state.chosenOne != undefined) {
-                        console.log("izabran je odgovor idemo provjeirtit")
-                        console.log(this.state.chosenOne)
+                        console.log("provjeravamo točnost truth je" + this.state.truth)
                         if (this.state.chosenOne == "chosenOneAns1") {
                             if (this.state.tocan1 == "DA") {
                                 document.getElementById("chosenOneAns1").className = "btn btn-success col"
                                 e.target.className = 'btn btn-success col '
                                 if(this.state.truth != true) {
+                                    console.log("povecali smo u " + this.state.chosenOne + "1")
                                     AuthenticationService.addCorrectAnswersIntoStorage();
                                     this.setState({truth: true})
                                 }
@@ -199,11 +196,12 @@ class GameComponent extends Component {
 
                             }
                         }
-                        if (this.state.chosenOne == "chosenOneAns2") {
+                        else if (this.state.chosenOne == "chosenOneAns2") {
                             if (this.state.tocan2 == "DA") {
                                 document.getElementById("chosenOneAns2").className = "btn btn-success col"
                                 e.target.className = 'btn btn-success col '
                                 if(this.state.truth != true) {
+                                    console.log("povecali smo u " + this.state.chosenOne + "2")
                                     AuthenticationService.addCorrectAnswersIntoStorage();
                                     this.setState({truth: true})
                                 }
@@ -212,11 +210,12 @@ class GameComponent extends Component {
                                 e.target.className = 'btn btn-danger col '
                             }
                         }
-                        if (this.state.chosenOne == "chosenOneAns3") {
+                        else if (this.state.chosenOne == "chosenOneAns3") {
                             if (this.state.tocan3 == "DA") {
                                 document.getElementById("chosenOneAns3").className = "btn btn-success col"
                                 e.target.className = 'btn btn-success col '
                                 if(this.state.truth != true) {
+                                    console.log("povecali smo u " + this.state.chosenOne + "3")
                                     AuthenticationService.addCorrectAnswersIntoStorage();
                                     this.setState({truth: true})
                                 }
@@ -228,11 +227,14 @@ class GameComponent extends Component {
                                 e.target.className = 'btn btn-danger col '
                             }
                         }
-                        if (this.state.chosenOne == "chosenOneAns4") {
+                        else if (this.state.chosenOne == "chosenOneAns4") {
                             if (this.state.tocan4 == "DA") {
                                 document.getElementById("chosenOneAns4").className = "btn btn-success col"
-                                e.target.className = 'btn btn-success col '
-                                this.setState({truth: true})
+                                if(this.state.truth != true) {
+                                    console.log("povecali smo u " + this.state.chosenOne + "4")
+                                    AuthenticationService.addCorrectAnswersIntoStorage();
+                                    this.setState({truth: true})
+                                }
                             } else {
                                 document.getElementById("chosenOneAns4").className = "btn btn-danger col"
                                 e.target.className = 'btn btn-danger col '
@@ -240,7 +242,7 @@ class GameComponent extends Component {
                         }
                     } else {
                         //render(<h1>Nije izabran niti jedan odgovor!</h1>)
-                        console.log("nije izabran niti jedan odgovor")
+
                     }
 
                 }
