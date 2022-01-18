@@ -13,22 +13,7 @@ import {render} from "@testing-library/react";
 import {getElement} from "bootstrap/js/src/util";
 
 
-class QuestionRow extends Component {
-    constructor(props) {
-        super(props);
-    }
 
-    render() {
-
-
-        return (
-
-            <div>
-                )}</div>
-        )
-
-    }
-}
 
 class GameComponent extends Component {
 
@@ -56,15 +41,17 @@ class GameComponent extends Component {
             kraj: false,
             pushedNext : false,
             confirmed : false,
+            truth: undefined,
         }
 
 
         this.handleNext = async (event) => {
             event.preventDefault();
+            this.setState({truth:undefined})
             let confirmed = false;
             let goNext = true;
             let prvo = false;
-            if(this.state.pushedNext) {
+            if (this.state.pushedNext) {
                 if (this.state.chosenOne == undefined) {
                     confirmed = window.confirm("Jeste li sigurni da želite preskočiti ovo pitanje?" +
                         "Niti jedan odgovro nije odabran");
@@ -74,29 +61,33 @@ class GameComponent extends Component {
                         goNext = false;
                     }
 
-                }else if(!this.state.confirmed) {
+                } else if (!this.state.confirmed) {
                     confirmed = window.confirm("Jeste li sigurni da ne želite provjeriti ovaj odgovor?")
-                    if(confirmed) {
+                    if (confirmed) {
                         goNext = true;
                     } else {
                         goNext = false;
                     }
                 }
             } else {
+
+                AuthenticationService.inicializeNumberOfAnswers();
                 prvo = true;
             }
 
             this.setState({
                 pushedNext: true
             })
-            console.log("GO NEXT" +  goNext);
-            if(goNext) {
+            console.log("GO NEXT" + goNext);
+            if (goNext) {
                 console.log("USLI SMO U PITANJA")
-                if(!prvo) {
+                if (!prvo) {
                     resetColors();
                 }
 
                 let yes = await QuestionService.getAllQuestions(AuthenticationService.getGameFromStorage());
+                AuthenticationService.getNumberOfQuestionsIntoStorage(yes.data.length);
+
                 console.log("BROJ PITANJA " + yes.data.length)
                 if (this.state.brojac == yes.data.length) {// ovo oznacava zadnje pitanje
                     this.setState({
@@ -125,88 +116,123 @@ class GameComponent extends Component {
 
                     }));
                 }
-                this.setState({
-                    chosenOne: undefined,
-                    confirmed : false
-                })
+                console.log("TRUTH")
+                console.log(this.state.truth)
+                console.log("chosenone " + this.state.chosenOne)
+                if (this.state.truth == true) {
+                    AuthenticationService.addCorrectAnswersIntoStorage();
+                } else {
+
+                    if (this.state.chosenOne == "chosenOneAns1") {
+                        if (this.state.tocan1 == "DA") {
+                            AuthenticationService.addCorrectAnswersIntoStorage();
+                        }
+                    }
+
+                    if (this.state.chosenOne == "chosenOneAns2") {
+                        if (this.state.tocan2 == "DA") {
+                            AuthenticationService.addCorrectAnswersIntoStorage();
+                        }
+                        if (this.state.chosenOne == "chosenOneAns3") {
+                            if (this.state.tocan3 == "DA") {
+                                AuthenticationService.addCorrectAnswersIntoStorage();
+                            }
+
+                        }
+                        if (this.state.chosenOne == "chosenOneAns4") {
+                            if (this.state.tocan4 == "DA") {
+                                AuthenticationService.addCorrectAnswersIntoStorage();
+
+                            }
+                        }
+                        this.setState({
+                            chosenOne: undefined,
+                            confirmed: false,
+                            truth: undefined
+                        })
+                    }
+                }
             }
         }
 
-        function resetColors(){
-            document.getElementById("checkAns").className="btn btn-warning"
-            document.getElementById("chosenOneAns1").className="btn btn-info col"
-            document.getElementById("chosenOneAns2").className="btn btn-info col"
-            document.getElementById("chosenOneAns3").className="btn btn-info col"
-            document.getElementById("chosenOneAns4").className="btn btn-info col"
+                function resetColors() {
+                    document.getElementById("checkAns").className = "btn btn-warning"
+                    document.getElementById("chosenOneAns1").className = "btn btn-info col"
+                    document.getElementById("chosenOneAns2").className = "btn btn-info col"
+                    document.getElementById("chosenOneAns3").className = "btn btn-info col"
+                    document.getElementById("chosenOneAns4").className = "btn btn-info col"
 
-        }
-
-
-
-
-        this.handleChange = (event) => {
-            this.setState({
-                [event.target.name]: event.target.id
-            })
-            resetColors();
-
-        }
-
-        this.handleSubmit = async (event) => {
-            event.preventDefault();
-
-        }
-
-        this.handleAnswer = async (e) => {
-            e.preventDefault();
-            this.setState({
-                confirmed: true
-            })
-            if (this.state.chosenOne != undefined) {
-                console.log("izabran je odgovor idemo provjeirtit")
-                console.log(this.state.chosenOne)
-                if (this.state.chosenOne == "chosenOneAns1") {
-                    if (this.state.tocan1 == "DA") {
-                        document.getElementById("chosenOneAns1").className = "btn btn-success col"
-                        e.target.className = 'btn btn-success col '
-                    } else {
-                        document.getElementById("chosenOneAns1").className = "btn btn-danger col"
-                        e.target.className = 'btn btn-danger col '
-                    }
                 }
-                if (this.state.chosenOne == "chosenOneAns2") {
-                    if (this.state.tocan2 == "DA") {
-                        document.getElementById("chosenOneAns2").className = "btn btn-success col"
-                        e.target.className = 'btn btn-success col '
-                    } else {
-                        document.getElementById("chosenOneAns2").className = "btn btn-danger col"
-                        e.target.className = 'btn btn-danger col '
-                    }
-                }
-                if (this.state.chosenOne == "chosenOneAns3") {
-                    if (this.state.tocan3 == "DA") {
-                        document.getElementById("chosenOneAns3").className = "btn btn-success col"
-                        e.target.className = 'btn btn-success col '
-                    } else {
-                        document.getElementById("chosenOneAns3").className = "btn btn-danger col"
-                        e.target.className = 'btn btn-danger col '
-                    }
-                }
-                if (this.state.chosenOne == "chosenOneAns4") {
-                    if (this.state.tocan4 == "DA") {
-                        document.getElementById("chosenOneAns4").className = "btn btn-success col"
-                        e.target.className = 'btn btn-success col '
-                    } else {
-                        document.getElementById("chosenOneAns4").className = "btn btn-danger col"
-                        e.target.className = 'btn btn-danger col '
-                    }
-                }
-            } else {
-                //render(<h1>Nije izabran niti jedan odgovor!</h1>)
-                console.log("nije izabran niti jedan odgovor")
-            }
 
-        }
+
+                this.handleChange = (event) => {
+                    this.setState({
+                        [event.target.name]: event.target.id
+                    })
+                    resetColors();
+
+                }
+
+                this.handleSubmit = async (event) => {
+                    event.preventDefault();
+
+                }
+
+                this.handleAnswer = async (e) => {
+                    e.preventDefault();
+                    this.setState({
+                        confirmed: true
+                    })
+                    if (this.state.chosenOne != undefined) {
+                        console.log("izabran je odgovor idemo provjeirtit")
+                        console.log(this.state.chosenOne)
+                        if (this.state.chosenOne == "chosenOneAns1") {
+                            if (this.state.tocan1 == "DA") {
+                                document.getElementById("chosenOneAns1").className = "btn btn-success col"
+                                e.target.className = 'btn btn-success col '
+                                this.setState({truth: true})
+                            } else {
+                                document.getElementById("chosenOneAns1").className = "btn btn-danger col"
+                                e.target.className = 'btn btn-danger col '
+                            }
+                        }
+                        if (this.state.chosenOne == "chosenOneAns2") {
+                            if (this.state.tocan2 == "DA") {
+                                document.getElementById("chosenOneAns2").className = "btn btn-success col"
+                                e.target.className = 'btn btn-success col '
+                                this.setState({truth: true})
+                            } else {
+                                document.getElementById("chosenOneAns2").className = "btn btn-danger col"
+                                e.target.className = 'btn btn-danger col '
+                            }
+                        }
+                        if (this.state.chosenOne == "chosenOneAns3") {
+                            if (this.state.tocan3 == "DA") {
+                                document.getElementById("chosenOneAns3").className = "btn btn-success col"
+                                e.target.className = 'btn btn-success col '
+                                this.setState({truth: true})
+                            } else {
+                                document.getElementById("chosenOneAns3").className = "btn btn-danger col"
+                                e.target.className = 'btn btn-danger col '
+                            }
+                        }
+                        if (this.state.chosenOne == "chosenOneAns4") {
+                            if (this.state.tocan4 == "DA") {
+                                document.getElementById("chosenOneAns4").className = "btn btn-success col"
+                                e.target.className = 'btn btn-success col '
+                                this.setState({truth: true})
+                            } else {
+                                document.getElementById("chosenOneAns4").className = "btn btn-danger col"
+                                e.target.className = 'btn btn-danger col '
+                            }
+                        }
+                    } else {
+                        //render(<h1>Nije izabran niti jedan odgovor!</h1>)
+                        console.log("nije izabran niti jedan odgovor")
+                    }
+
+                }
+
 
 
     }
@@ -218,13 +244,19 @@ class GameComponent extends Component {
         return (
             <div>
                 <NavBar/>
+                {!this.state.kraj
 
-                <p> IGRAŠ IGRU: + {this.state.defaultName} </p>
-                <p>OPIS: {this.state.defaultDescription}</p>
-
-                <p>ISPOD JE ROW hehe</p>
-
-
+              // staviti naziv igre i opis igre
+                }
+                {
+                    this.state.kraj &&
+                        <p> BRAVO ZAVRŠILI STE IGRU!</p>
+                }
+                {!this.state.pushedNext &&
+                <div className="container-fluid bg-info text-opacity-100">
+                    <p>DOBRODOŠLI U IGRU, STISNITE GUMB SLJEDECE PITANJE KAKO BISTE ZAPOĆELI S IGROM</p>
+                    </div>
+                }
                 <div className={"container-md"}>
 
                 </div>
@@ -251,26 +283,14 @@ class GameComponent extends Component {
 
                     </div>
                 }
+                {!this.state.kraj &&
+
                 <div>
                     <button className={"btn btn-primary"} onClick={this.handleNext}>Sljedeće pitanje</button>
                     <button className={"btn btn-warning"} onClick={this.handleAnswer} id = "checkAns" type={"submit"}>Provjeri odgovor</button>
                 </div>
+                }
 
-
-                <p>ovo je chosen one: {this.state.chosenOne}+++++</p>
-                <p>{this.state.tocan1}</p>
-                <p>{this.state.tocan2}</p>
-                <p>{this.state.tocan3}</p>
-                <p>{this.state.tocan4}</p>
-                <p>-------------------------</p>
-                <p>{this.state.idpitanja}</p>
-                <p>{this.state.namepitanja}</p>
-                <p>{this.state.textpitanja}</p>
-                <p>{this.state.odgovor1}</p>
-                <p>{this.state.odgovor2}</p>
-                <p>{this.state.odgovor3}</p>
-                <p>{this.state.odgovor4}</p>
-                <p>{this.state.kraj} </p>
 
 
                 {/*<form onSubmit={this.handleAnswer}>*/}
@@ -281,9 +301,7 @@ class GameComponent extends Component {
 
                 {/*</form>*/}
 
-                <div>
-                    {rows && rows}
-                </div>
+
             </div>
         )
     }

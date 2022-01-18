@@ -12,6 +12,8 @@ export const QUESTION_TEXT_SESSION_ATTRIBUTE_NAME = 'questionText'
 export const ANSWER_TEXT_SESSION_ATTRIBUTE_NAME = 'answerText'
 export const ANSWER_CORRECTNESS_SESSION_ATTRIBUTE_NAME = 'answerCorr'
 export const ANSWER_SESSION_ATTRIBUTE_NAME = 'answerId'
+export const NUMBER_OF_ANSWERS_SESSION_ATTRIBUTE_NAME = 'numbercount'
+export const TRUE_NUMBER_SESSION_ATTRIBUTE_NAME = 'correctanswer'
 const api = axios.create({
     baseURL: API_URL
 })
@@ -64,6 +66,30 @@ class AuthenticationService {
         return id_answer;
     }
 
+    getNumberOfQuestionsIntoStorage(id) {
+        sessionStorage.setItem(NUMBER_OF_ANSWERS_SESSION_ATTRIBUTE_NAME, id);
+
+    }
+    addCorrectAnswersIntoStorage() {
+        let number = sessionStorage.getItem(TRUE_NUMBER_SESSION_ATTRIBUTE_NAME);
+        console.log("number " + number)
+        let n = (parseInt(number))
+        n++;
+        sessionStorage.setItem(TRUE_NUMBER_SESSION_ATTRIBUTE_NAME, n);
+
+    }
+
+    inicializeNumberOfAnswers() {
+        console.log("inicijalaziacija")
+        sessionStorage.setItem(TRUE_NUMBER_SESSION_ATTRIBUTE_NAME, "0");
+        let nu = sessionStorage.getItem(TRUE_NUMBER_SESSION_ATTRIBUTE_NAME);
+        console.log(nu)
+    }
+    getNumberOfQuestionsFromStorage() {
+        let num = sessionStorage.getItem(NUMBER_OF_ANSWERS_SESSION_ATTRIBUTE_NAME);
+        return num;
+    }
+
     getGameFromStorage() {
         let id_game = sessionStorage.getItem(GAME_SESSION_ATTRIBUTE_NAME)
         return id_game
@@ -112,6 +138,10 @@ class AuthenticationService {
     loginUcenik(username) {
         let url = "/api/ZabavnoUcenje/ucenik/login";
         return api.post(url, {username: username})
+    }
+
+    clearCorrectAnswers() {
+        sessionStorage.removeItem(TRUE_NUMBER_SESSION_ATTRIBUTE_NAME);
     }
 }
 
