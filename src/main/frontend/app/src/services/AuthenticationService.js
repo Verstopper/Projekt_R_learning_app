@@ -79,6 +79,11 @@ class AuthenticationService {
 
     }
 
+    getNumberOfCorrectAnswersfromStorage() {
+        let number = sessionStorage.getItem(TRUE_NUMBER_SESSION_ATTRIBUTE_NAME);
+        return number;
+    }
+
     inicializeNumberOfAnswers() {
         console.log("inicijalaziacija")
         sessionStorage.setItem(TRUE_NUMBER_SESSION_ATTRIBUTE_NAME, "0");

@@ -41,13 +41,13 @@ class GameComponent extends Component {
             kraj: false,
             pushedNext : false,
             confirmed : false,
-            truth: undefined,
+            truth: false,
         }
 
 
         this.handleNext = async (event) => {
             event.preventDefault();
-            this.setState({truth:undefined})
+            //this.setState({truth:undefined})
             let confirmed = false;
             let goNext = true;
             let prvo = false;
@@ -119,9 +119,7 @@ class GameComponent extends Component {
                 console.log("TRUTH")
                 console.log(this.state.truth)
                 console.log("chosenone " + this.state.chosenOne)
-                if (this.state.truth == true) {
-                    AuthenticationService.addCorrectAnswersIntoStorage();
-                } else {
+                if (this.state.truth != true) {
 
                     if (this.state.chosenOne == "chosenOneAns1") {
                         if (this.state.tocan1 == "DA") {
@@ -129,29 +127,30 @@ class GameComponent extends Component {
                         }
                     }
 
-                    if (this.state.chosenOne == "chosenOneAns2") {
+                    else if (this.state.chosenOne == "chosenOneAns2") {
                         if (this.state.tocan2 == "DA") {
                             AuthenticationService.addCorrectAnswersIntoStorage();
                         }
-                        if (this.state.chosenOne == "chosenOneAns3") {
+                    }
+                        else if (this.state.chosenOne == "chosenOneAns3") {
                             if (this.state.tocan3 == "DA") {
                                 AuthenticationService.addCorrectAnswersIntoStorage();
                             }
-
                         }
-                        if (this.state.chosenOne == "chosenOneAns4") {
+
+
+                       else  if (this.state.chosenOne == "chosenOneAns4") {
                             if (this.state.tocan4 == "DA") {
                                 AuthenticationService.addCorrectAnswersIntoStorage();
 
                             }
                         }
+                    }
                         this.setState({
                             chosenOne: undefined,
                             confirmed: false,
                             truth: undefined
                         })
-                    }
-                }
             }
         }
 
@@ -190,17 +189,24 @@ class GameComponent extends Component {
                             if (this.state.tocan1 == "DA") {
                                 document.getElementById("chosenOneAns1").className = "btn btn-success col"
                                 e.target.className = 'btn btn-success col '
-                                this.setState({truth: true})
+                                if(this.state.truth != true) {
+                                    AuthenticationService.addCorrectAnswersIntoStorage();
+                                    this.setState({truth: true})
+                                }
                             } else {
                                 document.getElementById("chosenOneAns1").className = "btn btn-danger col"
                                 e.target.className = 'btn btn-danger col '
+
                             }
                         }
                         if (this.state.chosenOne == "chosenOneAns2") {
                             if (this.state.tocan2 == "DA") {
                                 document.getElementById("chosenOneAns2").className = "btn btn-success col"
                                 e.target.className = 'btn btn-success col '
-                                this.setState({truth: true})
+                                if(this.state.truth != true) {
+                                    AuthenticationService.addCorrectAnswersIntoStorage();
+                                    this.setState({truth: true})
+                                }
                             } else {
                                 document.getElementById("chosenOneAns2").className = "btn btn-danger col"
                                 e.target.className = 'btn btn-danger col '
@@ -210,7 +216,13 @@ class GameComponent extends Component {
                             if (this.state.tocan3 == "DA") {
                                 document.getElementById("chosenOneAns3").className = "btn btn-success col"
                                 e.target.className = 'btn btn-success col '
-                                this.setState({truth: true})
+                                if(this.state.truth != true) {
+                                    AuthenticationService.addCorrectAnswersIntoStorage();
+                                    this.setState({truth: true})
+                                }
+
+
+                                AuthenticationService.addCorrectAnswersIntoStorage();
                             } else {
                                 document.getElementById("chosenOneAns3").className = "btn btn-danger col"
                                 e.target.className = 'btn btn-danger col '
@@ -250,8 +262,13 @@ class GameComponent extends Component {
                 }
                 {
                     this.state.kraj &&
+                        <div>
                         <p> BRAVO ZAVRŠILI STE IGRU!</p>
-                }
+                            <p>Odgovorili ste točno na {AuthenticationService.getNumberOfCorrectAnswersfromStorage()} od {AuthenticationService.getNumberOfQuestionsFromStorage()} pitanja</p>
+
+                    <Button className={"btn btn-danger"} href="/api/ZabavnoUcenje/OdabirIgara">Vratite se na odabir igara!</Button>
+
+            </div>}
                 {!this.state.pushedNext &&
                 <div className="container-fluid bg-info text-opacity-100">
                     <p>DOBRODOŠLI U IGRU, STISNITE GUMB SLJEDECE PITANJE KAKO BISTE ZAPOĆELI S IGROM</p>

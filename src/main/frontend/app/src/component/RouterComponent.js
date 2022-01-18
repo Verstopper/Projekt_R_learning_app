@@ -23,6 +23,7 @@ import AddAnswerComponent from "./AddAnswerComponent";
 import EditAnswerComponent from "./EditAnswerComponent";
 import GameService from "../services/GameService";
 import GameComponent from "./GameComponent";
+import StudentGameComponent from "./StudentGameComponent";
 
 function NavComponent() {
     return null;
@@ -52,6 +53,7 @@ class RouterComponent extends Component {
                     <Route path={"/api/ZabavnoUcenje/addQuestion"} element={<AddQuestionComponent />}/>
                     <Route path={"/api/ZabavnoUcenje/addAnswer"} element={<AddAnswerComponent />}/>
                     <Route path={"/api/ZabavnoUcenje/Igra"} element={<GameComponent />}/>
+                    <Route path={"/api/ZabavnoUcenje/OdabirIgara"} element={<StudentGameComponent />}/>
                 </Routes>
                 <Routes>
                     <Route path="/" element={<MainIndexComponent /> }/>
