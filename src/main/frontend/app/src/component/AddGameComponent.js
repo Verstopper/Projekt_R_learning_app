@@ -82,8 +82,9 @@ class AddGameComponent extends React.Component {
                                     <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
                                             htmlType={"submit"}>Dodaj</Button>
                                     <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
-                                            href={"/"}>Odustani</Button>
-                                </Space></form>
+                                            href={"/api/ZabavnoUcenje/profesor/login"}>Odustani</Button>
+                                </Space>
+                            </form>
                         </section>
                     </Content>
                     <MyFooter/>
