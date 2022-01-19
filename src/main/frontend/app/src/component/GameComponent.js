@@ -126,11 +126,11 @@ class GameComponent extends Component {
         }
 
         function resetColors() {
-            document.getElementById("checkAns").className = "btn btn-warning"
-            document.getElementById("chosenOneAns1").className = "btn btn-info col"
-            document.getElementById("chosenOneAns2").className = "btn btn-info col"
-            document.getElementById("chosenOneAns3").className = "btn btn-info col"
-            document.getElementById("chosenOneAns4").className = "btn btn-info col"
+           // document.getElementById("checkAns").style.backgroundColor = "purple"
+            document.getElementById("chosenOneAns1").style.backgroundColor = "light purple"
+            document.getElementById("chosenOneAns2").style.backgroundColor = "light purple"
+            document.getElementById("chosenOneAns3").style.backgroundColor = "light purple"
+            document.getElementById("chosenOneAns4").style.backgroundColor = "light purple"
 
         }
 
