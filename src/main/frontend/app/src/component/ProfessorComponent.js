@@ -1,27 +1,25 @@
-import React, {Component, useState} from "react";
+import React, {Component} from "react";
 import {Navigate} from 'react-router-dom';
 import {validatePassword, validateUsername} from "./validateInfo";
-import StudentComponent from "./StudentComponent";
 import AuthenticationService from "../services/AuthenticationService";
-import InvalidComponent from "./InvalidComponent";
 import ProfessorDashboard from "./ProfessorDashboard";
+import MyHeader from "./MyHeader";
+import Layout, {Content} from "antd/lib/layout/layout";
+import MyFooter from "./MyFooter";
+import Title from "antd/lib/typography/Title";
+import {Button, Space} from "antd";
+
 
 class ProfessorComponent extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
-            username: "",
-            password: "",
-            success: false,
-            existsInDB: false,
+            username: "", password: "", success: false, existsInDB: false,
         }
         this.handleChange = (event) => {
-            this.setState(
-                {
-                    [event.target.name]: event.target.value
-                }
-            )
+            this.setState({
+                [event.target.name]: event.target.value
+            })
         }
         this.handleSubmit = async (event) => {
             event.preventDefault();
@@ -29,35 +27,29 @@ class ProfessorComponent extends Component {
             let errPass = validatePassword(this.state.password)
 
             if (!errUser && !errPass) {
-
                 let responsePass = await AuthenticationService.loginProfessor(this.state.username, this.state.password);
                 if (responsePass.status >= 400) {
-                    this.setState(
-                        {
-                            errors: 'Neuspješna prijava.',
-                        }
-                    )
+                    this.setState({
+                        errors: 'Neuspješna prijava.',
+                    })
                 }
                 if (responsePass.data) {
                     AuthenticationService.registerSuccessfulLogin(this.state.username, this.state.password);
+                    AuthenticationService.putProfessorInSession();
                     this.setState({
                         existsInDb: true,
                     })
                 } else {
-
                     this.setState({
-                        errors: 'Kriva lozinka'
+                        errors: 'Kriva lozinka.'
                     })
                 }
 
             } else {
-                this.setState(
-                    {
-                        errors: errUser,
-                    }
-                )
+                this.setState({
+                    errors: errUser,
+                })
             }
-
         }
     }
 
@@ -66,32 +58,44 @@ class ProfessorComponent extends Component {
         if (isUserLoggedIn) {
             return <ProfessorDashboard/>
         }
-        //replace username with id
         let renderValue;
         if (this.state.existsInDB && !this.state.success) {
             renderValue = <Navigate to={{
-                pathname: '/api/ZabavnoUcenje/profesor/login',
-                state: {username: this.state.username},
+                pathname: '/api/ZabavnoUcenje/profesor/login', state: {username: this.state.username},
             }}/>;
         } else {
             renderValue = (
                 <div className="">
-                    <section className="container container-px container-py">
-                        <form onSubmit={this.handleSubmit}>
-                            <div className="form-inputs">
-                                {/*<label htmlFor="username">Username</label>*/}
-                                <input required type="text" id="username" name="username" placeholder="Korisničko ime"
-                                       value={this.state.username} onChange={this.handleChange}/>
-                                {/*<label htmlFor="password">Password</label>*/}
-                                <input required autoComplete={"off"} type="text" id="password" name="password"
-                                       placeholder="Lozinka"
-                                       value={this.state.password} onChange={this.handleChange}/>
-                            </div>
-                            {this.state.errors && <p>{this.state.errors}</p>}
-                            <button className="btn btn-primary" type="submit">Login</button>
-                            <a className={"btn btn-danger"} href={"/"}>Odustani</a>
-                        </form>
-                    </section>
+                    <Layout>
+                        <MyHeader/>
+                        <Content
+                            style={{background: "white", position: "fixed", top: '30%', left: 0, right: 0, bottom: 0}}>
+                            <Title style={{fontFamily: "Gabriola", alignContent: 'space-evenly'}}>
+                                Prijava profesora:
+                            </Title>
+                            <section className="container container-px container-py">
+                                <form onSubmit={this.handleSubmit}>
+                                    <div className="form-inputs">
+                                        <input required type="text" id="username" name="username"
+                                               placeholder="Korisničko ime"
+                                               value={this.state.username} onChange={this.handleChange}/>
+                                        <input required autoComplete={"off"} type="text" id="password" name="password"
+                                               placeholder="Lozinka"
+                                               value={this.state.password} onChange={this.handleChange}/>
+                                    </div>
+                                    {this.state.errors && <p>{this.state.errors}</p>}
+                                    <p/>
+                                    <Space size={"middle"}>
+                                        <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
+                                                htmlType={"submit"}>Prijava</Button>
+                                        <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
+                                                href={"/"}>Odustani</Button>
+                                    </Space>
+                                </form>
+                            </section>
+                        </Content>
+                        <MyFooter/>
+                    </Layout>
                 </div>
             )
         }

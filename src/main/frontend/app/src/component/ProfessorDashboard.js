@@ -2,11 +2,16 @@ import ProfessorService from "../services/ProfessorService";
 import AuthenticationService from "../services/AuthenticationService";
 import NavBar from "./Navbar";
 import React, {Component} from 'react';
-import {Button, Col, Container, Row} from "react-bootstrap";
+import {Container} from "react-bootstrap";
 import GameService from "../services/GameService";
+import MyHeader from "./MyHeader";
+import MyFooter from "./MyFooter";
+import Layout, {Content} from "antd/lib/layout/layout";
+import {Button, Card, Space} from "antd";
 
 class GameRow extends Component {
     game;
+
     constructor(props) {
         super(props);
     }
@@ -22,21 +27,23 @@ class GameRow extends Component {
             let confirmed = window.confirm("Jeste li sigurni da želite izbrisati igru?")
             if (confirmed) GameService.deleteGame(id);
             console.log("ID IGRE JE " + id);
-            // let response = GameService.deleteGame(id);
             window.location.reload(false);
-            // console.log("RESPONCE NAKON BRISANJA" + response)
         }
 
         return (
             <Container>
-                <Row>
-                    <Col md={4}>Naziv igre: {this.props.name}
-                        <p> Opis igre: {this.props.description} </p></Col>
-                    <Col md={{span: 4, offset: 4}}><Button variant="danger"
-                                                           onClick={() => deleteGame(this.props.id)}>Izbriši</Button>
-                        <Button variant="warning" href="/api/ZabavnoUcenje/igrauredi"
-                                onClick={() => goToGame(this.props.id, this.props.name, this.props.description)}>Uredi</Button></Col>
-                </Row>
+                <p/>
+                <Card>
+                    <p>Naziv igre: {this.props.name}</p>
+                    <p> Opis igre: {this.props.description} </p>
+                    <Space>
+                        <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
+                                onClick={() => deleteGame(this.props.id)}>Izbriši</Button>
+                        <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
+                                href="/api/ZabavnoUcenje/igrauredi"
+                                onClick={() => goToGame(this.props.id, this.props.name, this.props.description)}>Uredi</Button>
+                    </Space>
+                </Card>
             </Container>
         )
     }
@@ -68,7 +75,6 @@ class ProfessorDashboard extends Component {
             event.preventDefault();
             let username = AuthenticationService.getLoggedInUserName();
             let games = await ProfessorService.getAllGames(username);
-            console.log(games.success)
             if (games.success) {
                 let value = [];
                 for (let game in games.games) {
@@ -105,7 +111,6 @@ class ProfessorDashboard extends Component {
                                    name={this.state.games[game].name}
                                    description={this.state.games[game].description}
                 />)
-                console.log(rows)
             }
         }
         if (this.state.games && !this.state.success) {
@@ -115,18 +120,38 @@ class ProfessorDashboard extends Component {
 
         return (
             <div>
-                <NavBar/>
-                <section>
-                    <form onSubmit={this.handleSubmit}>
-                        <a className={"btn btn-primary"} href={"/igra/dodaj"}>Dodaj igru</a>
-                        <a className={"btn btn-primary"} href={"/api/ZabavnoUcenje/razred"}>Dodaj razred</a>
-                        <a className={"btn btn-primary"} href={"/api/ZabavnoUcenje/dodajUcenika"}>Stvori ucenika</a>
-                        <button className={"btn btn-secondary"} type="submit">Pregled igara</button>
-                    </form>
-                    <form>
-                        {rows && rows}
-                    </form>
-                </section>
+                <Layout>
+                    <MyHeader/>
+                    <NavBar/>
+                    <Content style={{background: "white"}}><p/></Content>
+                    <Content
+                        style={{background: "white", position: "relative", top: '20%', left: 0, right: 0, bottom: 0}}>
+
+                        <section>
+                            <form onSubmit={this.handleSubmit}>
+                                <Space size={"small"}>
+                                    <Button style={{background: '#5B3758', color: "white"}}
+                                            href={"/igra/dodaj"}>Dodaj igru</Button>
+                                    <Button style={{background: '#5B3758', color: "white"}}
+                                            href={"/api/ZabavnoUcenje/razred"}>Dodaj razred</Button>
+                                    <Button style={{background: '#5B3758', color: "white"}}
+                                            href={"/api/ZabavnoUcenje/dodajUcenika"}>Stvori
+                                        učenika</Button>
+                                    <Button style={{background: '#5B3758', color: "white"}}
+                                            htmlType="submit">Pregled igara</Button>
+                                </Space>
+                            </form>
+                            <form>
+                                {rows && rows}
+                            </form>
+                        </section>
+                    </Content>
+                    <Content style={{background: "white"}}><p/></Content>
+                    <Content style={{background: "white"}}><p/></Content>
+                    <Content style={{background: "white"}}><p/></Content>
+                    <Content style={{background: "white"}}><p/></Content>
+                    <MyFooter/>
+                </Layout>
             </div>
         )
     }

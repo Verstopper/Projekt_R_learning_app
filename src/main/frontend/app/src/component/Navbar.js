@@ -1,41 +1,23 @@
 import React, {Component} from "react";
-import {Link, Navigate} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import AuthenticationService from "../services/AuthenticationService";
-import {render} from "@testing-library/react";
 
 class NavBar extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
-            hasLoginFailed: true,
-            logout: false
+            hasLoginFailed: true, logout: false
         }
     }
 
-    // handleClick = (event) => {
-    //     event.preventDefault()
-    //     AuthenticationService.logout()
-    //     this.setState({
-    //         logout: true
-    //     })
-    //
-    // }
-
     render() {
-
         const isUserLoggedIn = AuthenticationService.isUserLoggedIn()
-        const role = AuthenticationService.getRole();
-        let username = undefined;
-        if (isUserLoggedIn) {
-            username = AuthenticationService.getLoggedInUserName();
-        }
+        var role = AuthenticationService.getRole();
         if (this.state.logout) {
             return <Navigate to={"/"}/>
         }
 
-            return (
-            <header>
+        return (<header>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <a className="navbar-brand" href="/">Početna stranica</a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse"
@@ -45,68 +27,25 @@ class NavBar extends Component {
                     </button>
                     <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
                         <div className="navbar-nav">
-                            {!isUserLoggedIn &&
-                            <>
+                            {!isUserLoggedIn && <>
                                 <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/login">Prijava
                                     profesora</a>
                                 <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/ucenik/login">Prijava
-                                    ucenika</a>
+                                    učenika</a>
                                 <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/registracija">Registracija
                                     profesora</a>
-                            </>
-                            }
-                            {isUserLoggedIn &&
-                            <>
-                                {!role &&
-                                <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/login">Kontrolna
+                            </>}
+                            {isUserLoggedIn && <>
+                                {!role && <a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/login">Kontrolna
                                     ploča</a>}
-                                {/*<a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/ucenik/login">Prijava*/}
-                                {/*    ucenika</a>*/}
-                                {/*<a className={"nav-item nav-link"} href="/api/ZabavnoUcenje/profesor/registracija">Registracija*/}
-                                {/*    profesora</a>*/}
                                 <a className={"nav-item nav-link pull-right"} href={"/logout"}>Odjava</a>
-                            </>
-                            }
+                            </>}
                         </div>
                     </div>
                 </nav>
-
-                {/*<div>
-                    <a className={"btn btn-primary"} href="/">Početna stranica</a>
-                    <div id="hidden">
-                        {!isUserLoggedIn &&
-                        <a className={"btn btn-primary"} href="/api/ZabavnoUcenje/profesor/login">Prijava profesora</a>
-                        }
-                        {!isUserLoggedIn &&
-                        <a className={"btn btn-primary"} href="/api/ZabavnoUcenje/ucenik/login">Prijava ucenika</a>
-                        }
-                        {!isUserLoggedIn &&
-                        <a className={"btn btn-primary"} href="/api/ZabavnoUcenje/profesor/registracija">Registracija
-                            profesora</a>
-                        }
-                        {isUserLoggedIn &&
-                        <div>
-                            <a href="/api/ZabavnoUcenje/profesor/pregledIgara">Pregled igara</a>
-                            <a href="/logout">Odjava</a>
-                        </div>
-                        }
-
-                    </div>
-                </div>*/}
-            </header>
-        );
+            </header>);
 
     }
 }
-
-// const navbar = () => {
-//     return(
-//         <div>
-//             <li>
-//                 <Link to = '/'>Početna stranica</Link>
-//             </li>
-//         </div>
-//     )
-// }
 
 export default NavBar;
