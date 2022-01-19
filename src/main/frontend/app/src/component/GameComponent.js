@@ -65,6 +65,7 @@ class GameComponent extends Component {
 
             if (goNext) {
                 if (!prvo) {
+                    console.log("reset colors")
                     resetColors();
                 }
 
@@ -126,11 +127,12 @@ class GameComponent extends Component {
         }
 
         function resetColors() {
-           // document.getElementById("checkAns").style.backgroundColor = "purple"
-            document.getElementById("chosenOneAns1").style.backgroundColor = "light purple"
-            document.getElementById("chosenOneAns2").style.backgroundColor = "light purple"
-            document.getElementById("chosenOneAns3").style.backgroundColor = "light purple"
-            document.getElementById("chosenOneAns4").style.backgroundColor = "light purple"
+            document.getElementById("checkAns").style.backgroundColor = "#5B3758"
+            console.log("USO SAM U RESET COLORS")
+            document.getElementById("chosenOneAns1").style.backgroundColor = "#B48EAE"
+            document.getElementById("chosenOneAns2").style.backgroundColor = "#B48EAE"
+            document.getElementById("chosenOneAns3").style.backgroundColor = "#B48EAE"
+            document.getElementById("chosenOneAns4").style.backgroundColor = "#B48EAE"
 
         }
 
@@ -138,14 +140,11 @@ class GameComponent extends Component {
             this.setState({
                 [event.target.name]: event.target.id
             })
+            console.log("handle change")
             resetColors();
 
         }
 
-        this.handleSubmit = async (event) => {
-            event.preventDefault();
-
-        }
 
         this.handleAnswer = async (e) => {
             e.preventDefault();
@@ -157,7 +156,7 @@ class GameComponent extends Component {
                 if (this.state.chosenOne == "chosenOneAns1") {
                     if (this.state.tocan1 == "DA") {
                         document.getElementById("chosenOneAns1").style.backgroundColor = "green"
-                        e.target.style.backgroundColor = 'green '
+                        document.getElementById("checkAns").style.backgroundColor = "green"
                         if (this.state.truth != true) {
                             console.log("povecali smo u " + this.state.chosenOne + "1")
                             AuthenticationService.addCorrectAnswersIntoStorage();
@@ -165,13 +164,14 @@ class GameComponent extends Component {
                         }
                     } else {
                         document.getElementById("chosenOneAns1").style.backgroundColor = "red"
-                        e.target.style.backgroundColor = 'red';
+                        document.getElementById("checkAns").style.backgroundColor = "red"
 
                     }
                 } else if (this.state.chosenOne == "chosenOneAns2") {
                     if (this.state.tocan2 == "DA") {
                         document.getElementById("chosenOneAns2").style.backgroundColor = "green"
-                        e.target.style.backgroundColor = "green"
+                        document.getElementById("checkAns").style.backgroundColor = "green"
+
                         if (this.state.truth != true) {
                             console.log("povecali smo u " + this.state.chosenOne + "2")
                             AuthenticationService.addCorrectAnswersIntoStorage();
@@ -179,12 +179,14 @@ class GameComponent extends Component {
                         }
                     } else {
                         document.getElementById("chosenOneAns2").style.backgroundColor = "red"
-                        e.target.style.backgroundColor = "red"
+                        document.getElementById("checkAns").style.backgroundColor = "red"
+
                     }
                 } else if (this.state.chosenOne == "chosenOneAns3") {
                     if (this.state.tocan3 == "DA") {
                         document.getElementById("chosenOneAns3").style.backgroundColor = "green"
-                        e.target.style.backgroundColor = "green"
+                        document.getElementById("checkAns").style.backgroundColor = "green"
+
                         if (this.state.truth != true) {
                             console.log("povecali smo u " + this.state.chosenOne + "3")
                             AuthenticationService.addCorrectAnswersIntoStorage();
@@ -193,12 +195,13 @@ class GameComponent extends Component {
                         AuthenticationService.addCorrectAnswersIntoStorage();
                     } else {
                         document.getElementById("chosenOneAns3").style.backgroundColor = "red"
-                        e.target.style.backgroundColor = "red"
+                        document.getElementById("checkAns").style.backgroundColor = "red"
+
                     }
                 } else if (this.state.chosenOne == "chosenOneAns4") {
                     if (this.state.tocan4 == "DA") {
                         document.getElementById("chosenOneAns4").style.backgroundColor = "green"
-                        e.target.style.backgroundColor = "green"
+                        document.getElementById("checkAns").style.backgroundColor = "green"
                         if (this.state.truth != true) {
                             console.log("povecali smo u " + this.state.chosenOne + "4")
                             AuthenticationService.addCorrectAnswersIntoStorage();
@@ -206,7 +209,8 @@ class GameComponent extends Component {
                         }
                     } else {
                         document.getElementById("chosenOneAns4").style.backgroundColor = "red"
-                        e.target.style.backgroundColor = "red"
+                        document.getElementById("checkAns").style.backgroundColor = "red"
+
                     }
                 }
             }
