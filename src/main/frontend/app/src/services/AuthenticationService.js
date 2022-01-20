@@ -137,6 +137,10 @@ class AuthenticationService {
     clearCorrectAnswers() {
         sessionStorage.removeItem(TRUE_NUMBER_SESSION_ATTRIBUTE_NAME);
     }
+
+    clearNumberOfQuestion() {
+        sessionStorage.removeItem(NUMBER_OF_ANSWERS_SESSION_ATTRIBUTE_NAME);
+    }
 }
 
 export default new

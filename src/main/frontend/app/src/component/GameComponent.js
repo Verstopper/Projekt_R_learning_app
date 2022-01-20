@@ -12,6 +12,7 @@ import moment from 'moment/moment.js'
 
 
 class GameComponent extends Component {
+
     constructor(props) {
         super(props);
         this.state = {
@@ -38,7 +39,11 @@ class GameComponent extends Component {
             truth: false,
             pocetak: undefined,
             krajj : undefined,
-            ukupno : undefined
+            ukupno : undefined,
+            brojpitanja: undefined,
+            brojtocnih : undefined
+
+
         }
 
         this.handleNext = async (event) => {
@@ -48,7 +53,7 @@ class GameComponent extends Component {
             let prvo = false;
             if (this.state.pushedNext) {
                 if (this.state.chosenOne == undefined) {
-                    confirmed = window.confirm("Jeste li sigurni da želite preskočiti ovo pitanje?" + "Niti jedan odgovro nije odabran");
+                    confirmed = window.confirm("Jeste li sigurni da želite preskočiti ovo pitanje?" + "Niti jedan odgovor nije odabran");
                     goNext = confirmed;
 
                 } else if (!this.state.confirmed) {
@@ -85,8 +90,12 @@ class GameComponent extends Component {
 
                     this.setState({
                         kraj: true,
-                        ukupno : diff
+                        ukupno : diff,
+                        brojpitanja : AuthenticationService.getNumberOfQuestionsFromStorage(),
+                        brojtocnih : AuthenticationService.getNumberOfCorrectAnswersfromStorage()
                     })
+                    AuthenticationService.clearCorrectAnswers();
+                    AuthenticationService.clearNumberOfQuestion();
 
                 }
 
@@ -247,7 +256,7 @@ class GameComponent extends Component {
                         <Title style={{fontFamily: "Gabriola", alignContent: 'space-evenly'}}>
                             BRAVO ZAVRŠILI STE IGRU! <br/>
                             Odgovorili ste točno
-                            na {AuthenticationService.getNumberOfCorrectAnswersfromStorage()} od {AuthenticationService.getNumberOfQuestionsFromStorage()} pitanja
+                            na {this.state.brojtocnih} od {this.state.brojpitanja} pitanja
                         <br/>
                         Ukupno vrijeme : {this.state.ukupno} sekundi! BRAVO!</Title>
 
@@ -274,7 +283,7 @@ class GameComponent extends Component {
                             <Title style={{
                                 fontFamily: "Gabriola",
                                 alignContent: 'space-evenly'
-                            }}>{this.state.textpitanja}</Title>
+                            }}>{this.state.namepitanja}</Title>
                             <div style={{height: 10 + 'rem'}} className={"row"}>
                                 <button value={this.state.tocan1} id='chosenOneAns1' name={"chosenOne"}
                                         className='col' style={{background: '#B48EAE', color: "white"}}
@@ -299,6 +308,8 @@ class GameComponent extends Component {
                         <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
                                 onClick={this.handleAnswer} id="checkAns" htmlType={"submit"}>Provjeri
                             odgovor</Button>
+                        <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
+                                href={"/api/ZabavnoUcenje/ucenik/login"}>Odustani</Button>
                     </Space>}
                 </Content>
                 <MyFooter/>
