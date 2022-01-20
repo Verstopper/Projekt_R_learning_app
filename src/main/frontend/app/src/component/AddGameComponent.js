@@ -34,7 +34,6 @@ class AddGameComponent extends React.Component {
                 let response = await GameService.addGame(this.state.name, this.state.description, username);
                 if (response === false) {
                     this.state.success = false;
-                    console.log("usli smo " + this.state.success)
                     this.setState(
                         {
                             errors: 'Dodavanje igre neuspješno.',

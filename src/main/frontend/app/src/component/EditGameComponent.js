@@ -1,10 +1,15 @@
 import AuthenticationService from "../services/AuthenticationService";
 import NavBar from "./Navbar";
 import React, {Component} from 'react';
-import {Button, Col, Container, Row} from "react-bootstrap";
+import {Container} from "react-bootstrap";
 import QuestionService from "../services/QuestionService";
 import GameService from "../services/GameService";
 import ProfessorDashboard from "./ProfessorDashboard";
+import MyHeader from "./MyHeader";
+import Layout, {Content} from "antd/lib/layout/layout";
+import MyFooter from "./MyFooter";
+import Title from "antd/lib/typography/Title";
+import {Space, Button, Card} from "antd";
 
 class QuestionRow extends Component {
     constructor(props) {
@@ -12,29 +17,30 @@ class QuestionRow extends Component {
     }
 
     render() {
-
         function goToQuestion(id, questionName, questionText) {
-            console.log("ID QUESTION " + id)
             AuthenticationService.getQuestionIntoStorage(id, questionName, questionText);
         }
 
         function deleteQuestion(id) {
             let confirmed = window.confirm("Jeste li sigurni da želite izbrisati pitanje?")
-            if(confirmed) QuestionService.deleteAllQuestions(id);
+            if (confirmed) QuestionService.deleteAllQuestions(id);
             window.location.reload(false);
         }
 
         return (
             <Container>
-                <Row>
-                    <Col md={4}>Naziv: {this.props.name}
-                        <p> Text: {this.props.text} </p></Col>
-                    <Col md={{span: 4, offset: 4}}><Button variant="danger"
-                                                           onClick={() => deleteQuestion(this.props.id)}>Izbriši</Button>
-                        <Button variant="warning"
+                <p/>
+                <Card>
+                    <p> Naziv: {this.props.name}</p>
+                    <p> Opis: {this.props.text} </p>
+                    <Space>
+                        <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
+                                onClick={() => deleteQuestion(this.props.id)}>Izbriši</Button>
+                        <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
                                 onClick={() => goToQuestion(this.props.id, this.props.name, this.props.text)}
-                                href={"/api/ZabavnoUcenje/pitanjeuredi"}>Uredi</Button></Col>
-                </Row>
+                                href={"/api/ZabavnoUcenje/pitanjeuredi"}>Uredi</Button>
+                    </Space>
+                </Card>
             </Container>
         )
     }
@@ -78,15 +84,10 @@ class EditGameComponent extends Component {
         this.handleSubmit = async (event) => {
             event.preventDefault();
             let id_game = AuthenticationService.getGameFromStorage();
-            console.log("ID igre + " + id_game)
             let questions = await QuestionService.getAllQuestions(id_game);
-            console.log(questions.questions)
-            console.log(questions.data)
             if (questions.success) {
                 let value = [];
-                console.log("UNDEFINED" + questions.questions)
                 for (let question in questions.data) {
-                    console.log("QUESTION " + question)
                     let obj = {
                         id: questions.data[question].id,
                         name: questions.data[question].name,
@@ -118,7 +119,6 @@ class EditGameComponent extends Component {
                                        name={this.state.questions[question].name}
                                        text={this.state.questions[question].text}
                 />)
-                console.log(rows)
             }
         }
         if (this.state.questions && !this.state.success) {
@@ -126,43 +126,50 @@ class EditGameComponent extends Component {
 
         }
 
-
         return (
             <div>
-                <NavBar/>
-                <section>
-                    <label>UREDITE SVOJU IGRU!!</label>
-                    <div className="">
+                <Layout>
+                    <MyHeader/>
+                    <NavBar/>
+                    <Content
+                        style={{background: "white", position: "relative", top: '20%', left: 0, right: 0, bottom: 0}}>
+                        <br/>
+                        <Title style={{fontFamily: "Gabriola", alignContent: 'space-evenly'}}>
+                            Uredite igru: </Title>
                         <section className="container container-px container-py">
                             <form onSubmit={this.handleSubmit}>
                                 <div className="form-inputs">
-                                    <label htmlFor="name"></label>
                                     <input type="text" id="updatedName" name="updatedName"
                                            defaultValue={this.state.defaultname}
                                            value={this.state.updatedName} onChange={this.handleChange} required/>
                                 </div>
                                 <div className="form-inputs">
-                                    <label htmlFor="description"></label>
                                     <input type="text" id="updatedDescription" name="updatedDescription"
                                            defaultValue={this.state.defaultDescription}
                                            value={this.state.updatedDescription} onChange={this.handleChange} required/>
                                 </div>
-                                <button className={"btn btn-primary"} type="submit"
-                                        onClick={this.handleGameUpdate}>Ažuriraj igru
-                                </button>
-                                <a className={"btn btn-danger"} href="/api/ZabavnoUcenje/profesor/pregledIgara">Odustani</a>
+                                <p/>
+                                <Space size={"middle"}>
+                                    <Button style={{background: '#5B3758', color: "white"}} htmlType={"submit"}
+                                            onClick={this.handleGameUpdate}>Ažuriraj igru</Button>
+                                    <Button style={{background: '#5B3758', color: "white"}} htmlType={"submit"}
+                                            onSubmit={this.handleSubmit}>Pregled pitanja</Button>
+                                    <Button style={{background: '#5B3758', color: "white"}}
+                                            href={"/api/ZabavnoUcenje/addQuestion"}>Dodaj pitanje</Button>
+                                    <Button style={{background: '#5B3758', color: "white"}}
+                                            href={"/api/ZabavnoUcenje/profesor/pregledIgara"}>Odustani</Button>
+                                </Space>
+                            </form>
+                            <form>
+                                {rows && rows}
                             </form>
                         </section>
-                    </div>
-                    <form onSubmit={this.handleSubmit}>
-                        <button className={"btn btn-secondary"} type="submit">Pregled pitanja</button>
-                    </form>
-                    /
-                    <Button variant="warning" href={"/api/ZabavnoUcenje/addQuestion"}>Dodaj pitanje</Button>
-                    <form>
-                        {rows && rows}
-                    </form>
-                </section>
+                    </Content>
+                    <Content style={{background: "white"}}><br/></Content>
+                    <Content style={{background: "white"}}><br/></Content>
+                    <Content style={{background: "white"}}><br/></Content>
+                    <MyFooter/>
+                </Layout>
             </div>
         )
     }

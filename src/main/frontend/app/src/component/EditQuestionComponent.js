@@ -1,12 +1,16 @@
 import AuthenticationService from "../services/AuthenticationService";
 import NavBar from "./Navbar";
-import React, {Component, useRef} from 'react';
-import {Button, Col, Container, Row} from "react-bootstrap";
+import React, {Component} from 'react';
+import {Container} from "react-bootstrap";
 import QuestionService from "../services/QuestionService";
 import AnswerService from "../services/AnswerService";
-import AddAnswerComponent from "./AddAnswerComponent";
-import * as PropTypes from "prop-types";
+
 import EditGameComponent from "./EditGameComponent";
+import MyHeader from "./MyHeader";
+import Title from "antd/lib/typography/Title";
+import {Button, Card, Space} from "antd";
+import Layout, {Content} from "antd/lib/layout/layout";
+import MyFooter from "./MyFooter";
 
 class AnswerRow extends Component {
     constructor(props) {
@@ -14,36 +18,36 @@ class AnswerRow extends Component {
     }
 
     render() {
-
         function goToAnswer(id, answerText, answerCorrectness) {
-            console.log("ID ANSWER " + id)
             AuthenticationService.getAnswerIntoStorage(id, answerText, answerCorrectness);
         }
 
         function deleteAnswer(id) {
             let confirmed = window.confirm("Jeste li sigurni da želite izbrisati odgovor?");
-            if(confirmed) AnswerService.deleteAnswers(id);
+            if (confirmed) AnswerService.deleteAnswers(id);
             window.location.reload(false);
         }
 
         return (
             <Container>
-                <Row>
-                    <Col md={4}>Naziv: {this.props.text}
-                        <p> Točnost: {this.props.correctness} </p></Col>
-                    <Col md={{span: 4, offset: 4}}><Button variant="danger"
-                                                           onClick={() => deleteAnswer(this.props.id)}>Izbriši</Button>
-                        <Button variant="warning"
+                <p/>
+                <Card>
+                    <p> Naziv: {this.props.text}</p>
+                    <p> Točnost: {this.props.correctness} </p>
+                    <Space>
+                        <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
+                                onClick={() => deleteAnswer(this.props.id)}>Izbriši</Button>
+                        <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
                                 onClick={() => goToAnswer(this.props.id, this.props.text, this.props.correctness)}
-                                href={"/api/ZabavnoUcenje/odgovoruredi"}>Uredi</Button></Col>
-                </Row>
+                                href={"/api/ZabavnoUcenje/odgovoruredi"}>Uredi</Button>
+                    </Space>
+                </Card>
             </Container>
         )
     }
 }
 
 class EditQuestionComponent extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -62,23 +66,15 @@ class EditQuestionComponent extends Component {
         }
 
 
-        this.state.data.then((result) =>{
-            console.log("GELDAMO" + result.data)
-            if(result.data == 4) {
-            console.log("USLI SMO U NUTRA " + result)
-            this.setState({show:true})}
-        } , reason => {
-            console.log("GRESKA")
+        this.state.data.then((result) => {
+            if (result.data == 4) {
+                this.setState({show: true})
+            }
         })
-
 
 
         this.handleQuestionUpdate = async (event) => {
             let id_question = AuthenticationService.getQuestionFromStorage();
-            console.log("usao u handle update za question.....")
-            console.log("updatetdQuestionName: " + this.state.updatedName);
-            console.log("updatetdQuestionDescription: " + this.state.updatedText);
-            console.log("id: " + id_question);
             event.preventDefault();
             let response = await QuestionService.updateQuestion(id_question, this.state.updatedName, this.state.updatedText);
             this.state.success = true;
@@ -102,15 +98,10 @@ class EditQuestionComponent extends Component {
         this.handleSubmit = async (event) => {
             event.preventDefault();
             let id_question = AuthenticationService.getQuestionFromStorage();
-            console.log("SVI ODGOVROI OD PITANJA SA ID " + id_question)
             let answers = await AnswerService.getAllAnswers(id_question)
-            console.log(answers.questions)
-            console.log(answers.data)
             if (answers.success) {
                 let value = [];
-                console.log("UNDEFINED" + answers.answers)
                 for (let answer in answers.data) {
-
                     let obj = {
                         id: answers.data[answer].id,
                         correctness: answers.data[answer].correctness,
@@ -143,53 +134,57 @@ class EditQuestionComponent extends Component {
                                      correctness={this.state.answers[answer].correctness}
                                      text={this.state.answers[answer].text}
                 />)
-                console.log(rows)
             }
         }
         if (this.state.answers && !this.state.success) {
             rows = this.state.answers;
-
         }
-
 
         return (
             <div>
-                <NavBar/>
-                <section>
-                    <label>UREDITE SVOJE PITANJE</label>
-                    <div   className="">
+                <Layout>
+                    <MyHeader/>
+                    <NavBar/>
+                    <Content
+                        style={{background: "white", position: "relative", top: '20%', left: 0, right: 0, bottom: 0}}>
+                        <br/>
+                        <Title style={{fontFamily: "Gabriola", alignContent: 'space-evenly'}}>
+                            Uredite pitanje: </Title>
                         <section className="container container-px container-py">
                             <form onSubmit={this.handleSubmit}>
                                 <div className="form-inputs">
-                                    <label htmlFor="updatedName"></label>
                                     <input type="text" id="updatedName" name="updatedName"
                                            defaultValue={this.state.defaultName}
                                            value={this.state.updatedName} onChange={this.handleChange} required/>
                                 </div>
                                 <div className="form-inputs">
-                                    <label htmlFor="updatedText"></label>
                                     <input type="text" id="updatedText" name="updatedText"
                                            defaultValue={this.state.defaultText}
                                            value={this.state.updatedText} onChange={this.handleChange} required/>
                                 </div>
-                                <button className={"btn btn-primary"} type="submit"
-                                        onClick={this.handleQuestionUpdate}>Ažuriraj pitanje
-                                </button>
-                                <a className={"btn btn-danger"} href="/api/ZabavnoUcenje/igrauredi">Odustani</a>
+                                <p/>
+                                <Space size={"middle"}>
+                                    <Button style={{background: '#5B3758', color: "white"}} htmlType={"submit"}
+                                            onClick={this.handleQuestionUpdate}>Ažuriraj pitanje</Button>
+                                    <Button style={{background: '#5B3758', color: "white"}} htmlType={"submit"}
+                                            onSubmit={this.handleSubmit}>Pregled odgovora</Button>
+                                    <Button style={{background: '#5B3758', color: "white"}}
+                                            href={"/api/ZabavnoUcenje/addAnswer"} disabled={this.state.show}>Dodaj
+                                        odgovore</Button>
+                                    <Button style={{background: '#5B3758', color: "white"}}
+                                            href={"/api/ZabavnoUcenje/igrauredi"}>Odustani</Button>
+                                </Space>
+                            </form>
+                            <form>
+                                {rows && rows}
                             </form>
                         </section>
-                    </div>
-                    <form onSubmit={this.handleSubmit}>
-                        <button className={"btn btn-secondary"} type="submit">Pregled odgovora</button>
-                    </form>
-
-                    {/*<Button className={"btn btn-secondary"} disabled={showButton()} href={"/api/ZabavnoUcenje/addAnswer"}>Dodaj odgovor</Button>*/}
-
-                    <Button className={"btn btn-secondary"} disabled={this.state.show} href={"/api/ZabavnoUcenje/addAnswer"}>Dodaj odgovor</Button>
-                    <form>
-                        {rows && rows}
-                    </form>
-                </section>
+                    </Content>
+                    <Content style={{background: "white"}}><br/></Content>
+                    <Content style={{background: "white"}}><br/></Content>
+                    <Content style={{background: "white"}}><br/></Content>
+                    <MyFooter/>
+                </Layout>
             </div>
         )
     }

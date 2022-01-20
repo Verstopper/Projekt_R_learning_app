@@ -1,6 +1,11 @@
 import React from 'react'
 import AuthenticationService from "../services/AuthenticationService";
 import QuestionService from "../services/QuestionService";
+import MyHeader from "./MyHeader";
+import Title from "antd/lib/typography/Title";
+import MyFooter from "./MyFooter";
+import Layout, {Content} from "antd/lib/layout/layout";
+import {Button, Space} from "antd";
 
 class AddQuestionComponent extends React.Component {
 
@@ -22,7 +27,6 @@ class AddQuestionComponent extends React.Component {
         }
         this.handleSubmit = async (event) => {
             event.preventDefault();
-            let err = {}
             let idGame = AuthenticationService.getGameFromStorage();
             let response = await QuestionService.addQuestion(idGame, this.state.name, this.state.description);
             if (response.success === false) {
@@ -40,22 +44,33 @@ class AddQuestionComponent extends React.Component {
 
         return (
             <div className="">
-                <section className="container container-px container-py">
-                    <form onSubmit={this.handleSubmit}>
-                        <div className="form-inputs">
-                            <label htmlFor="name"></label>
-                            <input type="text" id="name" name="name" placeholder="Naziv pitanja"
-                                   value={this.state.name} onChange={this.handleChange} required/>
-                        </div>
-                        <div className="form-inputs">
-                            <label htmlFor="description"></label>
-                            <input type="text" id="description" name="description" placeholder="Opis pitanja"
-                                   value={this.state.description} onChange={this.handleChange} required/>
-                        </div>
-                        <button className={"btn btn-primary"} type="submit">Dodaj pitanje</button>
-                        <a className={"btn btn-danger"} href="javascript:history.go(-1)">Odustani</a>
-                    </form>
-                </section>
+                <Layout>
+                    <MyHeader/>
+                    <Content
+                        style={{background: "white", position: "fixed", top: '25%', left: 0, right: 0, bottom: 0}}>
+                        <Title style={{fontFamily: "Gabriola", alignContent: 'space-evenly'}}>
+                            Kreiraj pitanje: </Title>
+                        <section className="container container-px container-py">
+                            <form onSubmit={this.handleSubmit}>
+                                <div className="form-inputs">
+                                    <input type="text" id="name" name="name" placeholder="Naziv pitanja"
+                                           value={this.state.name} onChange={this.handleChange} required/>
+                                </div>
+                                <div className="form-inputs">
+                                    <input type="text" id="description" name="description" placeholder="Opis pitanja"
+                                           value={this.state.description} onChange={this.handleChange} required/>
+                                </div>
+                                <p/>
+                                <Space size={"middle"}>
+                                    <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
+                                            htmlType={"submit"}>Dodaj</Button>
+                                    <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
+                                            href={"/api/ZabavnoUcenje/igrauredi"}>Odustani</Button>
+                                </Space></form>
+                        </section>
+                    </Content>
+                    <MyFooter/>
+                </Layout>
             </div>
         );
     }

@@ -84,9 +84,8 @@ class AuthenticationService {
     }
 
     inicializeNumberOfAnswers() {
-
         sessionStorage.setItem(TRUE_NUMBER_SESSION_ATTRIBUTE_NAME, "0");
-        let nu = sessionStorage.getItem(TRUE_NUMBER_SESSION_ATTRIBUTE_NAME);
+        sessionStorage.getItem(TRUE_NUMBER_SESSION_ATTRIBUTE_NAME);
 
     }
     getNumberOfQuestionsFromStorage() {
@@ -99,11 +98,11 @@ class AuthenticationService {
     }
 
     getGameNameFormStorage() {
-        sessionStorage.getItem(GAME_NAME_SESSION_ATTRIBUTE_NAME);
+        return sessionStorage.getItem(GAME_NAME_SESSION_ATTRIBUTE_NAME);
 
     }
     getDescriptionFromStorage() {
-        sessionStorage.getItem(GAME_DESCRIPTION_SESSION_ATTRIBUTE_NAME);
+        return sessionStorage.getItem(GAME_DESCRIPTION_SESSION_ATTRIBUTE_NAME);
     }
 
     getRole() {
@@ -127,10 +126,7 @@ class AuthenticationService {
 
     loginProfessor(korisnicko_ime, lozinka) {
         let url = "/api/ZabavnoUcenje/profesor/login";
-        let mess = api.post(url, {username: korisnicko_ime, password: lozinka})
-
-        return mess
-        //return api.post(url, {username: korisnicko_ime, password: lozinka})
+        return api.post(url, {username: korisnicko_ime, password: lozinka})
     }
 
     loginUcenik(username) {

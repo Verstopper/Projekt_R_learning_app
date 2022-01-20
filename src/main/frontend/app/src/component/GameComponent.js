@@ -44,11 +44,7 @@ class GameComponent extends Component {
             if (this.state.pushedNext) {
                 if (this.state.chosenOne == undefined) {
                     confirmed = window.confirm("Jeste li sigurni da želite preskočiti ovo pitanje?" + "Niti jedan odgovro nije odabran");
-                    if (confirmed) {
-                        goNext = true;
-                    } else {
-                        goNext = false;
-                    }
+                    goNext = confirmed;
 
                 } else if (!this.state.confirmed) {
                     confirmed = window.confirm("Jeste li sigurni da ne želite provjeriti ovaj odgovor?")
@@ -233,8 +229,8 @@ class GameComponent extends Component {
                         <Content><p/></Content>
                         <Content><p/></Content>
                         <Title style={{fontFamily: "Gabriola", alignContent: 'space-evenly'}}>
-                            BRAVO ZAVRŠILI STE IGRU!
-                        Odgovorili ste točno
+                            BRAVO ZAVRŠILI STE IGRU! <br/>
+                            Odgovorili ste točno
                             na {AuthenticationService.getNumberOfCorrectAnswersfromStorage()} od {AuthenticationService.getNumberOfQuestionsFromStorage()} pitanja</Title>
 
                         <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
@@ -254,6 +250,8 @@ class GameComponent extends Component {
 
                     {this.state.pushedNext && !this.state.kraj &&
                         <div className="button-box text-center container">
+                            <br/>
+                            <Content><p/></Content>
                             <Content><p/></Content>
                             <Title style={{
                                 fontFamily: "Gabriola",
@@ -276,8 +274,8 @@ class GameComponent extends Component {
                                         onClick={this.handleChange}>{this.state.odgovor4}</button>
                             </div>
                         </div>}
+                    <p/>
                     {!this.state.kraj && <Space size={"middle"}>
-                        <p/>
                         <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
                                 onClick={this.handleNext}>Sljedeće pitanje</Button>
                         <Button shape={"round"} style={{background: '#5B3758', color: "white"}}

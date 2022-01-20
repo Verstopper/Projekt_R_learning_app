@@ -11,22 +11,18 @@ import {Button, Card, Space} from "antd";
 
 class GameRow extends Component {
     game;
-
     constructor(props) {
         super(props);
     }
 
     render() {
         function goToGame(id, name, description) {
-            console.log("USLI SMO U FUJU")
-            console.log("ID JE " + id)
             AuthenticationService.getGameIntoStorage(id, name, description);
         }
 
         function deleteGame(id) {
             let confirmed = window.confirm("Jeste li sigurni da želite izbrisati igru?")
             if (confirmed) GameService.deleteGame(id);
-            console.log("ID IGRE JE " + id);
             window.location.reload(false);
         }
 
@@ -51,7 +47,6 @@ class GameRow extends Component {
 
 
 class ProfessorDashboard extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -100,8 +95,6 @@ class ProfessorDashboard extends Component {
     }
 
     render() {
-
-
         let rows;
         if (this.state.games && this.state.success) {
             rows = []
@@ -126,7 +119,6 @@ class ProfessorDashboard extends Component {
                     <Content style={{background: "white"}}><p/></Content>
                     <Content
                         style={{background: "white", position: "relative", top: '20%', left: 0, right: 0, bottom: 0}}>
-
                         <section>
                             <form onSubmit={this.handleSubmit}>
                                 <Space size={"small"}>

@@ -8,16 +8,17 @@ const api = axios.create({
 class GradeService {
     async addGrade(name, generation, username) {
         let response = {success: false,}
-        let game;
-        let success = false;
         try {
-            game = await api.post("/api/ZabavnoUcenje/razred",
+            await api.post("/api/ZabavnoUcenje/razred",
                 {name: name, generation: generation, username: username});
             response.data = true;
+            response.success = true;
         } catch (err) {
             response.data = "Greška prilikom dodavanja razreda."
+            response.success = false;
+
         }
-        return response
+        return response.success
     }
 }
 

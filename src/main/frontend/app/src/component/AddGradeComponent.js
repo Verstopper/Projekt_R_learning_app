@@ -25,23 +25,22 @@ class AddGameComponent extends React.Component {
             let err = {}
             if (!err.password) {
                 let response = await GradeService.addGrade(this.state.name, this.state.generation, this.state.username);
-                this.state.success = true;
-                if (response.status >= 400) {
+                if (response === false) {
                     this.state.success = false;
                     this.setState({
                         errors: 'Dodavanje razreda neuspješno.',
                     })
+                } else {
+                    this.state.success = true;
+                    window.location.href = "/api/ZabavnoUcenje/profesor/pregledIgara";
+
                 }
             } else {
                 this.setState({
                     errors: err,
                 })
-            }
-            if (this.state.success) {
-                return (<ProfessorDashboard/>)
-            }
         }
-    }
+    }}
 
     render() {
         if (this.state.success) {
@@ -69,7 +68,7 @@ class AddGameComponent extends React.Component {
                                 <p/>
                                 <Space size={"middle"}>
                                     <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
-                                            htmlType={"submit"}>Dodaj</Button>
+                                            htmlType={"submit"} onClick={this.handleSubmit}>Dodaj</Button>
                                     <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
                                             href={"/api/ZabavnoUcenje/profesor/login"}>Odustani</Button>
                                 </Space>

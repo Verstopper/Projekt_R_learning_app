@@ -1,8 +1,11 @@
 import React from 'react'
 import AuthenticationService from "../services/AuthenticationService";
-import {Button} from "react-bootstrap";
-import EditGameComponent from "./EditGameComponent";
 import AnswerService from "../services/AnswerService";
+import MyHeader from "./MyHeader";
+import Title from "antd/lib/typography/Title";
+import Layout, {Content} from "antd/lib/layout/layout";
+import MyFooter from "./MyFooter";
+import {Button} from "antd";
 
 class EditAnswerComponent extends React.Component {
 
@@ -42,26 +45,40 @@ class EditAnswerComponent extends React.Component {
 
         return (
             <div className="">
-                <section className="container container-px container-py">
-                    <form onSubmit={this.handleSubmit}>
-                        <div className="form-inputs">
-
-                            <input type="text" id="updatedText" name="updatedText" defaultValue={this.state.defaultText}
-                                   value={this.state.updatedText} onChange={this.handleChange} required/>
-                        </div>
-                        <div className="form-inputs">
-                            <h5>Točnost:</h5>
-                            <select name="updatedCorrectness" id="updatedCorrectness" onChange={this.handleChange} required>
-                                <option value="DA">DA</option>
-                                <option value="NE">NE</option>
-                            </select>
-                            <p>
-                            </p>
-                        </div>
-                        <Button className={"btn btn-primary"} type="submit">Ažuriraj odgovor</Button>
-                        <Button className={"btn btn-danger"} href="/api/ZabavnoUcenje/pitanjeuredi">Odustani</Button>
-                    </form>
-                </section>
+                <Layout>
+                    <MyHeader/>
+                    <Content
+                        style={{background: "white", position: "relative", top: '40%', left: 0, right: 0, bottom: 0}}>
+                        <br/>
+                        <Title style={{fontFamily: "Gabriola", alignContent: 'space-evenly'}}>
+                            Uredite odgovor: </Title>
+                        <section className="container container-px container-py">
+                            <form onSubmit={this.handleSubmit}>
+                                <div className="form-inputs">
+                                    <input type="text" id="updatedText" name="updatedText"
+                                           defaultValue={this.state.defaultText}
+                                           value={this.state.updatedText} onChange={this.handleChange} required/>
+                                </div>
+                                <div className="form-inputs">
+                                    <select name="updatedCorrectness" id="updatedCorrectness"
+                                            onChange={this.handleChange} required>
+                                        <option value="DA">DA</option>
+                                        <option value="NE">NE</option>
+                                    </select>
+                                    <p>
+                                    </p>
+                                </div>
+                                <Button style={{background: '#5B3758', color: "white"}} htmlType={"submit"}>
+                                    Ažuriraj pitanje</Button>
+                                <Button style={{background: '#5B3758', color: "white"}}
+                                        href={"/api/ZabavnoUcenje/pitanjeuredi"}>Odustani</Button></form>
+                        </section>
+                    </Content>
+                    <Content style={{background: "white"}}><br/></Content>
+                    <Content style={{background: "white"}}><br/></Content>
+                    <Content style={{background: "white"}}><br/></Content>
+                    <MyFooter/>
+                </Layout>
             </div>
         );
     }
