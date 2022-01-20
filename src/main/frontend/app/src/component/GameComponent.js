@@ -7,6 +7,8 @@ import MyHeader from "./MyHeader";
 import MyFooter from "./MyFooter";
 import Layout, {Content} from "antd/lib/layout/layout";
 import Title from "antd/lib/typography/Title";
+import moment from 'moment/moment.js'
+
 
 
 class GameComponent extends Component {
@@ -34,6 +36,9 @@ class GameComponent extends Component {
             pushedNext: false,
             confirmed: false,
             truth: false,
+            pocetak: undefined,
+            krajj : undefined,
+            ukupno : undefined
         }
 
         this.handleNext = async (event) => {
@@ -53,6 +58,9 @@ class GameComponent extends Component {
             } else {
                 AuthenticationService.inicializeNumberOfAnswers();
                 prvo = true;
+                this.setState({
+                    pocetak : moment().format()
+                })
             }
 
             this.setState({
@@ -69,9 +77,17 @@ class GameComponent extends Component {
                 AuthenticationService.getNumberOfQuestionsIntoStorage(yes.data.length);
 
                 if (this.state.brojac == yes.data.length) {// ovo oznacava zadnje pitanje
+
+                    let ukupno_vrijeme = Date.now() - this.state.pocetak;
+                    const startDate = moment(this.state.pocetak);
+                    const timeEnd = moment(Date.now());
+                    const diff = timeEnd.diff(startDate,'seconds')
+
                     this.setState({
-                        kraj: true
+                        kraj: true,
+                        ukupno : diff
                     })
+
                 }
 
 
@@ -231,7 +247,9 @@ class GameComponent extends Component {
                         <Title style={{fontFamily: "Gabriola", alignContent: 'space-evenly'}}>
                             BRAVO ZAVRŠILI STE IGRU! <br/>
                             Odgovorili ste točno
-                            na {AuthenticationService.getNumberOfCorrectAnswersfromStorage()} od {AuthenticationService.getNumberOfQuestionsFromStorage()} pitanja</Title>
+                            na {AuthenticationService.getNumberOfCorrectAnswersfromStorage()} od {AuthenticationService.getNumberOfQuestionsFromStorage()} pitanja
+                        <br/>
+                        Ukupno vrijeme : {this.state.ukupno} sekundi! BRAVO!</Title>
 
                         <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
                                 href="/api/ZabavnoUcenje/OdabirIgara">Vratite se na
