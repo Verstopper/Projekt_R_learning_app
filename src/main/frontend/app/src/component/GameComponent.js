@@ -10,7 +10,6 @@ import Title from "antd/lib/typography/Title";
 import moment from 'moment/moment.js'
 
 
-
 class GameComponent extends Component {
 
     constructor(props) {
@@ -38,10 +37,10 @@ class GameComponent extends Component {
             confirmed: false,
             truth: false,
             pocetak: undefined,
-            krajj : undefined,
-            ukupno : undefined,
+            krajj: undefined,
+            ukupno: undefined,
             brojpitanja: undefined,
-            brojtocnih : undefined
+            brojtocnih: undefined
 
 
         }
@@ -64,7 +63,7 @@ class GameComponent extends Component {
                 AuthenticationService.inicializeNumberOfAnswers();
                 prvo = true;
                 this.setState({
-                    pocetak : moment().format()
+                    pocetak: moment().format()
                 })
             }
 
@@ -86,13 +85,13 @@ class GameComponent extends Component {
                     let ukupno_vrijeme = Date.now() - this.state.pocetak;
                     const startDate = moment(this.state.pocetak);
                     const timeEnd = moment(Date.now());
-                    const diff = timeEnd.diff(startDate,'seconds')
+                    const diff = timeEnd.diff(startDate, 'seconds')
 
                     this.setState({
                         kraj: true,
-                        ukupno : diff,
-                        brojpitanja : AuthenticationService.getNumberOfQuestionsFromStorage(),
-                        brojtocnih : AuthenticationService.getNumberOfCorrectAnswersfromStorage()
+                        ukupno: diff,
+                        brojpitanja: AuthenticationService.getNumberOfQuestionsFromStorage(),
+                        brojtocnih: AuthenticationService.getNumberOfCorrectAnswersfromStorage()
                     })
                     AuthenticationService.clearCorrectAnswers();
                     AuthenticationService.clearNumberOfQuestion();
@@ -121,17 +120,17 @@ class GameComponent extends Component {
                     }));
                 }
 
-                if (this.state.truth != true) {
+                if (this.state.truth !== true) {
 
-                    if (this.state.chosenOne == "chosenOneAns1") {
-                        if (this.state.tocan1 == "DA") {
+                    if (this.state.chosenOne === "chosenOneAns1") {
+                        if (this.state.tocan1 === "DA") {
                             AuthenticationService.addCorrectAnswersIntoStorage();
                         }
-                    } else if (this.state.chosenOne == "chosenOneAns2") {
-                        if (this.state.tocan2 == "DA") {
+                    } else if (this.state.chosenOne === "chosenOneAns2") {
+                        if (this.state.tocan2 === "DA") {
                             AuthenticationService.addCorrectAnswersIntoStorage();
                         }
-                    } else if (this.state.chosenOne == "chosenOneAns3") {
+                    } else if (this.state.chosenOne === "chosenOneAns3") {
                         if (this.state.tocan3 == "DA") {
                             AuthenticationService.addCorrectAnswersIntoStorage();
                         }
@@ -173,13 +172,11 @@ class GameComponent extends Component {
                 confirmed: true
             })
             if (this.state.chosenOne != undefined) {
-                console.log("provjeravamo točnost truth je" + this.state.truth)
                 if (this.state.chosenOne == "chosenOneAns1") {
                     if (this.state.tocan1 == "DA") {
                         document.getElementById("chosenOneAns1").style.backgroundColor = "green"
                         document.getElementById("checkAns").style.backgroundColor = "green"
                         if (this.state.truth != true) {
-                            console.log("povecali smo u " + this.state.chosenOne + "1")
                             AuthenticationService.addCorrectAnswersIntoStorage();
                             this.setState({truth: true})
                         }
@@ -194,7 +191,6 @@ class GameComponent extends Component {
                         document.getElementById("checkAns").style.backgroundColor = "green"
 
                         if (this.state.truth != true) {
-                            console.log("povecali smo u " + this.state.chosenOne + "2")
                             AuthenticationService.addCorrectAnswersIntoStorage();
                             this.setState({truth: true})
                         }
@@ -257,8 +253,8 @@ class GameComponent extends Component {
                             BRAVO ZAVRŠILI STE IGRU! <br/>
                             Odgovorili ste točno
                             na {this.state.brojtocnih} od {this.state.brojpitanja} pitanja
-                        <br/>
-                        Ukupno vrijeme : {this.state.ukupno} sekundi! BRAVO!</Title>
+                            <br/>
+                            Ukupno vrijeme : {this.state.ukupno} sekundi! BRAVO!</Title>
 
                         <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
                                 href="/api/ZabavnoUcenje/OdabirIgara">Vratite se na
@@ -276,31 +272,31 @@ class GameComponent extends Component {
                     </div>
 
                     {this.state.pushedNext && !this.state.kraj &&
-                        <div className="button-box text-center container">
-                            <br/>
-                            <Content><p/></Content>
-                            <Content><p/></Content>
-                            <Title style={{
-                                fontFamily: "Gabriola",
-                                alignContent: 'space-evenly'
-                            }}>{this.state.namepitanja}</Title>
-                            <div style={{height: 10 + 'rem'}} className={"row"}>
-                                <button value={this.state.tocan1} id='chosenOneAns1' name={"chosenOne"}
-                                        className='col' style={{background: '#B48EAE', color: "white"}}
-                                        onClick={this.handleChange}>{this.state.odgovor1}</button>
-                                <button value={this.state.tocan2} id='chosenOneAns2' name={"chosenOne"}
-                                        className='col' style={{background: '#B48EAE', color: "white"}}
-                                        onClick={this.handleChange}>{this.state.odgovor2}</button>
-                            </div>
-                            <div style={{height: 10 + 'rem'}} className={"row"}>
-                                <button value={this.state.tocan3} id='chosenOneAns3' name={"chosenOne"}
-                                        className='col' style={{background: '#B48EAE', color: "white"}}
-                                        onClick={this.handleChange}>{this.state.odgovor3}</button>
-                                <button value={this.state.tocan4} id='chosenOneAns4' name={"chosenOne"}
-                                        className='col' style={{background: '#B48EAE', color: "white"}}
-                                        onClick={this.handleChange}>{this.state.odgovor4}</button>
-                            </div>
-                        </div>}
+                    <div className="button-box text-center container">
+                        <br/>
+                        <Content><p/></Content>
+                        <Content><p/></Content>
+                        <Title style={{
+                            fontFamily: "Gabriola",
+                            alignContent: 'space-evenly'
+                        }}>{this.state.namepitanja}</Title>
+                        <div style={{height: 10 + 'rem'}} className={"row"}>
+                            <button value={this.state.tocan1} id='chosenOneAns1' name={"chosenOne"}
+                                    className='col' style={{background: '#B48EAE', color: "white"}}
+                                    onClick={this.handleChange}>{this.state.odgovor1}</button>
+                            <button value={this.state.tocan2} id='chosenOneAns2' name={"chosenOne"}
+                                    className='col' style={{background: '#B48EAE', color: "white"}}
+                                    onClick={this.handleChange}>{this.state.odgovor2}</button>
+                        </div>
+                        <div style={{height: 10 + 'rem'}} className={"row"}>
+                            <button value={this.state.tocan3} id='chosenOneAns3' name={"chosenOne"}
+                                    className='col' style={{background: '#B48EAE', color: "white"}}
+                                    onClick={this.handleChange}>{this.state.odgovor3}</button>
+                            <button value={this.state.tocan4} id='chosenOneAns4' name={"chosenOne"}
+                                    className='col' style={{background: '#B48EAE', color: "white"}}
+                                    onClick={this.handleChange}>{this.state.odgovor4}</button>
+                        </div>
+                    </div>}
                     <p/>
                     {!this.state.kraj && <Space size={"middle"}>
                         <Button shape={"round"} style={{background: '#5B3758', color: "white"}}
