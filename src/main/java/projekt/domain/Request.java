@@ -1,60 +1,24 @@
 package projekt.domain;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+import javax.persistence.criteria.CriteriaBuilder;
+
+@Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 public class Request {
 
-    private String naziv;
-    private String opis;
-    private String oib;
-    private String text;
-    private String nivo;
-
-    public Request(String naziv, String opis, String oib,String text,String nivo) {
-        this.naziv = naziv;
-        this.opis = opis;
-        this.oib = oib;
-        this.text = text;
-        this.nivo = nivo;
-    }
+    String username;
+    Integer idigre;
+    Integer idpitanje;
+    String korisnicko_ime;
+    Integer id_question;
 
 
 
-    public String getNaziv() {
-        return naziv;
-    }
-
-    public void setNaziv(String opis) {
-        this.naziv = naziv;
-    }
-
-    public String getOpis() {
-        return opis;
-    }
-
-    public void setOpis(String opis) {
-        this.opis = opis;
-    }
-
-    public String getOib() {
-        return oib;
-    }
-
-    public void setOib(String oib) {
-        this.oib = oib;
-    }
-
-    public String getText() {
-        return text;
-    }
-
-    public void setText(String text) {
-        this.text = text;
-    }
-
-    public String getNivo() {
-        return nivo;
-    }
-
-    public void setNivo(String nivo) {
-        this.nivo = nivo;
-    }
 }

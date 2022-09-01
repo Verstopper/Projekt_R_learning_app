@@ -7,7 +7,8 @@ import lombok.Data;
 @AllArgsConstructor
 @Data
 @Builder
-public class LoginDto {
-    String username;
-    String password;
+public class GradeAddDto {
+    private String name;
+    private String generation;
+    private String username;
 }
